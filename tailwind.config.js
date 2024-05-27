@@ -9,12 +9,21 @@ export default {
 	plugins: [typography(), daisyui],
 	daisyui: {
 		themes: ['sunset', 'light'],
-		defaultTheme: "sunset"
+		defaultTheme: 'sunset'
 	},
 	theme: {
 		screens: {
 			xs: '475px',
 			...defaultTheme.screens
 		},
-	},
+		animation: {
+			wiggle: 'wiggle 1s ease-in-out infinite'
+		},
+		keyframes: {
+			wiggle: {
+				'0%, 100%': { transform: 'rotate(-3deg)' },
+				'50%': { transform: 'rotate(3deg)' }
+			}
+		}
+	}
 };
