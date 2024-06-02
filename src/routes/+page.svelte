@@ -1,31 +1,31 @@
 <script lang="ts" context="module">
-	import { cubicInOut } from 'svelte/easing';
-	import { fade, fly } from 'svelte/transition';
+	import Fly from '$lib/components/animations/Fly.svelte';
 </script>
 
-<script lang="ts">
-	let visible = $state(false);
-
-	$effect(() => {
-		visible = true;
-	});
-</script>
-
-<p class="flex h-full w-full items-center justify-center gap-2 text-7xl">
-	{#if visible}
-		{#each 'FoHoOV' as character, i}
-			{#if i % 2 == 0}
-				<span class=" -translate-y-2" in:fly|global={{ y: -100, duration: 1100 }} out:fade>
+<div class="flex h-full w-full items-center justify-center gap-2 text-7xl">
+	{#each 'FoHoOV' as character, i}
+		{#if i % 2 == 0}
+			<Fly
+				fromY={'5rem'}
+				toY={'-0.3rem'}
+				animationFillMode={'forwards'}
+				animationTimingFunction={'cubic-bezier(1,.24,.57,.62)'}
+			>
+				<span>
 					{character}
 				</span>
-			{:else}
-				<span class=" translate-y-2" in:fly|global={{ y: 100, duration: 1100 }} out:fade>
+			</Fly>
+		{:else}
+			<Fly
+				fromY={'-5rem'}
+				toY={'0.3rem'}
+				animationFillMode={'forwards'}
+				animationTimingFunction={'cubic-bezier(.15,1.57,.89,.87)'}
+			>
+				<span>
 					{character}
 				</span>
-			{/if}
-		{/each}
-	{/if}
-</p>
-
-<style>
-</style>
+			</Fly>
+		{/if}
+	{/each}
+</div>
