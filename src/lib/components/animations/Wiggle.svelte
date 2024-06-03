@@ -1,8 +1,9 @@
 <script lang="ts" context="module">
 	import { getCssVarsString, type CssValue, type WithAnimationProps } from '$lib';
 	import type { Snippet } from 'svelte';
+	import type { AnimationProps } from './types';
 
-	export type Props = WithAnimationProps<{
+	export type Props = AnimationProps<{
 		fromDeg?: CssValue;
 		toDeg?: CssValue;
 		children: Snippet;
@@ -10,11 +11,11 @@
 </script>
 
 <script lang="ts">
-	const { children, ...restProps }: Props = $props();
+	const { start = true, children, ...restProps }: Props = $props();
 </script>
 
 <div
-	class="wiggle"
+	class:wiggle={start}
 	style={getCssVarsString({
 		prefixWith: 'ca',
 		props: restProps,

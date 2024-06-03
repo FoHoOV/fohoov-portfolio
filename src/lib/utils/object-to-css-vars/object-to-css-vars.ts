@@ -4,13 +4,16 @@ type ConvertToKebabCase<TString> = TString extends `${infer T}${infer U}`
 	? `${T extends Capitalize<T> ? '-' : ''}${Lowercase<T>}${ConvertToKebabCase<U>}`
 	: TString;
 
-type ConvertToCssVar<TKey, TPrefix extends string> = {
-	[K in keyof TKey as K extends string
-		? K extends `--${string}`
-			? K
-			: `--${TPrefix}-${ConvertToKebabCase<K>}`
-		: never]: string;
-};
+type ConvertToCssVar<TKey, TPrefix extends string> = Omit<
+	{
+		[K in keyof TKey as K extends string
+			? K extends `--${string}`
+				? K
+				: `--${TPrefix}-${ConvertToKebabCase<K>}`
+			: never]: string;
+	},
+	'$$slots'
+>;
 
 function convertToKebabCase<TString extends string>(prop: TString): ConvertToKebabCase<TString> {
 	return prop.replace(/([A-Z])/g, '-$1').toLowerCase() as ConvertToKebabCase<TString>;

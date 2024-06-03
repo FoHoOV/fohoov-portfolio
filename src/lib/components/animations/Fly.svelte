@@ -1,8 +1,9 @@
 <script lang="ts" context="module">
-	import { getCssVarsString, type CssValue, type WithAnimationProps } from '$lib';
+	import { getCssVarsString, type CssValue } from '$lib';
 	import type { Snippet } from 'svelte';
+	import type { AnimationProps } from './types';
 
-	export type Props = WithAnimationProps<{
+	export type Props = AnimationProps<{
 		fromX?: CssValue;
 		toX?: CssValue;
 		fromY?: CssValue;
@@ -12,11 +13,11 @@
 </script>
 
 <script lang="ts">
-	const { children, ...restProps }: Props = $props();
+	const { start = true, children, ...restProps }: Props = $props();
 </script>
 
 <div
-	class="fly"
+	class:fly={start}
 	style={getCssVarsString({
 		prefixWith: 'ca',
 		props: restProps,
