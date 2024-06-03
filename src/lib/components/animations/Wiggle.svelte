@@ -3,10 +3,8 @@
 	import type { Snippet } from 'svelte';
 
 	export type Props = WithAnimationProps<{
-		fromX?: CssValue;
-		toX?: CssValue;
-		fromY?: CssValue;
-		toY?: CssValue;
+		fromDeg?: CssValue;
+		toDeg?: CssValue;
 		children: Snippet;
 	}>;
 </script>
@@ -16,21 +14,19 @@
 </script>
 
 <div
-	class="fly"
+	class="wiggle"
 	style={getCssVarsString({
 		prefixWith: 'ca',
 		props: restProps,
 		defaults: {
 			animationDelay: '0',
 			animationDirection: 'initial',
-			animationDuration: '1s',
+			animationDuration: '2s',
 			animationFillMode: 'initial',
-			animationIterationCount: '1',
+			animationIterationCount: 'infinite',
 			animationTimingFunction: 'ease-in-out',
-			fromX: '0',
-			toX: '0',
-			fromY: '0',
-			toY: '0'
+			fromDeg: '-3deg',
+			toDeg: '3deg'
 		}
 	})}
 >
@@ -38,8 +34,8 @@
 </div>
 
 <style>
-	.fly {
-		animation-name: animate-fly;
+	.wiggle {
+		animation-name: animate-wiggle;
 		animation-duration: var(--ca-animation-duration);
 		animation-timing-function: var(--ca-animation-timing-function);
 		animation-delay: var(--ca-animation-delay);
@@ -48,12 +44,15 @@
 		animation-iteration-count: var(--ca-animation-iteration-count);
 	}
 
-	@keyframes animate-fly {
-		0% {
-			transform: translate(var(--ca-from-x), var(--ca-from-y));
+	@keyframes animate-wiggle {
+		33% {
+			transform: rotate(var(--ca-from-deg));
+		}
+		66% {
+			transform: rotate(var(--ca-to-deg));
 		}
 		100% {
-			transform: translate(var(--ca-to-x), var(--ca-to-y));
+			transform: rotate('initial');
 		}
 	}
 </style>
