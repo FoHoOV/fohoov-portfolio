@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import { CACHED_THEME_KEY_NAME } from './constants';
-import { persisted } from '$lib/stores';
 import Cookies from 'js-cookie';
+import { persisted } from '$lib/stores';
 
 const _storedTheme = persisted.primitive$(CACHED_THEME_KEY_NAME, null);
 

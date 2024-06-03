@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	import type { Snippet } from 'svelte';
-	import { cssVars, type WithAnimationProps, type CssValue } from '$lib';
+	import { getCssVarsString, type WithAnimationProps, type CssValue } from '$lib';
 
 	export type Props = WithAnimationProps<{
 		fromX?: CssValue;
@@ -15,13 +15,7 @@
 	const { children, ...restProps }: Props = $props();
 </script>
 
-<div
-	class="fly"
-	use:cssVars={{
-		props: restProps,
-		prefixWith: 'ca'
-	}}
->
+<div class="fly" style={getCssVarsString({ prefixWith: 'ca', props: restProps })}>
 	{@render children()}
 </div>
 
