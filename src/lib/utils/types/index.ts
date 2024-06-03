@@ -5,4 +5,4 @@ export * from './union-to-intersection';
 export * from './strict-union';
 export * from './dispatcher-type-to-callback-events';
 export * from './common-component-states';
-export * from "./time"
+export * from './time';

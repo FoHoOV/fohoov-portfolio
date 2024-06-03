@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
+	import { getCssVarsString, type CssValue, type WithAnimationProps } from '$lib';
 	import type { Snippet } from 'svelte';
-	import { getCssVarsString, type WithAnimationProps, type CssValue } from '$lib';
 
 	export type Props = WithAnimationProps<{
 		fromX?: CssValue;

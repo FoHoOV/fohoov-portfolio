@@ -1,4 +1,4 @@
-import { getCssVarsObject, type Options } from "$lib/utils/object-to-css-vars";
+import { getCssVarsObject, type Options } from '$lib/utils/object-to-css-vars';
 
 function convertToCssVars(node: HTMLElement, options: Options) {
 	$effect(() => {
