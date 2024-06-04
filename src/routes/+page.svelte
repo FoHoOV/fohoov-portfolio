@@ -4,12 +4,11 @@
 </script>
 
 <script lang="ts">
-	function createGridEffect(wrapper: HTMLElement, createTimeline: TimeLineCreator) {
+	function createGridEffect(wrapper: HTMLElement, getTimeline: TimeLineCreator) {
 		const boxes = wrapper.querySelectorAll('.box');
-		const boxesTimeLine = createTimeline({
+		const boxesTimeLine = getTimeline({
 			label: 'boxesTimeLine'
 		});
-
 		boxesTimeLine.from(boxes, {
 			duration: 1,
 			scale: 0,
@@ -22,9 +21,9 @@
 		});
 	}
 
-	function shiftGridBorders(wrapper: HTMLElement, createTimeline: TimeLineCreator) {
+	function shiftGridBorders(wrapper: HTMLElement, getTimeline: TimeLineCreator) {
 		const boxes = wrapper.querySelectorAll('.box');
-		const boxesTimeLine = createTimeline({
+		const boxesTimeLine = getTimeline({
 			label: 'boxesTimeLine'
 		});
 
@@ -51,6 +50,8 @@
 				}
 			});
 		};
+
+		inner();
 	}
 
 	function createNameOutroEffect(index: number, wrapper: HTMLElement) {
@@ -69,9 +70,9 @@
 	function createNameIntroEffect(
 		index: number,
 		wrapper: HTMLElement,
-		createTimeline: TimeLineCreator
+		getTimeline: TimeLineCreator
 	) {
-		const timeLine = createTimeline();
+		const timeLine = getTimeline();
 		timeLine.from(wrapper, {
 			yPercent: -300,
 			xPercent: Math.pow(index * 5, 2),
@@ -91,11 +92,11 @@
 <div class="relative flex h-full w-full items-center justify-center gap-2 overflow-hidden text-7xl">
 	<div
 		use:gsapCreator={[
-			({ target, createTimeline }) => {
-				createGridEffect(target, createTimeline);
+			({ target, getTimeline: getTimeline }) => {
+				createGridEffect(target, getTimeline);
 			},
-			({ target, createTimeline }) => {
-				shiftGridBorders(target, createTimeline);
+			({ target, getTimeline: getTimeline }) => {
+				shiftGridBorders(target, getTimeline);
 			}
 		]}
 		class="absolute left-0 top-0 -z-10 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200"
@@ -111,8 +112,8 @@
 		<span
 			class="invisible"
 			use:gsapCreator={[
-				({ target, createTimeline }) => {
-					createNameIntroEffect(i, target, createTimeline);
+				({ target, getTimeline: getTimeline }) => {
+					createNameIntroEffect(i, target, getTimeline);
 				},
 				({ target }) => {
 					createNameOutroEffect(i, target);

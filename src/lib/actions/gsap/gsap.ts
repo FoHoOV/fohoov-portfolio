@@ -8,7 +8,7 @@ export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
 
 			const creatorOptions: Parameters<TweenCreator>[0] = {
 				target: node,
-				createTimeline: (options) => {
+				getTimeline: (options, dontAttemptToCreate) => {
 					let timeLine: gsap.core.Timeline | undefined = undefined;
 
 					if (options?.label) {
@@ -16,18 +16,13 @@ export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
 					}
 
 					if (!timeLine) {
-						timeLine = gsapCore.timeline(options);
-						if (options?.label) {
-							timeLines.set(options.label, timeLine);
+						if (dontAttemptToCreate) {
+							throw new Error(`timeline with label ${options?.label} not found!`);
 						}
+						timeLine = gsapCore.timeline(options);
+						options?.label && timeLines.set(options.label, timeLine);
 					}
-					return timeLine;
-				},
-				getTimeline: (label) => {
-					const timeLine = timeLines.get(label);
-					if (!timeLine) {
-						throw new Error(`timeline with label ${label} not found!`);
-					}
+
 					return timeLine;
 				}
 			};
@@ -40,6 +35,9 @@ export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
 	const context = createAnimations();
 
 	return {
+		update() {
+			throw new Error('update for gsap action is not handled yet');
+		},
 		destroy() {
 			context.revert();
 		}
