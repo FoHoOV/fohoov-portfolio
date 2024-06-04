@@ -4,9 +4,12 @@
 </script>
 
 <script lang="ts">
-	function createGridEffect(wrapper: HTMLElement, getTimeline: TimeLineCreator) {
+	function createGridEffect(wrapper: HTMLElement, createTimeline: TimeLineCreator) {
 		const boxes = wrapper.querySelectorAll('.box');
-		const boxesTimeLine = getTimeline();
+		const boxesTimeLine = createTimeline({
+			label: 'boxesTimeLine'
+		});
+
 		boxesTimeLine.from(boxes, {
 			duration: 1,
 			scale: 0,
@@ -17,8 +20,15 @@
 				from: 'center'
 			}
 		});
+	}
 
-		const shiftGridBorders = () => {
+	function shiftGridBorders(wrapper: HTMLElement, createTimeline: TimeLineCreator) {
+		const boxes = wrapper.querySelectorAll('.box');
+		const boxesTimeLine = createTimeline({
+			label: 'boxesTimeLine'
+		});
+
+		const inner = () => {
 			boxesTimeLine.to(boxes, {
 				duration: 2,
 				yoyo: true,
@@ -36,15 +46,14 @@
 				},
 				onComplete: () => {
 					setTimeout(() => {
-						shiftGridBorders();
+						inner();
 					}, 5000);
 				}
 			});
 		};
-		shiftGridBorders();
 	}
 
-	function createNameEffect(index: number, wrapper: HTMLElement, getTimeline: TimeLineCreator) {
+	function createNameOutroEffect(index: number, wrapper: HTMLElement) {
 		gsap.to(wrapper, {
 			yPercent: 300,
 			xPercent: Math.pow(index * 5, 2),
@@ -55,7 +64,14 @@
 				end: 'bottom center'
 			}
 		});
-		const timeLine = getTimeline();
+	}
+
+	function createNameIntroEffect(
+		index: number,
+		wrapper: HTMLElement,
+		createTimeline: TimeLineCreator
+	) {
+		const timeLine = createTimeline();
 		timeLine.from(wrapper, {
 			yPercent: -300,
 			xPercent: Math.pow(index * 5, 2),
@@ -75,8 +91,11 @@
 <div class="relative flex h-full w-full items-center justify-center gap-2 overflow-hidden text-7xl">
 	<div
 		use:gsapCreator={[
-			({ target, getTimeline }) => {
-				createGridEffect(target, getTimeline);
+			({ target, createTimeline }) => {
+				createGridEffect(target, createTimeline);
+			},
+			({ target, createTimeline }) => {
+				shiftGridBorders(target, createTimeline);
 			}
 		]}
 		class="absolute left-0 top-0 -z-10 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200"
@@ -92,8 +111,11 @@
 		<span
 			class="invisible"
 			use:gsapCreator={[
-				({ target, getTimeline }) => {
-					createNameEffect(i, target, getTimeline);
+				({ target, createTimeline }) => {
+					createNameIntroEffect(i, target, createTimeline);
+				},
+				({ target }) => {
+					createNameOutroEffect(i, target);
 				}
 			]}
 			style="text-shadow: rgba(245,242,237,0.2) 0px 0px 10px"

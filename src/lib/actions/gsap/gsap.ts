@@ -8,18 +8,25 @@ export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
 
 			const creatorOptions: Parameters<TweenCreator>[0] = {
 				target: node,
-				getTimeline: (options, label) => {
+				createTimeline: (options) => {
 					let timeLine: gsap.core.Timeline | undefined = undefined;
 
-					if (label) {
-						timeLine = timeLines.get(label);
+					if (options?.label) {
+						timeLine = timeLines.get(options.label);
 					}
 
 					if (!timeLine) {
 						timeLine = gsapCore.timeline(options);
-						if (label) {
-							timeLines.set(label, timeLine);
+						if (options?.label) {
+							timeLines.set(options.label, timeLine);
 						}
+					}
+					return timeLine;
+				},
+				getTimeline: (label) => {
+					const timeLine = timeLines.get(label);
+					if (!timeLine) {
+						throw new Error(`timeline with label ${label} not found!`);
 					}
 					return timeLine;
 				}
