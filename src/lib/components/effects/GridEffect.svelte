@@ -31,7 +31,8 @@
 	function shiftGridBorders(wrapper: HTMLElement, getTimeline: TimeLineCreator) {
 		const boxes = wrapper.querySelectorAll('.box');
 		const boxesTimeLine = getTimeline({
-			label: 'boxesTimeLine'
+			label: 'boxesTimeLine',
+			errorIfNotExists: true
 		});
 
 		const inner = () => {
@@ -65,10 +66,10 @@
 <div class={`relative ${className}`}>
 	<div
 		use:gsapCreator={[
-			({ target, getTimeline: getTimeline }) => {
+			({ target, getTimeline }) => {
 				createGridEffect(target, getTimeline);
 			},
-			({ target, getTimeline: getTimeline }) => {
+			({ target, getTimeline }) => {
 				shiftGridBorders(target, getTimeline);
 			}
 		]}

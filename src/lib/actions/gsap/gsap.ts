@@ -8,7 +8,7 @@ export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
 
 			const creatorOptions: Parameters<TweenCreator>[0] = {
 				target: node,
-				getTimeline: (options, dontAttemptToCreate) => {
+				getTimeline: (options) => {
 					let timeLine: gsap.core.Timeline | undefined = undefined;
 
 					if (options?.label) {
@@ -16,7 +16,7 @@ export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
 					}
 
 					if (!timeLine) {
-						if (dontAttemptToCreate) {
+						if (options?.errorIfNotExists) {
 							throw new Error(`timeline with label ${options?.label} not found!`);
 						}
 						timeLine = gsapCore.timeline(options);

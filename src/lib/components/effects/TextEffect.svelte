@@ -10,25 +10,16 @@
 <script lang="ts">
 	const { text }: Props = $props();
 
-	function createNameOutroEffect(index: number, wrapper: HTMLElement) {
-		gsap.to(wrapper, {
-			yPercent: 300,
-			xPercent: Math.pow(index * 5, 2),
-			opacity: 0,
-			scrollTrigger: {
-				scrub: true,
-				start: 'center center',
-				end: 'bottom center'
-			}
-		});
-	}
-
 	function createNameIntroEffect(
 		index: number,
 		wrapper: HTMLElement,
 		getTimeline: TimeLineCreator
 	) {
-		const timeLine = getTimeline();
+		const timeLine = getTimeline({
+			label: 'intro',
+			errorIfNotExists: true
+		});
+
 		timeLine.from(wrapper, {
 			yPercent: -300,
 			xPercent: Math.pow(index * 5, 2),
@@ -43,17 +34,38 @@
 			duration: 3
 		});
 	}
+
+	function createNameOutroEffect(
+		index: number,
+		wrapper: HTMLElement,
+		getTimeline: TimeLineCreator
+	) {
+		const timeLine = getTimeline({
+			label: 'intro'
+		});
+
+		timeLine.to(wrapper, {
+			yPercent: 300,
+			xPercent: Math.pow(index * 5, 2),
+			opacity: 0,
+			scrollTrigger: {
+				scrub: true,
+				start: 'center center',
+				end: 'bottom center'
+			}
+		});
+	}
 </script>
 
 {#each text as character, i}
 	<span
 		class="invisible"
 		use:gsapCreator={[
-			({ target, getTimeline: getTimeline }) => {
-				createNameIntroEffect(i, target, getTimeline);
+			({ target, getTimeline }) => {
+				createNameOutroEffect(i, target, getTimeline);
 			},
-			({ target }) => {
-				createNameOutroEffect(i, target);
+			({ target, getTimeline }) => {
+				createNameIntroEffect(i, target, getTimeline);
 			}
 		]}
 		style="text-shadow: rgba(245,242,237,0.2) 0px 0px 10px"

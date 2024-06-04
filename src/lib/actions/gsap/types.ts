@@ -1,6 +1,5 @@
 export type TimeLineCreator = (
-	options?: gsap.TimelineVars & { label?: string },
-	dontAttemptToCreate?: boolean
+	options?: gsap.TimelineVars & { label?: string; errorIfNotExists?: boolean }
 ) => gsap.core.Timeline;
 
 export type TweenCreator = (config: {
@@ -10,7 +9,7 @@ export type TweenCreator = (config: {
 	 * it will cache the created timeline so it will never recreate timelines
 	 * with the same timeline (only for this element).
 	 *
-	 * if `dontAttemptToCreate` is set, it will throw an error if the `options.label` doesn't exist
+	 * if `options.errorIfNotExists` is set, it will throw an error if the `options.label` doesn't exist
 	 *
 	 * @throws {Error}
 	 */
