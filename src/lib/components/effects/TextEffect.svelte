@@ -25,7 +25,8 @@
 			xPercent: Math.pow(index * 5, 2),
 			scale: 3,
 			duration: 1,
-			autoAlpha: 0
+			autoAlpha: 0,
+			id: 'scale-tween'
 		});
 		timeLine.to(wrapper, {
 			textShadow: 'rgba(245,242,237,1) 0px 0px 300px',
@@ -44,14 +45,23 @@
 			label: 'intro'
 		});
 
-		timeLine.to(wrapper, {
+		gsap.to(wrapper, {
 			yPercent: 300,
 			xPercent: Math.pow(index * 5, 2),
 			opacity: 0,
 			scrollTrigger: {
+				trigger: wrapper.parentElement,
 				scrub: true,
 				start: 'center center',
-				end: 'bottom center'
+				end: 'bottom center',
+				markers: true,
+				onEnter: () => {
+					timeLine.getById('scale-tween').seek(Infinity);
+					timeLine.pause();
+				},
+				onLeaveBack: () => {
+					timeLine.resume();
+				}
 			}
 		});
 	}
