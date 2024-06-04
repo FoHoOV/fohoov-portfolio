@@ -54,7 +54,6 @@
 				scrub: true,
 				start: 'center center',
 				end: 'bottom center',
-				markers: true,
 				onEnter: () => {
 					timeLine.getById('scale-tween').seek(Infinity);
 					timeLine.pause();
