@@ -1,10 +1,13 @@
 <script lang="ts" context="module">
-	import { browser } from '$app/environment';
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
 
 	// TODO: create this and grid effects into an action
 	type GsapOptions = gsap.TweenVars & {
+		/**
+		 * last parameter that indicates the timing of this animation
+		 */
+		timingPosition?: gsap.Position;
 		/**
 		 * timeline instance to use instead of gsap.*
 		 */
@@ -16,14 +19,14 @@
 	};
 
 	function gsapTo(node: HTMLElement, options: GsapOptions) {
-		const res = (options.timeLine ?? gsap).to(node, options);
+		const res = (options.timeLine ?? gsap).to(node, options, options.timingPosition);
 		if (options.instance) {
 			options.instance(res);
 		}
 	}
 
 	function gsapFrom(node: HTMLElement, options: GsapOptions) {
-		const res = (options.timeLine ?? gsap).from(node, options);
+		const res = (options.timeLine ?? gsap).from(node, options, options.timingPosition);
 		if (options.instance) {
 			options.instance(res);
 		}
@@ -32,22 +35,45 @@
 
 <script lang="ts">
 	let wrapper: HTMLElement;
+
 	function createGridEffect() {
-		const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
-		tl.from(wrapper.querySelectorAll('.box'), {
+		const boxes = wrapper.querySelectorAll('.box');
+		const boxesTimeLine = gsap.timeline();
+		boxesTimeLine.from(boxes, {
 			duration: 1,
 			scale: 0,
-			yoyo: true,
-			repeat: -1,
-			repeatDelay: 2,
-			ease: 'power1.inOut',
 			stagger: {
 				amount: 0.5,
 				grid: [3, 3],
-				ease: 'power2.in',
+				ease: 'power3.inOut',
 				from: 'center'
 			}
 		});
+
+		const randomGrid = () => {
+			boxesTimeLine.to(boxes, {
+				duration: 2,
+				yoyo: true,
+				borderWidth: '1px',
+				borderStyle: 'solid',
+				borderColor: '#8080804a',
+				scale: 1.1,
+				repeat: 1,
+				transformOrigin: 'center',
+				stagger: {
+					amount: 1,
+					grid: [3, 3],
+					ease: 'power3.inOut',
+					from: 'random'
+				},
+				onComplete: () => {
+					setTimeout(() => {
+						randomGrid();
+					}, 5000);
+				}
+			});
+		};
+		randomGrid();
 	}
 
 	onMount(() => {
@@ -62,7 +88,7 @@
 	>
 		{#each { length: 3 } as _, i}
 			{#each { length: 3 } as _, i}
-				<span class="box h-full w-full bg-base-300"> </span>
+				<span class="box h-full w-full border-0 border-transparent bg-base-300"> </span>
 			{/each}
 		{/each}
 	</div>
@@ -87,6 +113,14 @@
 				duration: 1,
 				autoAlpha: 0
 			}}
+			use:gsapTo={{
+				textShadow: 'rgba(245,242,237,1) 0px 0px 300px',
+				yoyo: true,
+				repeat: -1,
+				duration: 5,
+				delay: 1
+			}}
+			style="text-shadow: rgba(245,242,237,0.2) 0px 0px 100px"
 		>
 			{character}
 		</span>
