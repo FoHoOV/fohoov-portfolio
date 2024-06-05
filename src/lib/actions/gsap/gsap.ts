@@ -1,7 +1,7 @@
 import { gsap as gsapCore } from 'gsap';
 import type { GsapOptions, TweenCreator } from './types';
 
-export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
+export function gsapCreator(node: Element, creators: GsapOptions) {
 	const createAnimations = () => {
 		return gsapCore.context(() => {
 			const timeLines = new Map<string, gsap.core.Timeline>();

@@ -3,7 +3,7 @@ export type TimeLineCreator = (
 ) => gsap.core.Timeline;
 
 export type TweenCreator = (config: {
-	target: HTMLElement;
+	target: Element;
 	/**
 	 * creates a timeline and returns that. If a label is provided,
 	 * it will cache the created timeline so it will never recreate timelines

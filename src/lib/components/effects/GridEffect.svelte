@@ -11,7 +11,7 @@
 <script lang="ts">
 	const { class: className, children }: Props = $props();
 
-	function createGridEffect(wrapper: HTMLElement, getTimeline: TimeLineCreator) {
+	function createGridEffect(wrapper: Element, getTimeline: TimeLineCreator) {
 		const boxes = wrapper.querySelectorAll('.box');
 		const boxesTimeLine = getTimeline({
 			label: 'boxesTimeLine'
@@ -28,7 +28,7 @@
 		});
 	}
 
-	function shiftGridBorders(wrapper: HTMLElement, getTimeline: TimeLineCreator) {
+	function shiftGridBorders(wrapper: Element, getTimeline: TimeLineCreator) {
 		const boxes = wrapper.querySelectorAll('.box');
 		const boxesTimeLine = getTimeline({
 			label: 'boxesTimeLine',
