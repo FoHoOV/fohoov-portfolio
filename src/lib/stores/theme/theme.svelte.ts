@@ -1,39 +1,35 @@
-import { browser } from '$app/environment';
-import { CACHED_THEME_KEY_NAME } from './constants';
-import Cookies from 'js-cookie';
-import { persisted } from '$lib/stores';
+import { CACHED_THEME_KEY_NAME, THEME_CONTEXT } from './constants';
+import { getRootContextManager, persisted } from '$lib';
 
-const _storedTheme = persisted.primitive$(CACHED_THEME_KEY_NAME, null);
-
-export function getSelectedTheme$() {
-	const theme = $derived.by(() => {
-		if (!browser) {
-			let cookieThemeName = Cookies.get(CACHED_THEME_KEY_NAME);
-
-			if (!cookieThemeName) {
-				cookieThemeName = 'dark';
-				Cookies.set(CACHED_THEME_KEY_NAME, cookieThemeName);
-			}
-			return cookieThemeName;
-		}
-		if (
-			_storedTheme.current === 'light' ||
-			!window.matchMedia('(prefers-color-scheme: dark)').matches
-		) {
-			return 'light';
-		}
-
-		return 'dark';
+export class ThemeManager {
+	#storedTheme = persisted.cookie$<{ value: 'dark' | 'light' }>(CACHED_THEME_KEY_NAME, {
+		initializer: { value: 'dark' }
 	});
 
-	return {
-		get current() {
-			return theme;
-		}
-	};
+	getSelectedTheme$() {
+		// eslint-disable-next-line @typescript-eslint/no-this-alias
+		const self = this;
+		return {
+			get current() {
+				return self.#storedTheme.current.value;
+			}
+		};
+	}
+
+	setTheme(theme: 'dark' | 'light') {
+		this.#storedTheme.current = { value: theme };
+	}
 }
 
-export function setTheme(theme: 'dark' | 'light') {
-	_storedTheme.current = theme;
-	Cookies.set(CACHED_THEME_KEY_NAME, theme);
+export function setThemeManagerToStore(store: ThemeManager) {
+	return getRootContextManager().add(THEME_CONTEXT, store);
+}
+
+export function getThemeManagerFromStore() {
+	const value = getRootContextManager().get<ThemeManager>(THEME_CONTEXT);
+	if (!value) {
+		throw new Error('theme store is not initialized yet');
+	}
+
+	return value;
 }
