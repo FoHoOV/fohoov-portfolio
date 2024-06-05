@@ -39,7 +39,7 @@ export function gsapCreator(node: HTMLElement, creators: GsapOptions) {
 			throw new Error('update for gsap action is not handled yet');
 		},
 		destroy() {
-			context.revert();
+			context.kill();
 		}
 	};
 }
