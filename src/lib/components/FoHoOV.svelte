@@ -13,7 +13,7 @@
 >
 	<GlowEffect>
 		<TextPopInEffect>
-			<p>{delusion.isDelusionOn$().current ? 'FoHoOV' : 'Who?'}</p>
+			<p>{delusion.isDelusionOn$().current ? 'Who?' : 'FoHoOV'}</p>
 		</TextPopInEffect>
 	</GlowEffect>
 </div>
