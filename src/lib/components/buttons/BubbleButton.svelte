@@ -2,7 +2,6 @@
 	import { gsapCreator, type CssValue, type GsapOptions } from '$lib';
 	import type { Snippet } from 'svelte';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
-	import { gsap } from 'gsap';
 
 	export type Props = {
 		size?: CssValue;

@@ -16,7 +16,7 @@
 		changeDelusionStateTimeLine.to(target, {
 			scale:
 				Math.max(window.innerHeight, window.innerWidth) /
-				(target.getBoundingClientRect().width / 6),
+				(target.getBoundingClientRect().width / 6), // TODO: dividing it by width/2 should be enough, but doesn't work
 			duration: 1,
 			onStart: () => {
 				animationState = 'started';
