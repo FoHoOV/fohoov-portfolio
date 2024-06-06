@@ -36,7 +36,7 @@
 			target,
 			{
 				scale: 0,
-				duration: 0.45
+				duration: 0.4
 			},
 			createTimeline ? undefined : '>-0.27'
 		);

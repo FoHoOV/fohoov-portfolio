@@ -22,7 +22,7 @@
 				text="Next"
 				level={'?'}
 				baseColor="greenyellow"
-				gsaps={[(options) => popEffect(options, true)]}
+				gsaps={[(options) => popEffect(options)]}
 			></Skill>
 		{:else}
 			<Skill text="React" level={1} baseColor={'blue'} gsaps={[(options) => popEffect(options)]}
