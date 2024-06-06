@@ -1,20 +1,20 @@
 <script lang="ts" context="module">
 	import { getDelusionStateFromStore } from '$lib';
 	import type { TweenConfig } from '$lib/actions';
-	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
+	import type { Props as SectionProps } from '$lib/components/section/Section.svelte';
 	import type { Snippet } from 'svelte';
 
 	type PopEffect = (options: TweenConfig, createTimeline?: boolean) => void;
 
-	export type Props = {
-		class?: string;
-		title: string;
+	export type Props = Omit<SectionProps, 'children'> & {
 		children: Snippet<[{ popEffect: PopEffect }]>;
 	};
 </script>
 
 <script lang="ts">
-	const { class: className, title, children }: Props = $props();
+	import SectionWithHeader from '$lib/components/section/Section.svelte';
+
+	const { children, ...restProps }: Props = $props();
 
 	let wrapper: HTMLElement | undefined;
 	let timeLine: gsap.core.Timeline | null = null;
@@ -50,16 +50,11 @@
 	});
 </script>
 
-<div class="flex min-h-full w-full flex-col {className}">
-	<div class="sticky top-0 z-10 w-full self-start text-center align-top">
-		<GlowEffect>
-			<h1 class="py-7 text-7xl font-extrabold backdrop-blur-sm sm:text-8xl">{title}</h1>
-		</GlowEffect>
-	</div>
+<SectionWithHeader {...restProps}>
 	<div
 		class="grid h-full w-full auto-rows-max content-center gap-10 pt-14 md:gap-20"
 		bind:this={wrapper}
 	>
 		{@render children({ popEffect: createPopEffect })}
 	</div>
-</div>
+</SectionWithHeader>
