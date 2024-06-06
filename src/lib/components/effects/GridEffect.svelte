@@ -54,7 +54,7 @@
 				onComplete: () => {
 					setTimeout(() => {
 						inner();
-					}, 500);
+					}, 1000);
 				}
 			});
 		};
