@@ -41,11 +41,11 @@
 			.to(
 				target.querySelector('#o2'),
 				{
-					duration: 3,
+					duration: 2,
 					translateY: 0,
 					ease: 'elastic.inOut(1.5, 0.5)'
 				},
-				'<-0.5'
+				'<'
 			);
 	}
 </script>
@@ -54,7 +54,7 @@
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 719.42 142.66"
-		class="invisible overflow-visible fill-current text-4xl"
+		class="invisible overflow-visible fill-current sm:text-3xl md:text-4xl"
 		width="15em"
 		use:gsapCreator={[
 			(options) => {
@@ -62,6 +62,47 @@
 			}
 		]}
 	>
+		<defs>
+			<filter
+				id="white-glow"
+				filterUnits="userSpaceOnUse"
+				x="-100%"
+				y="-100%"
+				width="300%"
+				height="300%"
+			>
+				<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur5" />
+				<feGaussianBlur in="SourceGraphic" stdDeviation="40" result="blur15" />
+				<feGaussianBlur in="SourceGraphic" stdDeviation="60" result="blur30" />
+				<feGaussianBlur in="SourceGraphic" stdDeviation="60" result="blur60" />
+				<feGaussianBlur in="SourceGraphic" stdDeviation="90" result="blur90" />
+				<feGaussianBlur in="SourceGraphic" stdDeviation="120" result="blur120" />
+				<feGaussianBlur in="SourceGraphic" stdDeviation="500" result="blur500" />
+				<feMerge result="blur-merged">
+					<feMergeNode in="blur15" />
+					<feMergeNode in="blur30" />
+					<feMergeNode in="blur60" />
+					<feMergeNode in="blur90" />
+					<feMergeNode in="blur120" />
+					<feMergeNode in="blur500" />
+				</feMerge>
+				<feColorMatrix
+					result="white-blur"
+					in="blur-merged"
+					type="matrix"
+					values="1 0 0 0 0
+					 0 1 0 0 0
+					 0 0 1 0 0
+					 0 0 0 0.4 0"
+				/>
+				<feMerge>
+					<feMergeNode in="white-blur" />
+					<feMergeNode in="blur5" />
+					<feMergeNode in="SourceGraphic" />
+				</feMerge>
+			</filter>
+		</defs>
+
 		<path id="f" d="M0,2.25h74.4v14.96H17.83v45.91h52.27v14.76H17.83v62.52H0V2.25Z" />
 		<path
 			id="o1"
@@ -88,3 +129,9 @@
 		/>
 	</svg>
 </div>
+
+<style>
+	path {
+		filter: url(#white-glow);
+	}
+</style>
