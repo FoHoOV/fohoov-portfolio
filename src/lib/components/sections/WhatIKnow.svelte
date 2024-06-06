@@ -49,7 +49,7 @@
 				text="God level rust dev"
 				level={11}
 				baseColor={'orangered'}
-				gsaps={[(options) => popEffect(options)]}
+				gsaps={[(options) => popEffect(options, true)]}
 			></Skill>
 		{/if}
 	{/snippet}

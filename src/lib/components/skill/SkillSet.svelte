@@ -26,7 +26,7 @@
 				scrollTrigger: {
 					trigger: wrapper,
 					toggleActions: 'play reverse restart reverse',
-					start: '40% bottom'
+					start: '55% bottom'
 				}
 			});
 		}
@@ -39,12 +39,13 @@
 				scale: 0,
 				duration: 0.4
 			},
-			createTimeline ? undefined : '>-0.27'
+			createTimeline ? undefined : '>-0.15'
 		);
 	}) satisfies PopEffect;
 
-	$effect(() => {
+	$effect.pre(() => {
 		delusion.isDelusionOn$().current;
+		// on each delusion change we could be getting a new set of skills so we have to renew it after the re-render
 		timeLine = null;
 	});
 </script>
