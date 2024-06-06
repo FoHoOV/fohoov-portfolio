@@ -2,7 +2,7 @@ export type TimeLineCreator = (
 	options?: gsap.TimelineVars & { label?: string; errorIfNotExists?: boolean }
 ) => gsap.core.Timeline;
 
-export type TweenCreator = (config: {
+export type TweenConfig = {
 	target: Element;
 	/**
 	 * creates a timeline and returns that. If a label is provided,
@@ -14,6 +14,8 @@ export type TweenCreator = (config: {
 	 * @throws {Error}
 	 */
 	getTimeline: TimeLineCreator;
-}) => void;
+};
+
+export type TweenCreator = (config: TweenConfig) => void;
 
 export type GsapOptions = TweenCreator[];

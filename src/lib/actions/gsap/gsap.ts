@@ -3,6 +3,9 @@ import type { GsapOptions, TweenCreator } from './types';
 
 export function gsapCreator(node: Element, creators: GsapOptions) {
 	const createAnimations = () => {
+		if (creators.length === 0) {
+			return;
+		}
 		return gsapCore.context(() => {
 			const timeLines = new Map<string, gsap.core.Timeline>();
 
@@ -39,7 +42,8 @@ export function gsapCreator(node: Element, creators: GsapOptions) {
 			throw new Error('update for gsap action is not handled yet');
 		},
 		destroy() {
-			context.kill();
+			console.log('called');
+			context?.kill();
 		}
 	};
 }

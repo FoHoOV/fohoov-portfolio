@@ -1,20 +1,26 @@
 <script lang="ts" context="module">
-	import { gsapCreator, type CssValue } from '$lib';
+	import { gsapCreator, type CssValue, type GsapOptions } from '$lib';
 	import type { Snippet } from 'svelte';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 	import { gsap } from 'gsap';
 
-	export type Props = { size?: CssValue; fill: string; children: Snippet } & HTMLButtonAttributes;
+	export type Props = {
+		size?: CssValue;
+		fill: string;
+		svgGsaps?: GsapOptions;
+		children: Snippet;
+	} & HTMLButtonAttributes;
 </script>
 
 <script lang="ts">
-	const { size, class: className, fill = 'white', children, ...restParams }: Props = $props();
-	let svgElement: SVGElement | undefined;
-
-	export function getSvgElement() {
-		return svgElement;
-	}
-
+	const {
+		size,
+		class: className,
+		fill = 'white',
+		svgGsaps,
+		children,
+		...restParams
+	}: Props = $props();
 	const morphs = [
 		'M34.9,-57.2C44.7,-48,51.7,-37.4,59.3,-25.7C66.9,-13.9,75.1,-1,74.3,11.3C73.5,23.6,63.8,35.2,54.3,48.3C44.9,61.3,35.7,75.9,23.6,78.7C11.5,81.4,-3.6,72.5,-16.6,64.9C-29.7,57.3,-40.7,51,-49,42.1C-57.3,33.1,-63,21.5,-60.2,11.3C-57.5,1.2,-46.4,-7.5,-42.7,-21.1C-38.9,-34.7,-42.5,-53.2,-36.6,-64.2C-30.7,-75.2,-15.4,-78.7,-1.4,-76.6C12.6,-74.4,25.1,-66.5,34.9,-57.2Z',
 		'M42.7,-66.5C55.2,-58.3,65.3,-46.4,72.3,-32.6C79.3,-18.8,83.2,-3.1,76.7,7.8C70.2,18.8,53.2,25.1,41.9,34.1C30.6,43.1,25.1,54.8,17.2,55.8C9.4,56.8,-0.8,47,-13.9,44.5C-27,41.9,-43.1,46.6,-48.8,41.5C-54.6,36.3,-50,21.4,-49.6,8.6C-49.2,-4.3,-53,-15.1,-50.3,-23.8C-47.6,-32.5,-38.4,-39,-29,-48.6C-19.5,-58.2,-9.8,-70.8,2.6,-74.9C15,-79,30.1,-74.6,42.7,-66.5Z',
@@ -39,7 +45,7 @@
 			xmlns="http://www.w3.org/2000/svg"
 			width={size}
 			height={size}
-			bind:this={svgElement}
+			use:gsapCreator={svgGsaps ?? []}
 		>
 			<path
 				transform="translate(100 100)"

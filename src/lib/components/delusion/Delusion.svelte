@@ -1,34 +1,30 @@
 <script lang="ts" context="module">
 	import BubbleButton from '$lib/components/buttons/BubbleButton.svelte';
 
-	import { getDelusionStateFromStore } from '$lib';
-	import { gsap } from 'gsap';
-	import { onDestroy } from 'svelte';
-	import { browser } from '$app/environment';
+	import { getDelusionStateFromStore, type TweenConfig } from '$lib';
 </script>
 
 <script lang="ts">
 	const delusion = getDelusionStateFromStore();
 
-	let bubbleButton: BubbleButton | undefined;
 	let animationState = $state<'started' | 'ended'>('ended');
+	let changeDelusionStateTimeLine: gsap.core.Timeline | undefined;
 
-	// TODO: use a createTimeline
-	const changeDelusionStateTimeLine = browser ? gsap.timeline() : null;
-	function changeDelusionState() {
-		const svg = bubbleButton?.getSvgElement();
-		if (!svg || !changeDelusionStateTimeLine) {
-			return;
-		}
-		animationState = 'started';
-		changeDelusionStateTimeLine.to(svg, {
-			scale: Math.max(window.innerHeight, window.innerWidth) / svg.getBoundingClientRect().x,
+	function createDelusionStateChangeAnimation({ target, getTimeline }: TweenConfig) {
+		changeDelusionStateTimeLine = getTimeline({ paused: true });
+
+		changeDelusionStateTimeLine.to(target, {
+			scale: Math.max(window.innerHeight, window.innerWidth) / target.getBoundingClientRect().x,
 			duration: 1,
+			onStart: () => {
+				animationState = 'started';
+			},
 			onComplete: () => {
 				delusion.toggleDelusionState();
 			}
 		});
-		changeDelusionStateTimeLine.to(svg, {
+
+		changeDelusionStateTimeLine.to(target, {
 			scale: 1,
 			duration: 1,
 			onComplete: () => {
@@ -37,20 +33,22 @@
 		});
 	}
 
-	$effect(() => {
-		return () => {
-			changeDelusionStateTimeLine?.kill();
-		};
-	});
+	function startToggleAnimation() {
+		changeDelusionStateTimeLine?.restart();
+	}
 </script>
 
 <BubbleButton
-	bind:this={bubbleButton}
 	class="fixed left-2 top-2 z-10 text-white {animationState !== 'ended' ? 'disabled' : ''}"
 	size="5rem"
 	fill="#2a384e"
-	onclick={changeDelusionState}
+	onclick={startToggleAnimation}
 	disabled={animationState !== 'ended'}
+	svgGsaps={[
+		(options) => {
+			createDelusionStateChangeAnimation(options);
+		}
+	]}
 >
 	<p class="opacity-[1]" class:!opacity-0={animationState == 'started'}>
 		{delusion.isDelusionOn$().current ? 'fake' : 'real'}
