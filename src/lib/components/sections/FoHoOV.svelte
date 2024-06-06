@@ -4,6 +4,8 @@
 </script>
 
 <script lang="ts">
+	import PopInEffect from '$lib/components/effects/PopInEffect.svelte';
+
 	const delusion = getDelusionStateFromStore();
 
 	function createTextSpringEffect({ target, getTimeline }: TweenConfig) {
@@ -53,20 +55,26 @@
 	class="relative flex h-full w-full items-center justify-center gap-2 overflow-x-hidden text-7xl"
 >
 	<GlowEffect>
-		<p
-			class="invisible flex text-7xl font-extrabold sm:text-8xl"
-			use:gsapCreator={[
-				(options) => {
-					createTextSpringEffect(options);
-				}
-			]}
-		>
-			<span id="f" class="inline-block">F</span>
-			<span id="o1" class="inline-block">o</span>
-			<span id="h" class="inline-block">H</span>
-			<span id="o2" class="invisible inline-block -translate-y-48">o</span>
-			<span id="o3" class="inline-block translate-x-10">O</span>
-			<span id="v" class="inline-block translate-x-10">V</span>
-		</p>
+		{#if !delusion.isDelusionOn$().current}
+			<p
+				class="invisible flex text-7xl font-extrabold sm:text-8xl"
+				use:gsapCreator={[
+					(options) => {
+						createTextSpringEffect(options);
+					}
+				]}
+			>
+				<span id="f" class="inline-block">F</span>
+				<span id="o1" class="inline-block">o</span>
+				<span id="h" class="inline-block">H</span>
+				<span id="o2" class="invisible inline-block -translate-y-48">o</span>
+				<span id="o3" class="inline-block translate-x-10">O</span>
+				<span id="v" class="inline-block translate-x-10">V</span>
+			</p>
+		{:else}
+			<PopInEffect>
+				<p class="text-7xl font-extrabold sm:text-8xl">He/Him</p>
+			</PopInEffect>
+		{/if}
 	</GlowEffect>
 </div>
