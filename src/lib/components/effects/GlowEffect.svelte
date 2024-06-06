@@ -16,7 +16,7 @@
 
 <style>
 	.glow-effect {
-		text-shadow: rgba(245, 242, 237, 0.2) 0px 0px 10px;
+		text-shadow: rgba(245, 242, 237, 0.2) 0px 0px 50px;
 		animation-name: animate-glow-effect;
 		animation-duration: 6s;
 		animation-fill-mode: forwards;
@@ -28,7 +28,7 @@
 			text-shadow: rgba(245, 242, 237, 1) 0px 0px 300px;
 		}
 		100% {
-			text-shadow: rgba(245, 242, 237, 0.2) 0px 0px 10px;
+			text-shadow: rgba(245, 242, 237, 0.2) 0px 0px 50px;
 		}
 	}
 </style>

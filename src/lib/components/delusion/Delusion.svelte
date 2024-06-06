@@ -39,7 +39,7 @@
 </script>
 
 <BubbleButton
-	class="fixed left-2 top-2 z-10 text-2xl text-white {animationState !== 'ended' ? 'disabled' : ''}"
+	class="fixed left-2 top-2 z-40 text-2xl text-white {animationState !== 'ended' ? 'disabled' : ''}"
 	size="7rem"
 	fill="#2a384e"
 	onclick={startToggleAnimation}
