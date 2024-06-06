@@ -4,7 +4,10 @@
 	import Mastering from '$lib/components/sections/Mastering.svelte';
 </script>
 
+<script lang="ts">
+</script>
+
 <FoHoOV />
 
-<WhatIKnow class="pb-5" />
-<Mastering />
+<WhatIKnow />
+<Mastering class="pt-7" />
