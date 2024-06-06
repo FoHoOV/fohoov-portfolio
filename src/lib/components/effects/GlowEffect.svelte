@@ -16,7 +16,9 @@
 
 <style>
 	.glow-effect {
-		text-shadow: rgba(245, 242, 237, 0.2) 0px 0px 50px;
+		--initial-value: rgba(245, 242, 237, 0.2) 0px 0px 50px;
+		--to-value: rgba(245, 242, 237, 1) 0px 0px 150px;
+		text-shadow: var(--initial-value);
 		animation-name: animate-glow-effect;
 		animation-duration: 6s;
 		animation-fill-mode: forwards;
@@ -25,10 +27,10 @@
 	}
 	@keyframes animate-glow-effect {
 		50% {
-			text-shadow: rgba(245, 242, 237, 1) 0px 0px 300px;
+			text-shadow: var(--to-value);
 		}
 		100% {
-			text-shadow: rgba(245, 242, 237, 0.2) 0px 0px 50px;
+			text-shadow: var(--initial-value);
 		}
 	}
 </style>
