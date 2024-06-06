@@ -7,13 +7,21 @@
 	import PopInEffect from '$lib/components/effects/PopInEffect.svelte';
 
 	const delusion = getDelusionStateFromStore();
+	let timeLine: gsap.core.Timeline | undefined;
 
-	function createTextSpringEffect({ target, getTimeline }: TweenConfig) {
-		const timeLine = getTimeline();
+	function createTextSpringEffect({ target }: TweenConfig) {
+		if (!timeLine) {
+			return;
+		}
+
 		timeLine
-			.from(target, {
-				autoAlpha: 0
-			})
+			.from(
+				target,
+				{
+					autoAlpha: 0
+				},
+				'<+0.17'
+			)
 			.from(
 				target.querySelectorAll('span'),
 				{
@@ -49,15 +57,74 @@
 				'<'
 			);
 	}
+
+	function createHiEffect({ target, getTimeline }: TweenConfig) {
+		timeLine = getTimeline({ delay: 1 });
+		timeLine
+			.to(target, {
+				autoAlpha: 1,
+				translateX: 0,
+				ease: 'elastic.out',
+				duration: 0.8
+			})
+			.to(target, {
+				autoAlpha: 0,
+				translateX: '-6rem',
+				ease: 'elastic.inOut(1.5, 1)',
+				duration: 0.8
+			});
+	}
+	function createImEffect({ target }: TweenConfig) {
+		if (!timeLine) {
+			return;
+		}
+		timeLine
+			.to(
+				target,
+				{
+					autoAlpha: 1,
+					translateX: 0,
+					ease: 'elastic.out',
+					duration: 0.8
+				},
+				'>-0.4'
+			)
+			.to(target, {
+				autoAlpha: 0,
+				translateY: '6rem',
+				ease: 'elastic.inOut(1.5, 1)',
+				duration: 0.8
+			});
+	}
 </script>
 
 <div
-	class="relative flex h-full w-full items-center justify-center gap-2 overflow-x-hidden text-7xl"
+	class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-x-hidden text-7xl"
 >
 	<GlowEffect>
 		{#if !delusion.isDelusionOn$().current}
 			<p
-				class="invisible flex text-7xl font-extrabold sm:text-8xl"
+				class="invisible absolute -translate-x-24"
+				use:gsapCreator={[
+					(options) => {
+						createHiEffect(options);
+					}
+				]}
+			>
+				Greetings!
+			</p>
+			<p
+				class="invisible absolute translate-x-24"
+				use:gsapCreator={[
+					(options) => {
+						createImEffect(options);
+					}
+				]}
+			>
+				I'm
+			</p>
+			<p
+				class="invisible absolute flex text-7xl font-extrabold sm:text-8xl"
 				use:gsapCreator={[
 					(options) => {
 						createTextSpringEffect(options);
@@ -68,8 +135,8 @@
 				<span id="o1" class="inline-block">o</span>
 				<span id="h" class="inline-block">H</span>
 				<span id="o2" class="invisible inline-block -translate-y-48">o</span>
-				<span id="o3" class="inline-block translate-x-10">O</span>
-				<span id="v" class="inline-block translate-x-10">V</span>
+				<span id="o3" class="inline-block translate-x-10 md:translate-x-28">O</span>
+				<span id="v" class="inline-block translate-x-10 md:translate-x-28">V</span>
 			</p>
 		{:else}
 			<PopInEffect>
