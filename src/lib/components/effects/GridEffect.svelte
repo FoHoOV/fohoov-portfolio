@@ -19,10 +19,10 @@
 		boxesTimeLine.from(boxes, {
 			duration: 1,
 			scale: 0,
+			ease: 'power2.inOut',
 			stagger: {
 				amount: 0.5,
 				grid: [3, 3],
-				ease: 'power3.inOut',
 				from: 'center'
 			}
 		});
@@ -41,20 +41,20 @@
 				yoyo: true,
 				borderWidth: '1px',
 				borderStyle: 'solid',
-				borderColor: '#8080804a',
-				scale: 1.1,
+				borderColor: '#80808018',
+				scale: 1.3,
 				repeat: 1,
 				transformOrigin: 'center',
+				ease: 'back.in',
 				stagger: {
 					amount: 1,
 					grid: [3, 3],
-					ease: 'power3.inOut',
 					from: 'random'
 				},
 				onComplete: () => {
 					setTimeout(() => {
 						inner();
-					}, 5000);
+					}, 500);
 				}
 			});
 		};
