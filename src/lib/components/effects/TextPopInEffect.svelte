@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	import { gsap } from 'gsap';
-	import { gsapCreator } from '$lib';
+	import { gsapCreator, type TweenConfig } from '$lib';
 	import type { Snippet } from 'svelte';
 
 	export type Props = {
@@ -12,8 +12,8 @@
 <script lang="ts">
 	const { class: className, children }: Props = $props();
 
-	function createPopInEffect(wrapper: Element) {
-		gsap.from(wrapper, {
+	function createPopInEffect({ target }: TweenConfig) {
+		gsap.from(target, {
 			yPercent: -300,
 			scale: 5,
 			duration: 1,
@@ -26,8 +26,8 @@
 <div
 	class="invisible {className}"
 	use:gsapCreator={[
-		({ target }) => {
-			createPopInEffect(target);
+		(options) => {
+			createPopInEffect(options);
 		}
 	]}
 >

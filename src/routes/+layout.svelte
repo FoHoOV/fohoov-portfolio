@@ -13,22 +13,29 @@
 		setThemeManagerToStore,
 		setDelusionStateToStore
 	} from '$lib';
-
-	if (browser) {
-		initGsap();
-	}
-
-	function initGsap() {
-		gsap.registerPlugin(ScrollTrigger);
-	}
 </script>
 
 <script lang="ts">
 	const { children } = $props();
 
-	createRootContextManager();
-	setThemeManagerToStore(new ThemeManager());
-	setDelusionStateToStore(new DelusionManager());
+	init();
+
+	function initGsap() {
+		gsap.registerPlugin(ScrollTrigger);
+	}
+
+	function initGlobalStores() {
+		createRootContextManager();
+		setThemeManagerToStore(new ThemeManager());
+		setDelusionStateToStore(new DelusionManager());
+	}
+
+	function init() {
+		if (browser) {
+			initGsap();
+		}
+		initGlobalStores();
+	}
 </script>
 
 <div class="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden">

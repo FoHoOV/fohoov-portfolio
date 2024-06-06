@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { gsapCreator, type TimeLineCreator } from '$lib';
+	import { gsapCreator, type TimeLineCreator, type TweenConfig } from '$lib';
 	import type { Snippet } from 'svelte';
 
 	export type Props = {
@@ -11,8 +11,8 @@
 <script lang="ts">
 	const { class: className, children }: Props = $props();
 
-	function createGridEffect(wrapper: Element, getTimeline: TimeLineCreator) {
-		const boxes = wrapper.querySelectorAll('.box');
+	function createGridEffect({ target, getTimeline }: TweenConfig) {
+		const boxes = target.querySelectorAll('.box');
 		const boxesTimeLine = getTimeline({
 			label: 'boxesTimeLine'
 		});
@@ -28,8 +28,8 @@
 		});
 	}
 
-	function shiftGridBorders(wrapper: Element, getTimeline: TimeLineCreator) {
-		const boxes = wrapper.querySelectorAll('.box');
+	function shiftGridBorders({ target, getTimeline }: TweenConfig) {
+		const boxes = target.querySelectorAll('.box');
 		const boxesTimeLine = getTimeline({
 			label: 'boxesTimeLine',
 			errorIfNotExists: true
@@ -66,11 +66,11 @@
 <div class={`relative ${className}`}>
 	<div
 		use:gsapCreator={[
-			({ target, getTimeline }) => {
-				createGridEffect(target, getTimeline);
+			(options) => {
+				createGridEffect(options);
 			},
-			({ target, getTimeline }) => {
-				shiftGridBorders(target, getTimeline);
+			(options) => {
+				shiftGridBorders(options);
 			}
 		]}
 		class="absolute left-0 top-0 -z-10 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200"
