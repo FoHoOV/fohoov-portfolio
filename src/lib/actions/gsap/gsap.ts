@@ -42,7 +42,6 @@ export function gsapCreator(node: Element, creators: GsapOptions) {
 			throw new Error('update for gsap action is not handled yet');
 		},
 		destroy() {
-			console.log('called');
 			context?.kill();
 		}
 	};

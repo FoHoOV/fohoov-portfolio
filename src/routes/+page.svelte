@@ -3,13 +3,22 @@
 </script>
 
 <script lang="ts">
+	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
+	import WavyTextBackground from '$lib/components/effects/WavyTextBackground.svelte';
 </script>
 
 <FoHoOV></FoHoOV>
 
-<div class="relative min-h-full w-full">
+<div class="h-full w-full">
 	<div class="sticky top-0 w-full text-center">
-		<h1 class="text-4xl uppercase">skills</h1>
+		<GlowEffect>
+			<h1 class="pt-14 text-4xl backdrop-blur-sm">Skills</h1>
+		</GlowEffect>
 	</div>
-	<div class="h-full w-full"></div>
+
+	<WavyTextBackground class="text-7xl font-extrabold sm:text-8xl" baseColor={'#004cbb'}>
+		TypeScript
+	</WavyTextBackground>
 </div>
+
+<div class="h-full w-full"></div>
