@@ -3,20 +3,22 @@
 	import SkillSet from '$lib/components/skill/SkillSet.svelte';
 
 	import { getDelusionStateFromStore } from '$lib';
+
+	export type Props = {
+		class?: string;
+	};
 </script>
 
 <script lang="ts">
+	const { class: className }: Props = $props();
+
 	const delusion = getDelusionStateFromStore();
 </script>
 
-<SkillSet title="Learning">
+<SkillSet class="lg:flex-row-reverse {className}" title="Learning">
 	{#snippet children({ popEffect })}
 		{#if !delusion.isDelusionOn$().current}
-			<Skill
-				text="React"
-				level={'?'}
-				baseColor="blue"
-				gsaps={[(options) => popEffect(options, true)]}
+			<Skill text="React" level={4} baseColor="blue" gsaps={[(options) => popEffect(options, true)]}
 			></Skill>
 			<Skill
 				text="Next"

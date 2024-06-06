@@ -6,5 +6,5 @@
 
 <FoHoOV />
 
-<WhatIKnow />
+<WhatIKnow class="pb-5" />
 <Mastering />

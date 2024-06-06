@@ -73,7 +73,7 @@
 				shiftGridBorders(options);
 			}
 		]}
-		class="absolute left-0 top-0 -z-10 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200"
+		class="absolute left-0 top-0 -z-50 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200"
 	>
 		{#each { length: 3 } as _}
 			{#each { length: 3 } as _}

@@ -2,7 +2,7 @@
 	import '../app.css';
 
 	import GridEffect from '$lib/components/effects/GridEffect.svelte';
-	import Delusion from '$lib/components/delusion/Delusion.svelte';
+	import DelusionToggle from '$lib/components/delusion/DelusionToggle.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { browser } from '$app/environment';
@@ -42,6 +42,6 @@
 	<GridEffect class="h-full w-full"></GridEffect>
 </div>
 
-<Delusion></Delusion>
+<DelusionToggle />
 
 {@render children()}

@@ -14,7 +14,9 @@
 		changeDelusionStateTimeLine = getTimeline({ paused: true });
 
 		changeDelusionStateTimeLine.to(target, {
-			scale: Math.max(window.innerHeight, window.innerWidth) / target.getBoundingClientRect().x,
+			scale:
+				Math.max(window.innerHeight, window.innerWidth) /
+				(target.getBoundingClientRect().width / 6),
 			duration: 1,
 			onStart: () => {
 				animationState = 'started';
@@ -39,7 +41,9 @@
 </script>
 
 <BubbleButton
-	class="fixed left-2 top-2 z-40 text-2xl text-white {animationState !== 'ended' ? 'disabled' : ''}"
+	class="fixed bottom-2 right-2 z-40 text-2xl text-white {animationState !== 'ended'
+		? 'disabled'
+		: ''}"
 	size="7rem"
 	fill="#2a384e"
 	onclick={startToggleAnimation}
