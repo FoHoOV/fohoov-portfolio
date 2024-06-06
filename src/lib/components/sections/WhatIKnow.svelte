@@ -33,7 +33,7 @@
 				gsaps={[(options) => popEffect(options)]}
 			></Skill>
 			<Skill
-				text="Typescript"
+				text="TypeScript/JavaScript"
 				level={9}
 				baseColor={'#004cbb'}
 				gsaps={[(options) => popEffect(options)]}

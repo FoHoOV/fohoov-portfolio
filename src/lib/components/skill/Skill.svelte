@@ -17,7 +17,7 @@
 	const { baseColor, text, level, gsaps }: Props = $props();
 </script>
 
-<div class="grid grid-cols-1 gap-y-5 md:grid-cols-2 md:gap-x-20" use:gsapCreator={gsaps ?? []}>
+<div class="grid grid-cols-1 gap-y-5 md:grid-cols-2" use:gsapCreator={gsaps ?? []}>
 	<WavyTextBackground class="text-center text-4xl font-extrabold" {baseColor}>
 		<p>{text}</p>
 	</WavyTextBackground>
