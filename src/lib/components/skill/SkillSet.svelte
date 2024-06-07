@@ -1,4 +1,6 @@
 <script lang="ts" context="module">
+	import Section from '$lib/components/section/Section.svelte';
+
 	import { getDelusionStateFromStore } from '$lib';
 	import type { TweenConfig } from '$lib/actions';
 	import type { Props as SectionProps } from '$lib/components/section/Section.svelte';
@@ -12,8 +14,6 @@
 </script>
 
 <script lang="ts">
-	import SectionWithHeader from '$lib/components/section/Section.svelte';
-
 	const { children, ...restProps }: Props = $props();
 
 	let wrapper: HTMLElement | undefined;
@@ -50,11 +50,10 @@
 	});
 </script>
 
-<SectionWithHeader {...restProps}>
+<Section {...restProps}>
 	<div
 		class="grid h-full w-full auto-rows-max content-center gap-10 pt-14 md:gap-20"
-		bind:this={wrapper}
-	>
+		bind:this={wrapper}>
 		{@render children({ popEffect: createPopEffect })}
 	</div>
-</SectionWithHeader>
+</Section>
