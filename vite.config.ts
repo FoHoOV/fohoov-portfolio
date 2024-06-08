@@ -7,6 +7,6 @@ export default defineConfig({
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
 	ssr: {
-		noExternal: ['gsap', '@gsap/shockingly']
+		noExternal: ['gsap', '@gsap/shockingly', 'three']
 	}
 });
