@@ -15,8 +15,7 @@
 
 <script lang="ts">
 	const { children, ...restProps }: Props = $props();
-
-	let wrapper: HTMLElement | undefined;
+	let wrapper: Section | undefined;
 	let timeLine: gsap.core.Timeline | null = null;
 	const delusion = getDelusionStateFromStore();
 
@@ -24,9 +23,9 @@
 		if (createTimeline) {
 			timeLine = getTimeline({
 				scrollTrigger: {
-					trigger: wrapper,
+					trigger: wrapper?.getWrapper(),
 					toggleActions: 'play reverse restart reverse',
-					start: '55% bottom'
+					start: '-10% top',
 				}
 			});
 		}
@@ -50,10 +49,8 @@
 	});
 </script>
 
-<Section {...restProps}>
-	<div
-		class="grid h-full w-full auto-rows-max content-center gap-10 pt-14 md:gap-20"
-		bind:this={wrapper}>
+<Section {...restProps} bind:this={wrapper}>
+	<div class="grid h-full w-full auto-rows-max content-center gap-10 pt-14 md:gap-20">
 		{@render children({ popEffect: createPopEffect })}
 	</div>
 </Section>
