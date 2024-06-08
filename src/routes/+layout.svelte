@@ -3,6 +3,7 @@
 
 	import GridEffect from '$lib/components/effects/GridEffect.svelte';
 	import DelusionToggle from '$lib/components/delusion/DelusionToggle.svelte';
+
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { browser } from '$app/environment';
