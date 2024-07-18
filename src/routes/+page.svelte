@@ -3,7 +3,8 @@
 	import WhatIKnow from '$lib/components/home/WhatIKnow.svelte';
 	import Mastering from '$lib/components/home/Mastering.svelte';
 	import Projects from '$lib/components/home/Projects.svelte';
-	import Scene from '$lib/components/threlte-scenes/Scene.svelte';
+	import Scene from '$lib/components/threlte/Scene.svelte';
+	import World from '$lib/components/threlte/World.svelte';
 	import { Canvas } from '@threlte/core';
 </script>
 
@@ -12,6 +13,7 @@
 
 <div class="fixed left-0 top-0 h-full w-full">
 	<Canvas>
+		<World bloom={true} debug={false}></World>
 		<Scene></Scene>
 	</Canvas>
 </div>
