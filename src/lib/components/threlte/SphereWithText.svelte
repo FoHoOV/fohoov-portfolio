@@ -1,0 +1,68 @@
+<script lang="ts" context="module">
+	import { generateReflectionTexture } from '$lib/utils';
+	import { T, useTask } from '@threlte/core';
+	import { Text } from '@threlte/extras';
+	import {
+		type ColorRepresentation,
+		type Vector3,
+		type Color,
+		type Mesh,
+		AddOperation,
+		type Vector3Like
+	} from 'three';
+
+	export type Props = {
+		text: string;
+		radius: number;
+		fontSize: number;
+		position: Vector3 | Vector3Like;
+		textColor?: Color | ColorRepresentation;
+		sphereColor?: Color | ColorRepresentation;
+		distanceFromSphere?: number;
+		rotationSpeed?: number;
+		ref: Mesh | null;
+	};
+</script>
+
+<script lang="ts">
+	let {
+		text,
+		radius,
+		fontSize,
+		position,
+		textColor,
+		sphereColor,
+		ref = $bindable(null),
+		distanceFromSphere = 0.2,
+		rotationSpeed = 3
+	}: Props = $props();
+
+	let cubeRotation = $state(0);
+	let sphereEnvMap = $derived(ref ? generateReflectionTexture(ref) : null);
+
+	useTask((delta) => {
+		cubeRotation += (delta * rotationSpeed) / 5;
+	});
+</script>
+
+<T.Mesh bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
+	<T.Mesh>
+		<T.SphereGeometry args={[radius - 0.05]} />
+		<T.MeshBasicMaterial
+			color={sphereColor ?? 'black'}
+			roughness={0}
+			metalness={1}
+			combine={AddOperation}
+			envMap={sphereEnvMap?.texture}
+		></T.MeshBasicMaterial>
+	</T.Mesh>
+
+	<Text
+		position={[0, 0, radius + distanceFromSphere]}
+		{text}
+		{fontSize}
+		curveRadius={-radius - distanceFromSphere}
+		anchorY={'50%'}
+		color={textColor ?? 'white'}
+	/>
+</T.Mesh>
