@@ -2,13 +2,12 @@ import { gsap as gsapCore } from 'gsap';
 import type { GsapOptions, TweenCreator } from './types';
 
 export function gsapCreator(node: Element, creators: GsapOptions) {
-	const createAnimations = () => {
+	$effect(() => {
 		if (creators.length === 0) {
 			return;
 		}
-		return gsapCore.context(() => {
+		const context = gsapCore.context(() => {
 			const timeLines = new Map<string, gsap.core.Timeline>();
-
 			const creatorOptions: Parameters<TweenCreator>[0] = {
 				target: node,
 				getTimeline: (options) => {
@@ -23,6 +22,7 @@ export function gsapCreator(node: Element, creators: GsapOptions) {
 							throw new Error(`timeline with label ${options?.label} not found!`);
 						}
 						timeLine = gsapCore.timeline(options);
+						// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 						options?.label && timeLines.set(options.label, timeLine);
 					}
 
@@ -33,16 +33,9 @@ export function gsapCreator(node: Element, creators: GsapOptions) {
 				creator(creatorOptions);
 			});
 		});
-	};
 
-	const context = createAnimations();
-
-	return {
-		update() {
-			throw new Error('update for gsap action is not handled yet');
-		},
-		destroy() {
-			context?.kill();
-		}
-	};
+		return () => {
+			context.kill();
+		};
+	});
 }
