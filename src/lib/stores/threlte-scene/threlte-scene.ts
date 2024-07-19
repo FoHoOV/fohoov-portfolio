@@ -10,7 +10,7 @@ export class ThrelteSceneManager {
 	#components = new SvelteMap<
 		keyof Scenes,
 		{
-			component: ComponentProps<Component>;
+			component: Component;
 			props: () => ComponentProps<Component>;
 			beforeUnmount?: () => Promise<void>;
 		}
@@ -45,6 +45,6 @@ export class ThrelteSceneManager {
 	}
 
 	get components$() {
-		return this.#components;
+		return this.#components.values();
 	}
 }
