@@ -11,13 +11,17 @@
 		DelusionManager,
 		ThemeManager,
 		createRootContextManager,
-		setThemeManagerToStore,
-		setDelusionStateToStore
+		setDelusionManager,
+		StorageTypes,
+		Persisted,
+		setPersistedUtils,
+		setStorageTypes
 	} from '$lib';
+	import { setTheme } from '$lib/stores/theme/context';
 </script>
 
 <script lang="ts">
-	const { children } = $props();
+	const { data, children } = $props();
 
 	init();
 
@@ -27,8 +31,16 @@
 
 	function initGlobalStores() {
 		createRootContextManager();
-		setThemeManagerToStore(new ThemeManager());
-		setDelusionStateToStore(new DelusionManager());
+
+		const storageTypes = new StorageTypes({ initialCookies: data.sharedCookies });
+		const persisted = new Persisted(storageTypes);
+
+		return {
+			themeManager: setTheme(new ThemeManager(persisted)),
+			delusionState: setDelusionManager(new DelusionManager(persisted)),
+			persistedUtils: setPersistedUtils(persisted),
+			storageTypes: setStorageTypes(storageTypes)
+		};
 	}
 
 	function init() {

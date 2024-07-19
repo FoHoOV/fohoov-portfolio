@@ -1,12 +1,12 @@
 <script lang="ts" context="module">
 	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
-	import { getDelusionStateFromStore, gsapCreator, type TweenConfig } from '$lib';
+	import { getDelusionManager, gsapCreator, type TweenConfig } from '$lib';
 </script>
 
 <script lang="ts">
 	import PopInEffect from '$lib/components/effects/PopInEffect.svelte';
 
-	const delusion = getDelusionStateFromStore();
+	const delusionManager = getDelusionManager();
 	let timeLine: gsap.core.Timeline | undefined;
 
 	function createTextSpringEffect({ target }: TweenConfig) {
@@ -99,18 +99,16 @@
 </script>
 
 <div
-	class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-x-hidden text-7xl"
->
+	class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-x-hidden text-7xl">
 	<GlowEffect>
-		{#if !delusion.isDelusionOn$().current}
+		{#if !delusionManager.isDelusionOn$().current}
 			<p
 				class="invisible absolute -translate-x-24"
 				use:gsapCreator={[
 					(options) => {
 						createHiEffect(options);
 					}
-				]}
-			>
+				]}>
 				Greetings!
 			</p>
 			<p
@@ -119,8 +117,7 @@
 					(options) => {
 						createImEffect(options);
 					}
-				]}
-			>
+				]}>
 				I'm
 			</p>
 			<p
@@ -129,8 +126,7 @@
 					(options) => {
 						createTextSpringEffect(options);
 					}
-				]}
-			>
+				]}>
 				<span id="f" class="inline-block">F</span>
 				<span id="o1" class="inline-block">o</span>
 				<span id="h" class="inline-block">H</span>

@@ -1,24 +1,20 @@
-import { ROOT_CONTEXT_MANAGER_KEY } from './constants';
-import { getContext, setContext } from 'svelte';
+export class ContextManager {
+	private _contexts: Record<any, unknown> = $state({});
 
-class ContextManager {
-	private _contexts: Record<string | number | symbol, unknown> = $state({});
-
-	add<TContext>(key: string | number | symbol, value: TContext) {
+	add<TContext>(key: any, value: TContext) {
 		this._contexts[key] = value;
 		return value;
 	}
 
-	delete(key: string | number | symbol) {
+	delete(key: any) {
 		delete this._contexts[key];
 	}
 
-	get<TContext>(key: string | number | symbol) {
+	get<TContext>(key: any) {
 		return this._contexts[key] as TContext;
 	}
 
-	get$<TContext>(key: string | number | symbol) {
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
+	get$<TContext>(key: any) {
 		const self = this;
 		return {
 			get value$() {
@@ -26,13 +22,4 @@ class ContextManager {
 			}
 		};
 	}
-}
-export const contextManager = new ContextManager();
-
-export function createRootContextManager() {
-	setContext(ROOT_CONTEXT_MANAGER_KEY, contextManager);
-}
-
-export function getRootContextManager() {
-	return getContext<ContextManager>(ROOT_CONTEXT_MANAGER_KEY);
 }

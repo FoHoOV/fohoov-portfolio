@@ -1,35 +1,22 @@
-import { CACHED_THEME_KEY_NAME, THEME_CONTEXT } from './constants';
-import { getRootContextManager, persisted } from '$lib';
+import { Persisted } from '../persisted';
+import { SHARED_KEYS } from '$lib/constants/cookie';
+
+export type Theme = 'dark' | 'light';
 
 export class ThemeManager {
-	#storedTheme = persisted.cookie$<{ value: 'dark' | 'light' }>(CACHED_THEME_KEY_NAME, {
-		initializer: { value: 'dark' }
-	});
+	#storedTheme;
 
-	getSelectedTheme$() {
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		const self = this;
-		return {
-			get current() {
-				return self.#storedTheme.current.value;
-			}
-		};
+	constructor(persisted: Persisted) {
+		this.#storedTheme = persisted.cookie$<{ value: Theme }>(SHARED_KEYS.theme, {
+			initializer: { value: 'dark' }
+		});
 	}
 
-	setTheme(theme: 'dark' | 'light') {
-		this.#storedTheme.current = { value: theme };
-	}
-}
-
-export function setThemeManagerToStore(store: ThemeManager) {
-	return getRootContextManager().add(THEME_CONTEXT, store);
-}
-
-export function getThemeManagerFromStore() {
-	const value = getRootContextManager().get<ThemeManager>(THEME_CONTEXT);
-	if (!value) {
-		throw new Error('theme store is not initialized yet');
+	get value$() {
+		return this.#storedTheme.value$.value;
 	}
 
-	return value;
+	change(theme: Theme) {
+		this.#storedTheme.value$ = { value: theme };
+	}
 }

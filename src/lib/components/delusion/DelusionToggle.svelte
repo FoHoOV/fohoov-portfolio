@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
 	import BubbleButton from '$lib/components/buttons/BubbleButton.svelte';
 
-	import { getDelusionStateFromStore, type TweenConfig } from '$lib';
+	import { getDelusionManager, type TweenConfig } from '$lib';
 </script>
 
 <script lang="ts">
-	const delusion = getDelusionStateFromStore();
+	const delusionManager = getDelusionManager();
 
 	let animationState = $state<'started' | 'ended'>('ended');
 	let changeDelusionStateTimeLine: gsap.core.Timeline | undefined;
@@ -22,7 +22,7 @@
 				animationState = 'started';
 			},
 			onComplete: () => {
-				delusion.toggleDelusionState();
+				delusionManager.toggleDelusionState();
 			}
 		});
 
@@ -52,9 +52,8 @@
 		(options) => {
 			createDelusionStateChangeAnimation(options);
 		}
-	]}
->
+	]}>
 	<p class="opacity-[1]" class:!opacity-0={animationState == 'started'}>
-		{delusion.isDelusionOn$().current ? 'fake' : 'real'}
+		{delusionManager.isDelusionOn$().current ? 'fake' : 'real'}
 	</p>
 </BubbleButton>

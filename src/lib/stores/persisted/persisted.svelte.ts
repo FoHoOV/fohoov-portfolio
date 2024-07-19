@@ -1,3 +1,4 @@
+import { PUBLIC_COOKIES_EXPIRATION_SPAN_SECONDS } from '$env/static/public';
 import { StorageTypes } from '$lib';
 
 type PrimitiveStorageTypes = string | number | boolean;
@@ -6,30 +7,35 @@ type ObjectStorageTypes = Record<string, unknown>;
 type Options<T extends PrimitiveStorageTypes | ObjectStorageTypes> = {
 	initializer?: T;
 	default?: T;
-	storeInCookie?: boolean;
 };
 
-class _Persisted {
+export class Persisted {
+	#storageTypes: StorageTypes;
+
+	constructor(storageTypes: StorageTypes) {
+		this.#storageTypes = storageTypes;
+	}
+
 	/**
 	 * stores to localStorage
 	 */
 	primitive$<T extends PrimitiveStorageTypes>(key: string, options?: Options<T>) {
-		const storage = StorageTypes.localStorage.getItem(key);
+		const storage = this.#storageTypes.localStorage.getItem(key);
 		let reactiveValue = $state<string>(
-			storage ? storage ?? options?.default?.toString() : options?.initializer?.toString() ?? ''
+			storage ? (storage ?? options?.default?.toString()) : (options?.initializer?.toString() ?? '')
 		);
 
 		$effect.root(() => {
 			$effect(() => {
-				StorageTypes.localStorage.setItem(key, reactiveValue?.toString() ?? '');
+				this.#storageTypes.localStorage.setItem(key, reactiveValue?.toString() ?? '');
 			});
 		});
 
 		return {
-			get current(): string {
+			get value$(): string {
 				return reactiveValue;
 			},
-			set current(newValue: T) {
+			set value$(newValue: T) {
 				reactiveValue = newValue?.toString() + '';
 			}
 		};
@@ -39,21 +45,21 @@ class _Persisted {
 	 * stores to localStorage
 	 */
 	object$<T extends ObjectStorageTypes>(key: string, options?: Options<T>) {
-		const storage = StorageTypes.localStorage.getItem(key);
+		const storage = this.#storageTypes.localStorage.getItem(key);
 		const parsed: T = storage ? JSON.parse(storage) : options?.default;
 		let reactiveValue = $state<T>(parsed ?? options?.initializer);
 
 		$effect.root(() => {
 			$effect(() => {
-				StorageTypes.localStorage.setItem(key, JSON.stringify(reactiveValue));
+				this.#storageTypes.localStorage.setItem(key, JSON.stringify(reactiveValue));
 			});
 		});
 
 		return {
-			get current(): T {
+			get value$(): T {
 				return reactiveValue;
 			},
-			set current(newValue: T) {
+			set value$(newValue: T) {
 				reactiveValue = newValue;
 			}
 		};
@@ -63,30 +69,31 @@ class _Persisted {
 	 * stores to cookie
 	 */
 	cookie$<T extends ObjectStorageTypes>(key: string, options?: Options<T>) {
-		const storage = StorageTypes.cookies.get(key);
+		const storage = this.#storageTypes.cookies.get(key);
 		const parsed: T = storage ? JSON.parse(storage) : options?.default;
 		let reactiveValue = $state<T>(parsed ?? options?.initializer);
 
 		$effect.root(() => {
 			$effect(() => {
 				const expirationDate = new Date(Date.now());
-				expirationDate.setDate(Date.now() + 100);
-				StorageTypes.cookies.set(key, JSON.stringify(reactiveValue), {
+				expirationDate.setSeconds(
+					expirationDate.getSeconds() + parseInt(PUBLIC_COOKIES_EXPIRATION_SPAN_SECONDS)
+				);
+				this.#storageTypes.cookies.set(key, JSON.stringify(reactiveValue), {
 					expires: expirationDate,
-					path: '/'
+					path: '/',
+					httpOnly: false
 				});
 			});
 		});
 
 		return {
-			get current(): T {
+			get value$(): T {
 				return reactiveValue;
 			},
-			set current(newValue: T) {
+			set value$(newValue: T) {
 				reactiveValue = newValue;
 			}
 		};
 	}
 }
-
-export const persisted = new _Persisted();
