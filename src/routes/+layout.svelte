@@ -7,17 +7,7 @@
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { browser } from '$app/environment';
-	import {
-		DelusionManager,
-		ThemeManager,
-		createRootContextManager,
-		setDelusionManager,
-		StorageTypes,
-		Persisted,
-		setPersistedUtils,
-		setStorageTypes
-	} from '$lib';
-	import { setTheme } from '$lib/stores/theme/context';
+	import { initGlobalStores } from '$lib';
 </script>
 
 <script lang="ts">
@@ -29,25 +19,11 @@
 		gsap.registerPlugin(ScrollTrigger);
 	}
 
-	function initGlobalStores() {
-		createRootContextManager();
-
-		const storageTypes = new StorageTypes({ initialCookies: data.sharedCookies });
-		const persisted = new Persisted(storageTypes);
-
-		return {
-			themeManager: setTheme(new ThemeManager(persisted)),
-			delusionState: setDelusionManager(new DelusionManager(persisted)),
-			persistedUtils: setPersistedUtils(persisted),
-			storageTypes: setStorageTypes(storageTypes)
-		};
-	}
-
 	function init() {
 		if (browser) {
 			initGsap();
 		}
-		initGlobalStores();
+		initGlobalStores(data.sharedCookies);
 	}
 </script>
 
