@@ -8,8 +8,9 @@ type SceneNameToComponent = {
 
 type Props<TSceneName extends keyof SceneNameToComponent> = {
 	component: SceneNameToComponent[TSceneName];
+	renderedComponent?: SceneNameToComponent[TSceneName];
 	props: () => ComponentProps<SceneNameToComponent[TSceneName]>;
-	beforeUnmount?: (component: SceneNameToComponent[TSceneName]) => Promise<void>;
+	beforeUnmount?: (component: SceneNameToComponent[TSceneName] | undefined) => Promise<void>;
 };
 
 export class ThrelteSceneManager {
@@ -37,7 +38,7 @@ export class ThrelteSceneManager {
 
 		if (current.beforeUnmount) {
 			// TODO: this is not he rendered component instance (somehow get it from svelte:component?)
-			await current.beforeUnmount(current.component);
+			await current.beforeUnmount(current.renderedComponent);
 			this.#scenes.delete(key);
 		} else {
 			this.#scenes.delete(key);

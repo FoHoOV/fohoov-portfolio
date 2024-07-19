@@ -46,6 +46,7 @@
 <script lang="ts">
 	const { camera } = useThrelte();
 	const spheresRef: Array<Mesh> = $state(Array(data.length).fill(null));
+	const orbitTweenReferences = new Map<Mesh, gsap.core.Tween>();
 
 	$effect(() => {
 		if (spheresRef.length !== data.length) {
@@ -73,18 +74,20 @@
 		events?: {
 			onSphereAnimationCompleted?: (sphere: Mesh) => void;
 			onTimelineCompleted?: () => void;
+			onAnimationStarted?: (sphere: Mesh) => void;
 		}
 	) {
 		const timeLine = gsap.timeline({
+			delay: 0,
 			onComplete: () => {
 				events?.onTimelineCompleted?.();
 			}
 		});
 		const endingPosition = new Vector3(position.x, position.y, position.z);
-		const radius = 16;
 		const rotation = -1 * Math.PI;
 
 		for (const sphere of spheresRef) {
+			const radius = endingPosition.distanceTo(sphere.position) + 2;
 			const { startingPoint, endingPoint, center, generatePositionFromSpherical } =
 				calculateSphericalPathBetweenPoints(sphere.position, endingPosition, radius, rotation);
 
@@ -95,6 +98,9 @@
 					phi: endingPoint.phi,
 					duration: 2,
 					ease: 'expo',
+					onStart: () => {
+						events?.onAnimationStarted?.(sphere);
+					},
 					onUpdate: () => {
 						sphere.position.copy(
 							generatePositionFromSpherical(startingPoint.phi, startingPoint.theta)
@@ -112,7 +118,7 @@
 	function orbitSphere(sphere: Mesh) {
 		const { startingPoint, endingPoint, generatePositionFromSpherical } =
 			calculateSphericalPathForOrbit(sphere.position, new Vector3(0, 0, 0), { axis: 'theta' });
-		gsap.to(startingPoint, {
+		const tween = gsap.to(startingPoint, {
 			theta: endingPoint.theta,
 			phi: endingPoint.phi,
 			duration: 10,
@@ -123,13 +129,19 @@
 				sphere.position.copy(newPosition);
 			}
 		});
+		orbitTweenReferences.set(sphere, tween);
 	}
 
 	export function moveSpheresOutOfView() {
 		return new Promise<void>((resolve) => {
 			moveSpheresToPosition(
-				{ x: $camera.position.x, y: $camera.position.y, z: $camera.position.z },
+				{ x: $camera.position.x + 5, y: $camera.position.y, z: $camera.position.z + 5 },
 				{
+					onAnimationStarted(sphere) {
+						const tween = orbitTweenReferences.get(sphere);
+						tween?.pause();
+						tween && orbitTweenReferences.delete(sphere);
+					},
 					onTimelineCompleted() {
 						resolve();
 					}
