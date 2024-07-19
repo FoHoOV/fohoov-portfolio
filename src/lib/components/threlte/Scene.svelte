@@ -1,8 +1,11 @@
 <script context="module" lang="ts">
-	import SkillSet from './SkillSet.svelte';
+	import { getThrelteSceneManager } from '$lib/stores';
 </script>
 
 <script lang="ts">
+	const threlteSceneManager = getThrelteSceneManager();
 </script>
 
-<SkillSet></SkillSet>
+{#each threlteSceneManager.components$ as { component, props }}
+	<svelte:component this={component} {...props()}></svelte:component>
+{/each}
