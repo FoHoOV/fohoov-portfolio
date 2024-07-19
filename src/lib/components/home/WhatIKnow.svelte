@@ -35,7 +35,7 @@
 						return {};
 					},
 					beforeUnmount: async (component) => {
-						// await component.moveSpheresOutOfView();
+						await component.moveSpheresOutOfView();
 					}
 				});
 			},
