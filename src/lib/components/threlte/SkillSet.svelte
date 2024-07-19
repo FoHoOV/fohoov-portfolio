@@ -9,9 +9,9 @@
 <script lang="ts">
 	const { camera } = useThrelte();
 	const initialPosition = new Vector3(
-		$camera.position.x,
+		$camera.position.x - 3,
 		$camera.position.y,
-		$camera.position.z + 5
+		$camera.position.z + 2
 	);
 
 	const data: Array<{
@@ -51,7 +51,7 @@
 			position: initialPosition.clone()
 		},
 		{
-			text: 'Typescript/Javascript',
+			text: 'JS - TS',
 			textColor: '#000000',
 			sphereColor: '#a0bad0',
 			position: initialPosition.clone()
@@ -69,38 +69,53 @@
 		if (index == spheresRef.length) {
 			return;
 		}
-		// setTimeout(() => {
-		// 	orbitSphere(spheresRef[index]);
-		// 	animate(index + 1);
-		// }, 1000);
-		moveSpheresToStartingLocation(gsap.timeline());
+		moveSpheresToPosition(
+			{ x: 11, y: 1, z: 0 },
+			{
+				onSphereAnimationCompleted(sphere) {
+					orbitSphere(sphere);
+				}
+			}
+		);
 	}
 
-	function moveSpheresToStartingLocation(startingLocationTimeLine: gsap.core.Timeline) {
-		const endingPosition = new Vector3(9, 1, 0);
-		const radius = 15;
-		const rotation = -2 * Math.PI;
+	export function moveSpheresToPosition(
+		position: Vector3Like,
+		events?: {
+			onSphereAnimationCompleted?: (sphere: Mesh) => void;
+			onTimelineCompleted?: () => void;
+		}
+	) {
+		const timeLine = gsap.timeline({
+			onComplete: () => {
+				events?.onTimelineCompleted?.();
+			}
+		});
+		const endingPosition = new Vector3(position.x, position.y, position.z);
+		const radius = 16;
+		const rotation = -1 * Math.PI;
+
 		for (const sphere of spheresRef) {
 			const { startingPoint, endingPoint, center, generatePositionFromSpherical } =
 				calculateSphericalPathBetweenPoints(sphere.position, endingPosition, radius, rotation);
 
-			startingLocationTimeLine.to(
+			timeLine.to(
 				startingPoint,
 				{
 					theta: endingPoint.theta,
 					phi: endingPoint.phi,
-					duration: 1,
-					ease: 'none',
+					duration: 2,
+					ease: 'expo',
 					onUpdate: () => {
 						sphere.position.copy(
 							generatePositionFromSpherical(startingPoint.phi, startingPoint.theta)
 						);
 					},
 					onComplete: () => {
-						orbitSphere(sphere);
+						events?.onSphereAnimationCompleted?.(sphere);
 					}
 				},
-				'<2'
+				'<1.5'
 			);
 		}
 	}
@@ -118,6 +133,19 @@
 				const newPosition = generatePositionFromSpherical(startingPoint.phi, startingPoint.theta);
 				sphere.position.copy(newPosition);
 			}
+		});
+	}
+
+	export function moveSpheresOutOfView() {
+		return new Promise<void>((resolve) => {
+			moveSpheresToPosition(
+				{ x: $camera.position.x, y: $camera.position.y, z: $camera.position.z },
+				{
+					onTimelineCompleted() {
+						resolve();
+					}
+				}
+			);
 		});
 	}
 </script>

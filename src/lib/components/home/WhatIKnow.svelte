@@ -1,6 +1,10 @@
 <script lang="ts" context="module">
 	import Skill from '$lib/components/skill/Skill.svelte';
 	import SkillSet from '$lib/components/skill/SkillSet.svelte';
+	import ThrelteSkillSet from '$lib/components/threlte/SkillSet.svelte';
+	import { getThrelteSceneManager } from '$lib/stores';
+	import { onMount } from 'svelte';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	export type Props = {
 		class?: string;
@@ -9,9 +13,41 @@
 
 <script lang="ts">
 	const { class: className }: Props = $props();
+	const threlteSceneManager = getThrelteSceneManager();
+	let skillSet: SkillSet | undefined = undefined;
+
+	onMount(() => {
+		const wrapper = skillSet?.getWrapper();
+		if (!wrapper) {
+			console.error('what?');
+			return;
+		}
+
+		ScrollTrigger.create({
+			trigger: wrapper,
+			start: 'top center',
+			end: 'end',
+			onEnter: () => {
+				console.log('called');
+				threlteSceneManager.addComponent('skillSet', {
+					component: ThrelteSkillSet,
+					props: () => {
+						return {};
+					},
+					beforeUnmount: async (component) => {
+						// await component.moveSpheresOutOfView();
+					}
+				});
+			},
+			onLeave: async () => {
+				console.log('lb called');
+				await threlteSceneManager.removeComponent('skillSet');
+			}
+		});
+	});
 </script>
 
-<SkillSet class="flex flex-col lg:flex-row {className}" title="Skills">
+<SkillSet class="flex flex-col lg:flex-row {className}" title="Skills" bind:this={skillSet}>
 	{#snippet children({ popEffect })}
 		<Skill
 			text="Svelte"

@@ -42,6 +42,10 @@
 		);
 	}) satisfies PopEffect;
 
+	export function getWrapper() {
+		return wrapper?.getWrapper();
+	}
+
 	$effect.pre(() => {
 		delusionManager.isDelusionOn$().current;
 		// on each delusion change we could be getting a new set of skills so we have to renew it after the re-render

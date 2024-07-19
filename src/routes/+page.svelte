@@ -11,7 +11,7 @@
 <script lang="ts">
 </script>
 
-<div class="fixed left-0 top-0 h-full w-full">
+<div class="fixed left-0 top-0 h-full w-full bg-transparent">
 	<Canvas>
 		<World bloom={true} debug={false}></World>
 		<Scene></Scene>
@@ -19,7 +19,6 @@
 </div>
 
 <FoHoOV />
-
 <WhatIKnow />
 <Mastering class="pt-7" />
 <Projects class="pt-7" />

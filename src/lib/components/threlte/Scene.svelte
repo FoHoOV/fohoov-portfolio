@@ -6,6 +6,6 @@
 	const threlteSceneManager = getThrelteSceneManager();
 </script>
 
-{#each threlteSceneManager.components$ as { component, props }}
+{#each threlteSceneManager.scenes$ as { component, props }}
 	<svelte:component this={component} {...props()}></svelte:component>
 {/each}

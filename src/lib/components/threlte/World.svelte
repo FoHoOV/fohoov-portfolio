@@ -90,7 +90,7 @@
 <svelte:window bind:innerHeight={windowInnerHeight} bind:innerWidth={windowInnerWidth} />
 
 <T.PerspectiveCamera
-	position={[10, 5, 10]}
+	position={[5, 5, 25]}
 	makeDefault
 	on:create={({ ref }) => {
 		ref.lookAt(0, 0, 0);

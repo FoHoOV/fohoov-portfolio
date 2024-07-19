@@ -11,7 +11,7 @@
 	const { class: className, children }: Props = $props();
 </script>
 
-<div class="glow-effect contents {className}">
+<div class="contents {className}">
 	{@render children()}
 </div>
 
