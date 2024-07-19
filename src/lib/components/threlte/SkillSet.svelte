@@ -4,60 +4,49 @@
 	import { useThrelte } from '@threlte/core';
 	import { gsap } from 'gsap';
 	import { Mesh, Vector3, type Vector3Like } from 'three';
-</script>
 
-<script lang="ts">
-	const { camera } = useThrelte();
-	const initialPosition = new Vector3(
-		$camera.position.x - 3,
-		$camera.position.y,
-		$camera.position.z + 2
-	);
-
-	const data: Array<{
-		text: string;
-		textColor: string;
-		sphereColor: string;
-		position: Vector3 | Vector3Like;
-	}> = [
+	const data = [
 		{
 			text: 'Svelte',
 			textColor: '#000000',
-			sphereColor: '#a0bad0',
-			position: initialPosition.clone()
+			sphereColor: '#a0bad0'
 		},
 		{
 			text: 'Fast Api',
 			textColor: '#000000',
-			sphereColor: '#a0bad0',
-			position: initialPosition.clone()
+			sphereColor: '#a0bad0'
 		},
 		{
 			text: 'Sveltekit',
 			textColor: '#000000',
-			sphereColor: '#a0bad0',
-			position: initialPosition.clone()
+			sphereColor: '#a0bad0'
 		},
 		{
 			text: 'Flask',
 			textColor: '#000000',
-			sphereColor: '#a0bad0',
-			position: initialPosition.clone()
+			sphereColor: '#a0bad0'
 		},
 		{
 			text: 'Tailwind',
 			textColor: '#000000',
-			sphereColor: '#a0bad0',
-			position: initialPosition.clone()
+			sphereColor: '#a0bad0'
 		},
 		{
 			text: 'JS - TS',
 			textColor: '#000000',
-			sphereColor: '#a0bad0',
-			position: initialPosition.clone()
+			sphereColor: '#a0bad0'
 		}
-	];
+	] as const satisfies Array<{
+		text: string;
+		textColor: string;
+		sphereColor: string;
+	}>;
+</script>
+
+<script lang="ts">
+	const { camera } = useThrelte();
 	const spheresRef: Array<Mesh> = $state(Array(data.length).fill(null));
+
 	$effect(() => {
 		if (spheresRef.length !== data.length) {
 			return;
@@ -79,7 +68,7 @@
 		);
 	}
 
-	export function moveSpheresToPosition(
+	function moveSpheresToPosition(
 		position: Vector3Like,
 		events?: {
 			onSphereAnimationCompleted?: (sphere: Mesh) => void;
@@ -157,7 +146,7 @@
 		radius={2}
 		fontSize={1}
 		rotationSpeed={5}
-		position={info.position}
+		position={{ x: $camera.position.x - 3, y: $camera.position.y, z: $camera.position.z + 2 }}
 		sphereColor={info.sphereColor}
 		textColor={info.textColor}></SphereWithText>
 {/each}
