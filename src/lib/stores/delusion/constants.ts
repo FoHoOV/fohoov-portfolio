@@ -1,2 +1,0 @@
-export const CACHED_DELUSION_VALUE = 'CACHED_DELUSION_VALUE';
-export const DELUSION_CONTEXT = Symbol();

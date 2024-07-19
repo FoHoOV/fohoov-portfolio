@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
 	import Section from '$lib/components/section/Section.svelte';
 
-	import { getDelusionStateFromStore } from '$lib';
+	import { getDelusionManager } from '$lib';
 	import type { TweenConfig } from '$lib/actions';
 	import type { Props as SectionProps } from '$lib/components/section/Section.svelte';
 	import type { Snippet } from 'svelte';
@@ -17,7 +17,7 @@
 	const { children, ...restProps }: Props = $props();
 	let wrapper: Section | undefined;
 	let timeLine: gsap.core.Timeline | null = null;
-	const delusion = getDelusionStateFromStore();
+	const delusionManager = getDelusionManager();
 
 	const createPopEffect = (({ target, getTimeline }, createTimeline = false) => {
 		if (createTimeline) {
@@ -25,7 +25,7 @@
 				scrollTrigger: {
 					trigger: wrapper?.getWrapper(),
 					toggleActions: 'play reverse restart reverse',
-					start: '-10% top',
+					start: '-10% top'
 				}
 			});
 		}
@@ -43,7 +43,7 @@
 	}) satisfies PopEffect;
 
 	$effect.pre(() => {
-		delusion.isDelusionOn$().current;
+		delusionManager.isDelusionOn$().current;
 		// on each delusion change we could be getting a new set of skills so we have to renew it after the re-render
 		timeLine = null;
 	});

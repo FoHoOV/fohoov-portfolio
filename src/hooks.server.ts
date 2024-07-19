@@ -1,12 +1,14 @@
-import { StorageTypes } from '$lib';
 import type { Handle } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
+import { SHARED_KEYS } from '$lib/constants/cookie';
 
-export const handle: Handle = async ({ event, resolve }) => {
-	// doing this might not be good, it might access other sessions? if doesn't take the
-	// current request as param internally, I might be f'ed
-	StorageTypes.cookieManager = {
-		set: event.cookies.set,
-		get: event.cookies.get
-	};
+export const setSharedCookies: Handle = async ({ event, resolve }) => {
+	const result = {} as App.Locals['sharedCookies'];
+	for (const value of Object.values(SHARED_KEYS)) {
+		result[value] = event.cookies.get(value);
+	}
+	event.locals.sharedCookies = result;
 	return await resolve(event);
 };
+
+export const handle: Handle = sequence(setSharedCookies);
