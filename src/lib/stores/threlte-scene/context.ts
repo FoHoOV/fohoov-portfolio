@@ -1,5 +1,5 @@
 import { getContext, setContext } from '$lib/stores';
-import type { ThrelteSceneManager } from './threlte-scene';
+import type { ThrelteSceneManager } from './threlte-scene.svelte';
 
 const THRELTE_SCENE_KEY = Symbol();
 

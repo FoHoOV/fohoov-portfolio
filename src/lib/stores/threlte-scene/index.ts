@@ -1,2 +1,2 @@
-export * from './threlte-scene';
+export * from './threlte-scene.svelte';
 export * from './context';

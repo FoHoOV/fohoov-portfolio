@@ -1,4 +1,4 @@
-import type { Persisted } from '$lib';
+import type { Persisted } from '$lib/stores/persisted';
 import { SHARED_KEYS } from '$lib/constants/cookie';
 
 export class DelusionManager {
