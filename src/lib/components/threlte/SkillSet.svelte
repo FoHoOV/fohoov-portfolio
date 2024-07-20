@@ -97,7 +97,7 @@
 					theta: endingPoint.theta,
 					phi: endingPoint.phi,
 					duration: 2,
-					ease: 'expo',
+					ease: 'none',
 					onStart: () => {
 						events?.onAnimationStarted?.(sphere);
 					},
