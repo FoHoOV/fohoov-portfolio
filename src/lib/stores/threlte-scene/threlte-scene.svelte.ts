@@ -16,28 +16,20 @@ type Props<TSceneName extends keyof SceneNameToComponent> = {
 export class ThrelteSceneManager {
 	#scenes = new SvelteMap<keyof SceneNameToComponent, Props<keyof SceneNameToComponent>>();
 
-	addComponent<TSceneName extends keyof SceneNameToComponent>(
-		key: TSceneName,
-		{ component, props, beforeUnmount }: Props<TSceneName>
-	) {
-		this.#scenes.set(key, {
-			component: component,
-			props,
-			beforeUnmount
-		});
+	add<TSceneName extends keyof SceneNameToComponent>(key: TSceneName, props: Props<TSceneName>) {
+		this.#scenes.set(key, props);
 	}
 
 	/**
 	 * awaits `beforeUnmount` before unmounting the component.
 	 */
-	async removeComponent(key: keyof SceneNameToComponent) {
+	async remove(key: keyof SceneNameToComponent) {
 		const current = this.#scenes.get(key);
 		if (!current) {
 			throw new Error(`${key} is not mounted via this store`);
 		}
 
 		if (current.beforeUnmount) {
-			// TODO: this is not he rendered component instance (somehow get it from svelte:component?)
 			await current.beforeUnmount(current.renderedComponent);
 			this.#scenes.delete(key);
 		} else {
