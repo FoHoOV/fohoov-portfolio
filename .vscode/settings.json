@@ -1,3 +1,4 @@
 {
-	"cSpell.words": ["daisyui", "dont", "Fohoov", "gsap", "gsaps", "Outro", "threlte", "yoyo"]
+	"cSpell.words": ["daisyui", "dont", "Fohoov", "gsap", "gsaps", "Outro", "threlte", "yoyo"],
+	"typescript.tsdk": "node_modules/typescript/lib"
 }
