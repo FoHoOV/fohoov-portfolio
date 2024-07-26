@@ -25,8 +25,5 @@
 			<h1 class="py-7 text-7xl font-extrabold backdrop-blur-sm sm:text-8xl">{title}</h1>
 		</GlowEffect>
 	</div>
-	{#if wrapper}
-		<!--TODO: bruh, do some diff between svelte4 - svelte5 binding timings see if this is a bug, propose a PR anyways -->
-		{@render children()}
-	{/if}
+	{@render children()}
 </div>
