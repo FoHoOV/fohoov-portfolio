@@ -29,19 +29,19 @@
 			end: 'end',
 			onEnter: () => {
 				console.log('called');
-				threlteSceneManager.addComponent('skillSet', {
+				threlteSceneManager.add('skillSet', {
 					component: ThrelteSkillSet,
 					props: () => {
 						return {};
 					},
 					beforeUnmount: async (component) => {
-						await component.moveSpheresOutOfView();
+						await component?.moveSpheresOutOfView();
 					}
 				});
 			},
 			onLeave: async () => {
 				console.log('lb called');
-				await threlteSceneManager.removeComponent('skillSet');
+				await threlteSceneManager.remove('skillSet');
 			}
 		});
 	});

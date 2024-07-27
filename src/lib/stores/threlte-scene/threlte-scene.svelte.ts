@@ -2,6 +2,8 @@ import type SkillSet from '$lib/components/threlte/SkillSet.svelte';
 import type { ComponentProps } from 'svelte';
 import { SvelteMap } from 'svelte/reactivity';
 
+// the reason that we only include the types but don't add the component based on component-name
+// is to prevent loading all component as soon as this module loads.
 type SceneNameToComponent = {
 	skillSet: SkillSet;
 };
