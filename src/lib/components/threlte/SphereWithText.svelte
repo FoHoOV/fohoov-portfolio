@@ -8,7 +8,8 @@
 		type Color,
 		type Mesh,
 		AddOperation,
-		type Vector3Like
+		type Vector3Like,
+		MeshStandardMaterial
 	} from 'three';
 
 	export type Props = {
@@ -48,13 +49,12 @@
 <T.Mesh bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
 	<T.Mesh>
 		<T.SphereGeometry args={[radius - 0.05]} />
-		<T.MeshBasicMaterial
+		<T.MeshStandardMaterial
 			color={sphereColor ?? 'black'}
-			roughness={0}
-			metalness={1}
+			roughness={0.05}
+			metalness={0.9}
 			combine={AddOperation}
-			envMap={sphereEnvMap?.texture}
-		></T.MeshBasicMaterial>
+			envMap={sphereEnvMap?.texture}></T.MeshStandardMaterial>
 	</T.Mesh>
 
 	<Text
@@ -63,6 +63,5 @@
 		{fontSize}
 		curveRadius={-radius - distanceFromSphere}
 		anchorY={'50%'}
-		color={textColor ?? 'white'}
-	/>
+		color={textColor ?? 'white'} />
 </T.Mesh>
