@@ -7,9 +7,8 @@
 		type Vector3,
 		type Color,
 		type Mesh,
-		AddOperation,
 		type Vector3Like,
-		MeshStandardMaterial
+		AddOperation
 	} from 'three';
 
 	export type Props = {
