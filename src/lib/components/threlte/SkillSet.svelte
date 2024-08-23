@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import SphereWithText from '$lib/components/threlte/SphereWithText.svelte';
 	import { calculateSphericalPathBetweenPoints, calculateSphericalPathForOrbit } from '$lib/utils';
 	import { useThrelte } from '@threlte/core';
@@ -60,7 +60,7 @@
 			return;
 		}
 		moveSpheresToPosition(
-			{ x: 11, y: 1, z: 0 },
+			{ x: 16, y: 2, z: 0 },
 			{
 				onSphereAnimationCompleted(sphere) {
 					orbitSphere(sphere);
@@ -96,8 +96,8 @@
 				{
 					theta: endingPoint.theta,
 					phi: endingPoint.phi,
-					duration: 2,
-					ease: 'none',
+					duration: 4,
+					ease: 'power3.in',
 					onStart: () => {
 						events?.onAnimationStarted?.(sphere);
 					},
@@ -110,7 +110,7 @@
 						events?.onSphereAnimationCompleted?.(sphere);
 					}
 				},
-				'<1.5'
+				'<.4'
 			);
 		}
 	}
@@ -121,7 +121,7 @@
 		const tween = gsap.to(startingPoint, {
 			theta: endingPoint.theta,
 			phi: endingPoint.phi,
-			duration: 10,
+			duration: 5.5,
 			repeat: -1,
 			ease: 'none',
 			onUpdate: () => {
@@ -158,7 +158,7 @@
 		radius={2}
 		fontSize={1}
 		rotationSpeed={5}
-		position={{ x: $camera.position.x - 3, y: $camera.position.y, z: $camera.position.z + 2 }}
+		position={{ x: $camera.position.x - 3, y: $camera.position.y, z: $camera.position.z + 6 }}
 		sphereColor={info.sphereColor}
 		textColor={info.textColor}></SphereWithText>
 {/each}
