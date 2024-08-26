@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { T, useTask, useThrelte } from '@threlte/core';
 	import { Grid, OrbitControls } from '@threlte/extras';
 	import { Color, EquirectangularReflectionMapping, Vector2 } from 'three';

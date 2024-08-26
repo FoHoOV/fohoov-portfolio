@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { generateReflectionTexture } from '$lib/utils';
 	import { T, useTask } from '@threlte/core';
 	import { Text } from '@threlte/extras';
@@ -19,8 +19,9 @@
 		textColor?: Color | ColorRepresentation;
 		sphereColor?: Color | ColorRepresentation;
 		distanceFromSphere?: number;
+		initialTextRotation?: number;
 		rotationSpeed?: number;
-		ref: Mesh | null;
+		ref?: Mesh | null;
 	};
 </script>
 
@@ -34,10 +35,11 @@
 		sphereColor,
 		ref = $bindable(null),
 		distanceFromSphere = 0.2,
+		initialTextRotation = 0,
 		rotationSpeed = 3
 	}: Props = $props();
 
-	let cubeRotation = $state(0);
+	let cubeRotation = $state(initialTextRotation);
 	let sphereEnvMap = $derived(ref ? generateReflectionTexture(ref) : null);
 
 	useTask((delta) => {

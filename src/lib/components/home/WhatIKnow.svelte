@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import Skill from '$lib/components/skill/Skill.svelte';
 	import SkillSet from '$lib/components/skill/SkillSet.svelte';
 	import ThrelteSkillSet from '$lib/components/threlte/SkillSet.svelte';
@@ -34,8 +34,8 @@
 					props: () => {
 						return {};
 					},
-					beforeUnmount: async (component) => {
-						await component?.moveSpheresOutOfView();
+					async beforeUnmount(component) {
+						await component?.moveOutOfView();
 					}
 				});
 			},
@@ -49,7 +49,7 @@
 
 <SkillSet class="flex flex-col lg:flex-row {className}" title="Skills" bind:this={skillSet}>
 	{#snippet children({ popEffect })}
-		<Skill
+		<!-- <Skill
 			text="Svelte"
 			level={9}
 			baseColor="orange"
@@ -76,6 +76,6 @@
 			level={9}
 			baseColor={'#004cbb'}
 			gsaps={[(options) => popEffect(options)]}>
-		</Skill>
+		</Skill> -->
 	{/snippet}
 </SkillSet>

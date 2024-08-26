@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import FoHoOV from '$lib/components/home/FoHoOV.svelte';
 	import WhatIKnow from '$lib/components/home/WhatIKnow.svelte';
 	import Mastering from '$lib/components/home/Mastering.svelte';

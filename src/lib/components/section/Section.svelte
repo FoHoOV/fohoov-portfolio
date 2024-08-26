@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
 	import type { Snippet } from 'svelte';
 

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import WavyTextBackground from '$lib/components/effects/WavyTextBackground.svelte';
 
 	import { gsapCreator, type GsapOptions } from '$lib/actions';

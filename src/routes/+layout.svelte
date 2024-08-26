@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import '../app.css';
 
 	import GridEffect from '$lib/components/effects/GridEffect.svelte';

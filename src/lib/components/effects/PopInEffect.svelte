@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { gsap } from 'gsap';
 	import { gsapCreator, type TweenConfig } from '$lib';
 	import type { Snippet } from 'svelte';
@@ -29,7 +29,6 @@
 		(options) => {
 			createPopInEffect(options);
 		}
-	]}
->
+	]}>
 	{@render children()}
 </div>
