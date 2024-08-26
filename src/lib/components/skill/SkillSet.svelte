@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import Section from '$lib/components/section/Section.svelte';
 
 	import { getDelusionManager } from '$lib';

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { FILL_COLOR_PLACEHOLDER, WAVES } from '$lib/components/effects/wavy-svgs';
 	import type { Property } from 'csstype';
 	import type { Snippet } from 'svelte';
@@ -41,8 +41,7 @@
 <div
 	class="wavy-bg {className}"
 	{...restParams}
-	style={`background-image: url("data:image/svg+xml,${getSvg()}");`}
->
+	style={`background-image: url("data:image/svg+xml,${getSvg()}");`}>
 	{@render children()}
 </div>
 

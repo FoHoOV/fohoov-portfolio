@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import BubbleButton from '$lib/components/buttons/BubbleButton.svelte';
 
 	import { getDelusionManager, type TweenConfig } from '$lib';

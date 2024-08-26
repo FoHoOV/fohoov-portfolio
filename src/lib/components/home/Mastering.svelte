@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import Skill from '$lib/components/skill/Skill.svelte';
 	import SkillSet from '$lib/components/skill/SkillSet.svelte';
 

@@ -1,9 +1,8 @@
 <script lang="ts" module>
 	import SphereWithText from '$lib/components/threlte/SphereWithText.svelte';
-	import { calculateSphericalPathBetweenPoints, calculateSphericalPathForOrbit } from '$lib/utils';
-	import { useThrelte } from '@threlte/core';
 	import { gsap } from 'gsap';
-	import { Mesh, Vector3, type Vector3Like } from 'three';
+	import { onMount } from 'svelte';
+	import { Mesh } from 'three';
 
 	const data = [
 		{
@@ -44,121 +43,65 @@
 </script>
 
 <script lang="ts">
-	const { camera } = useThrelte();
 	const spheresRef: Array<Mesh> = $state(Array(data.length).fill(null));
-	const orbitTweenReferences = new Map<Mesh, gsap.core.Tween>();
+	const timeLines: gsap.core.Timeline[] = Array(spheresRef.length).fill(null);
 
-	$effect(() => {
-		if (spheresRef.length !== data.length) {
-			return;
-		}
-		animate();
-	});
-
-	function animate(index = 0) {
-		if (index == spheresRef.length) {
-			return;
-		}
-		moveSpheresToPosition(
-			{ x: 16, y: 2, z: 0 },
-			{
-				onSphereAnimationCompleted(sphere) {
-					orbitSphere(sphere);
-				}
-			}
-		);
-	}
-
-	function moveSpheresToPosition(
-		position: Vector3Like,
-		events?: {
-			onSphereAnimationCompleted?: (sphere: Mesh) => void;
-			onTimelineCompleted?: () => void;
-			onAnimationStarted?: (sphere: Mesh) => void;
-		}
-	) {
-		const timeLine = gsap.timeline({
-			delay: 0,
-			onComplete: () => {
-				events?.onTimelineCompleted?.();
-			}
-		});
-		const endingPosition = new Vector3(position.x, position.y, position.z);
-		const rotation = -1 * Math.PI;
-
-		for (const sphere of spheresRef) {
-			const radius = endingPosition.distanceTo(sphere.position) + 2;
-			const { startingPoint, endingPoint, center, generatePositionFromSpherical } =
-				calculateSphericalPathBetweenPoints(sphere.position, endingPosition, radius, rotation);
-
-			timeLine.to(
-				startingPoint,
-				{
-					theta: endingPoint.theta,
-					phi: endingPoint.phi,
-					duration: 4,
-					ease: 'power3.in',
-					onStart: () => {
-						events?.onAnimationStarted?.(sphere);
-					},
-					onUpdate: () => {
-						sphere.position.copy(
-							generatePositionFromSpherical(startingPoint.phi, startingPoint.theta)
-						);
-					},
-					onComplete: () => {
-						events?.onSphereAnimationCompleted?.(sphere);
-					}
-				},
-				'<.4'
-			);
-		}
-	}
-
-	function orbitSphere(sphere: Mesh) {
-		const { startingPoint, endingPoint, generatePositionFromSpherical } =
-			calculateSphericalPathForOrbit(sphere.position, new Vector3(0, 0, 0), { axis: 'theta' });
-		const tween = gsap.to(startingPoint, {
-			theta: endingPoint.theta,
-			phi: endingPoint.phi,
-			duration: 5.5,
-			repeat: -1,
-			ease: 'none',
-			onUpdate: () => {
-				const newPosition = generatePositionFromSpherical(startingPoint.phi, startingPoint.theta);
-				sphere.position.copy(newPosition);
-			}
-		});
-		orbitTweenReferences.set(sphere, tween);
-	}
-
-	export function moveSpheresOutOfView() {
+	export function moveOutOfView() {
 		return new Promise<void>((resolve) => {
-			moveSpheresToPosition(
-				{ x: $camera.position.x + 5, y: $camera.position.y, z: $camera.position.z + 5 },
-				{
-					onAnimationStarted(sphere) {
-						const tween = orbitTweenReferences.get(sphere);
-						tween?.pause();
-						tween && orbitTweenReferences.delete(sphere);
-					},
-					onTimelineCompleted() {
+			let noOfRevertedAnimations = $state(0);
+			timeLines.forEach((timeLine) => {
+				timeLine.reverse('bounce').then(() => {
+					noOfRevertedAnimations += 1;
+				});
+			});
+			const cleanup = $effect.root(() => {
+				$effect(() => {
+					if (noOfRevertedAnimations == timeLines.length) {
 						resolve();
+						cleanup();
 					}
-				}
-			);
+				});
+			});
 		});
 	}
+
+	onMount(() => {
+		spheresRef.forEach((sphere, i) => {
+			timeLines[i] = gsap.timeline();
+			const startingLocation = 2 + Math.random() * 5;
+			timeLines[i]
+				.addLabel('start')
+				.to(sphere.position, {
+					delay: Math.random(),
+					y: startingLocation,
+					duration: 3,
+					ease: 'elastic.out'
+				})
+				.addLabel('bounce')
+				.to(sphere.position, {
+					y: startingLocation + 2,
+					yoyo: true,
+					duration: 3,
+					repeat: -1,
+					ease: 'sine.inOut'
+				});
+		});
+		return () => {
+			timeLines.forEach((timeLine) => {
+				timeLine.kill();
+			});
+		};
+	});
 </script>
 
 {#each data as info, i (info)}
 	<SphereWithText
 		bind:ref={spheresRef[i]}
 		text={info.text}
-		radius={2}
+		radius={2.1}
 		fontSize={1}
-		rotationSpeed={5}
-		position={{ x: $camera.position.x - 3, y: $camera.position.y, z: $camera.position.z + 6 }}
+		rotationSpeed={0}
+		position={{ x: (i - 1.5) * 6, y: -10, z: Math.random() * 2 }}
 		sphereColor={info.sphereColor}
 		textColor={info.textColor}></SphereWithText>
 {/each}

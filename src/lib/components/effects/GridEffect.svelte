@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { gsapCreator, type TimeLineCreator, type TweenConfig } from '$lib';
 	import type { Snippet } from 'svelte';
 
@@ -73,8 +73,7 @@
 				shiftGridBorders(options);
 			}
 		]}
-		class="absolute left-0 top-0 -z-50 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200"
-	>
+		class="absolute left-0 top-0 -z-50 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200">
 		{#each { length: 3 } as _}
 			{#each { length: 3 } as _}
 				<span class="box h-full w-full border-0 border-transparent bg-base-300"> </span>
