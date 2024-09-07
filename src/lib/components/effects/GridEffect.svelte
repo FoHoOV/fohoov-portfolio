@@ -32,7 +32,7 @@
 		const boxes = target.querySelectorAll('.box');
 		const boxesTimeLine = getTimeline({
 			label: 'boxesTimeLine',
-			errorIfNotExists: true
+			errorIfLabelDoesntExist: true
 		});
 
 		const inner = () => {

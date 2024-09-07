@@ -18,7 +18,7 @@ export function gsapCreator(node: Element, creators: GsapOptions) {
 					}
 
 					if (!timeLine) {
-						if (options?.errorIfNotExists) {
+						if (options?.errorIfLabelDoesntExist) {
 							throw new Error(`timeline with label ${options?.label} not found!`);
 						}
 						timeLine = gsapCore.timeline(options);
@@ -29,7 +29,7 @@ export function gsapCreator(node: Element, creators: GsapOptions) {
 					return timeLine;
 				}
 			};
-			creators?.forEach((creator) => {
+			creators.forEach((creator) => {
 				creator(creatorOptions);
 			});
 		});

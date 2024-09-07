@@ -1,15 +1,15 @@
 export type TimeLineCreator = (
-	options?: gsap.TimelineVars & { label?: string; errorIfNotExists?: boolean }
+	options?: gsap.TimelineVars & { label?: string; errorIfLabelDoesntExist?: boolean }
 ) => gsap.core.Timeline;
 
 export type TweenConfig = {
 	target: Element;
 	/**
 	 * creates a timeline and returns that. If a label is provided,
-	 * it will cache the created timeline so it will never recreate timelines
-	 * with the same timeline (only for this element).
+	 * it will cache the created timeline so it won't recreate timelines
+	 * with the same label (only for this element).
 	 *
-	 * if `options.errorIfNotExists` is set, it will throw an error if the `options.label` doesn't exist
+	 * if `options.errorIfLabelDoesntExist` is set, it will throw an error if the `options.label` doesn't exist
 	 *
 	 * @throws {Error}
 	 */
