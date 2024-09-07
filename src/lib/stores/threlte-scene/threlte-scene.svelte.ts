@@ -1,47 +1,38 @@
-import SkillSet from '$lib/components/threlte/SkillSet.svelte';
-import type { ComponentProps } from 'svelte';
+import type { ComponentExports } from '$lib/utils';
+import type { ComponentProps, Component } from 'svelte';
 import { SvelteMap } from 'svelte/reactivity';
 
-// the reason that we only include the types but don't add the component based on component-name
-// is to prevent loading all component as soon as this module loads.
-type SceneNameToComponent = {
-	skillSet: typeof SkillSet;
-};
-
-type Props<TSceneName extends keyof SceneNameToComponent> = {
-	component: SceneNameToComponent[TSceneName];
-	renderedComponent?: InstanceType<SceneNameToComponent[TSceneName]>;
-	props: () => ComponentProps<SceneNameToComponent[TSceneName]>;
-	beforeUnmount?: (
-		component: InstanceType<SceneNameToComponent[TSceneName]> | undefined
-	) => Promise<void>;
+type Props<TComponent extends Component<any, any>> = {
+	component: TComponent;
+	exports?: ComponentExports<TComponent>;
+	props: () => ComponentProps<TComponent>;
+	beforeUnmount?: (exports: ComponentExports<TComponent> | undefined) => Promise<void>;
 };
 
 export class ThrelteSceneManager {
-	#scenes = new SvelteMap<keyof SceneNameToComponent, Props<keyof SceneNameToComponent>>();
+	#scenes = new SvelteMap<symbol, Props<Component<any, any>>>();
 
-	add<TSceneName extends keyof SceneNameToComponent>(
-		key: TSceneName,
-		props: Omit<Props<TSceneName>, 'renderedComponent'>
+	add<TComponent extends Component<any, any>>(
+		key: symbol,
+		props: Omit<Props<TComponent>, 'exports'>
 	) {
-		this.#scenes.set(key, { renderedComponent: undefined, ...props } as Props<TSceneName>);
+		this.#scenes.set(key, { exports: undefined, ...props });
 	}
 
 	/**
 	 * awaits `beforeUnmount` before unmounting the component.
 	 */
-	async remove(key: keyof SceneNameToComponent) {
+	async remove(key: symbol) {
 		const current = this.#scenes.get(key);
 		if (!current) {
-			throw new Error(`${key} is not mounted via this store`);
+			throw new Error(`${key.toString()} is not mounted via this store`);
 		}
 
 		if (current.beforeUnmount) {
-			await current.beforeUnmount(current.renderedComponent);
-			this.#scenes.delete(key);
-		} else {
-			this.#scenes.delete(key);
+			await current.beforeUnmount(current.exports);
 		}
+
+		this.#scenes.delete(key);
 	}
 
 	get scenes$() {
