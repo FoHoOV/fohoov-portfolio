@@ -6,6 +6,6 @@
 	const threlteSceneManager = getThrelteSceneManager();
 </script>
 
-{#each threlteSceneManager.scenes$ as { component: Component, props, renderedComponent }}
-	<Component bind:this={renderedComponent} {...props() as any}></Component>
+{#each threlteSceneManager.scenes$ as { component: Component, props, exports }}
+	<Component bind:this={exports} {...props()}></Component>
 {/each}

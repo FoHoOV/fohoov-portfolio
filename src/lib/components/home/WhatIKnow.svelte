@@ -23,13 +23,14 @@
 			return;
 		}
 
+		const skillSetSymbol = Symbol('ThrelteSkillSet');
 		ScrollTrigger.create({
 			trigger: wrapper,
 			start: 'top center',
 			end: 'end',
 			onEnter: () => {
-				console.log('called');
-				threlteSceneManager.add('skillSet', {
+				console.log('oe called');
+				threlteSceneManager.add(skillSetSymbol, {
 					component: ThrelteSkillSet,
 					props: () => {
 						return {};
@@ -40,8 +41,8 @@
 				});
 			},
 			onLeave: async () => {
-				console.log('lb called');
-				await threlteSceneManager.remove('skillSet');
+				console.log('ol called');
+				await threlteSceneManager.remove(skillSetSymbol);
 			}
 		});
 	});

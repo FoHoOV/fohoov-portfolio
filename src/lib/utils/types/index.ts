@@ -8,3 +8,4 @@ export * from './common-component-states';
 export * from './time';
 export * from './animation-props';
 export * from './css-value';
+export * from './components';
