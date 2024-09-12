@@ -1,9 +1,10 @@
 <script lang="ts" module>
 	import ThrelteSkillSet from '$lib/components/threlte/SkillSet.svelte';
+	import Section from '$lib/components/section/Section.svelte';
+
 	import { getThrelteSceneManager } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { bounds } from '$lib/utils';
 
 	export type Props = {
 		class?: string;
@@ -11,38 +12,49 @@
 </script>
 
 <script lang="ts">
-	import Section from '$lib/components/section/Section.svelte';
-
 	const { class: className }: Props = $props();
+
 	const threlteSceneManager = getThrelteSceneManager();
 	let sectionRef: Section | undefined = undefined;
+	const skillSetSymbol = Symbol('ThrelteSkillSet');
+
+	function mountScene() {
+		threlteSceneManager.add(skillSetSymbol, {
+			component: ThrelteSkillSet,
+			props: () => {
+				return {};
+			},
+			async beforeUnmount(component) {
+				await component?.moveOutOfView();
+			}
+		});
+	}
+
+	async function unMountScene() {
+		await threlteSceneManager.remove(skillSetSymbol);
+	}
 
 	onMount(() => {
 		const wrapper = sectionRef?.getWrapper();
 
-		const skillSetSymbol = Symbol('ThrelteSkillSet');
 		ScrollTrigger.create({
 			trigger: wrapper,
-			start: 'top 20%',
-			end: 'end center',
+			start: 'top center',
+			end: '70% center',
 			onEnter: () => {
-				console.log('oe called');
-				threlteSceneManager.add(skillSetSymbol, {
-					component: ThrelteSkillSet,
-					props: () => {
-						return {};
-					},
-					async beforeUnmount(component) {
-						await component?.moveOutOfView();
-					}
-				});
+				mountScene();
 			},
 			onLeave: async () => {
-				console.log('ol called');
-				await threlteSceneManager.remove(skillSetSymbol);
+				await unMountScene();
+			},
+			onLeaveBack: async () => {
+				await unMountScene();
+			},
+			onEnterBack: () => {
+				mountScene();
 			}
 		});
 	});
 </script>
 
-<Section bind:this={sectionRef} title={'What I know'} class={className}></Section>
+<Section bind:this={sectionRef} title="What I know" class={className}></Section>
