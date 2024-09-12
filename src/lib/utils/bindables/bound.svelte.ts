@@ -1,8 +1,8 @@
 import { isNoNull } from '$lib/utils/types';
 
-export class Bound<T> {
-	public readonly toBeBounds: (T | null)[] = $state([]);
-	public readonly bounds: T[] = $derived.by(() => {
+export class Bounds<T> {
+	public readonly toBeBounds = $state<(T | null)[]>([]);
+	public readonly bounds = $derived.by<T[]>(() => {
 		return this.toBeBounds.filter((x) => isNoNull(x));
 	});
 	public readonly length: number;
@@ -13,6 +13,6 @@ export class Bound<T> {
 	}
 }
 
-export function bound<T>(size?: number) {
-	return new Bound<T>(size);
+export function bounds<T>(size: number) {
+	return new Bounds<T>(size);
 }

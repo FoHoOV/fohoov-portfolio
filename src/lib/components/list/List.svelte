@@ -48,7 +48,7 @@
 
 	$effect.pre(() => {
 		delusionManager.isDelusionOn$().current;
-		// on each delusion change we could be getting a new set of skills so we have to renew it after the re-render
+		// on each delusion change we could be getting a new set of items so we have to renew it after the re-render
 		timeLine = null;
 	});
 </script>

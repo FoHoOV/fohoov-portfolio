@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import SphereWithText from '$lib/components/threlte/SphereWithText.svelte';
-	import { bound } from '$lib';
+	import { bounds } from '$lib';
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
 	import { Mesh } from 'three';
@@ -44,7 +44,7 @@
 </script>
 
 <script lang="ts">
-	const spheresRef = bound<Mesh>(data.length);
+	const spheresRef = bounds<Mesh>(data.length);
 	const timeLines: gsap.core.Timeline[] = Array(spheresRef.length).fill(null);
 	const startingY = -10;
 
