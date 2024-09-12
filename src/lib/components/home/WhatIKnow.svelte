@@ -1,11 +1,9 @@
 <script lang="ts" module>
-	import Skill from '$lib/components/skill/Skill.svelte';
-	import SkillSet from '$lib/components/skill/SkillSet.svelte';
 	import ThrelteSkillSet from '$lib/components/threlte/SkillSet.svelte';
 	import { getThrelteSceneManager } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { bound } from '$lib/utils';
+	import { bounds } from '$lib/utils';
 
 	export type Props = {
 		class?: string;
@@ -13,22 +11,20 @@
 </script>
 
 <script lang="ts">
+	import Section from '$lib/components/section/Section.svelte';
+
 	const { class: className }: Props = $props();
 	const threlteSceneManager = getThrelteSceneManager();
-	const skillSet = bound<SkillSet>();
+	let sectionRef: Section | undefined = undefined;
 
 	onMount(() => {
-		const wrapper = skillSet.bounds[0].getWrapper();
-		if (!wrapper) {
-			console.error('what?');
-			return;
-		}
+		const wrapper = sectionRef?.getWrapper();
 
 		const skillSetSymbol = Symbol('ThrelteSkillSet');
 		ScrollTrigger.create({
 			trigger: wrapper,
-			start: 'top center',
-			end: 'end',
+			start: 'top 20%',
+			end: 'end center',
 			onEnter: () => {
 				console.log('oe called');
 				threlteSceneManager.add(skillSetSymbol, {
@@ -49,38 +45,4 @@
 	});
 </script>
 
-<SkillSet
-	class="flex flex-col lg:flex-row {className}"
-	title="Skills"
-	bind:this={skillSet.toBeBounds[0]}>
-	{#snippet children({ popEffect })}
-		<!-- <Skill
-			text="Svelte"
-			level={9}
-			baseColor="orange"
-			gsaps={[(options) => popEffect(options, true)]}></Skill>
-
-		<Skill text="SvelteKit" level={7} baseColor="red" gsaps={[(options) => popEffect(options)]}>
-		</Skill>
-
-		<Skill text="Fast API" level={6} baseColor={'green'} gsaps={[(options) => popEffect(options)]}>
-		</Skill>
-
-		<Skill text="Flask" level={8} baseColor={'gray'} gsaps={[(options) => popEffect(options)]}>
-		</Skill>
-
-		<Skill
-			text="Tailwind (+daisyUI)"
-			level={8}
-			baseColor="blue"
-			gsaps={[(options) => popEffect(options)]}>
-		</Skill>
-
-		<Skill
-			text="TypeScript/JavaScript"
-			level={9}
-			baseColor={'#004cbb'}
-			gsaps={[(options) => popEffect(options)]}>
-		</Skill> -->
-	{/snippet}
-</SkillSet>
+<Section bind:this={sectionRef} title={'What I know'} class={className}></Section>

@@ -1,6 +1,6 @@
 <script lang="ts" module>
-	import Skill from '$lib/components/skill/Skill.svelte';
-	import SkillSet from '$lib/components/skill/SkillSet.svelte';
+	import Skill from '$lib/components/list/Item.svelte';
+	import SkillSet from '$lib/components/list/List.svelte';
 
 	export type Props = {
 		class?: string;
