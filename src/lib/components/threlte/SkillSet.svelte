@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	import SphereWithText from '$lib/components/threlte/SphereWithText.svelte';
+	import { bound } from '$lib';
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
 	import { Mesh } from 'three';
@@ -43,15 +44,25 @@
 </script>
 
 <script lang="ts">
-	const spheresRef: Array<Mesh> = $state(Array(data.length).fill(null));
+	const spheresRef = bound<Mesh>(data.length);
 	const timeLines: gsap.core.Timeline[] = Array(spheresRef.length).fill(null);
+	const startingY = -10;
 
 	export function moveOutOfView() {
 		return new Promise<void>((resolve) => {
 			let noOfRevertedAnimations = $state(0);
-			timeLines.forEach((timeLine) => {
-				timeLine.reverse('bounce').then(() => {
-					noOfRevertedAnimations += 1;
+			timeLines.forEach((timeLine, i) => {
+				gsap.to(spheresRef.bounds[i].position, {
+					y: startingY,
+					delay: Math.random(),
+					duration: 2,
+					ease: 'elastic.in',
+					onStart() {
+						timeLine.kill();
+					},
+					onComplete() {
+						noOfRevertedAnimations += 1;
+					}
 				});
 			});
 			const cleanup = $effect.root(() => {
@@ -66,7 +77,7 @@
 	}
 
 	onMount(() => {
-		spheresRef.forEach((sphere, i) => {
+		spheresRef.bounds.forEach((sphere, i) => {
 			timeLines[i] = gsap.timeline();
 			const startingLocation = 2 + Math.random() * 5;
 			timeLines[i]
@@ -96,12 +107,12 @@
 
 {#each data as info, i (info)}
 	<SphereWithText
-		bind:ref={spheresRef[i]}
+		bind:ref={spheresRef.toBeBounds[i]}
 		text={info.text}
 		radius={2.1}
 		fontSize={1}
 		rotationSpeed={0}
-		position={{ x: (i - 1.5) * 6, y: -10, z: Math.random() * 2 }}
+		position={{ x: (i - 1.5) * 6, y: startingY, z: Math.random() * 2 }}
 		sphereColor={info.sphereColor}
-		textColor={info.textColor}></SphereWithText>
+		textColor={info.textColor} />
 {/each}

@@ -5,6 +5,7 @@
 	import { getThrelteSceneManager } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import { bound } from '$lib/utils';
 
 	export type Props = {
 		class?: string;
@@ -14,10 +15,10 @@
 <script lang="ts">
 	const { class: className }: Props = $props();
 	const threlteSceneManager = getThrelteSceneManager();
-	let skillSet: SkillSet | undefined = undefined;
+	const skillSet = bound<SkillSet>();
 
 	onMount(() => {
-		const wrapper = skillSet?.getWrapper();
+		const wrapper = skillSet.bounds[0].getWrapper();
 		if (!wrapper) {
 			console.error('what?');
 			return;
@@ -48,7 +49,10 @@
 	});
 </script>
 
-<SkillSet class="flex flex-col lg:flex-row {className}" title="Skills" bind:this={skillSet}>
+<SkillSet
+	class="flex flex-col lg:flex-row {className}"
+	title="Skills"
+	bind:this={skillSet.toBeBounds[0]}>
 	{#snippet children({ popEffect })}
 		<!-- <Skill
 			text="Svelte"
