@@ -1,7 +1,6 @@
 <script lang="ts" module>
 	import { generateReflectionTexture } from '$lib/utils';
 	import { T, useTask } from '@threlte/core';
-	import { Text } from '@threlte/extras';
 	import {
 		type ColorRepresentation,
 		type Vector3,
@@ -12,30 +11,28 @@
 	} from 'three';
 
 	export type Props = {
-		text: string;
-		radius: number;
-		fontSize: number;
 		position: Vector3 | Vector3Like;
-		textColor?: Color | ColorRepresentation;
+		radius: number;
+		url: string;
 		sphereColor?: Color | ColorRepresentation;
 		distanceFromSphere?: number;
-		initialTextRotation?: number;
+		initialRotation?: number;
 		rotationSpeed?: number;
 		ref?: Mesh | undefined;
 	};
 </script>
 
 <script lang="ts">
+	import Svg from '$lib/components/threlte/Svg.svelte';
+
 	let {
-		text,
 		radius,
-		fontSize,
 		position,
-		textColor,
 		sphereColor,
+		url,
 		ref = $bindable(undefined),
 		distanceFromSphere = 0.2,
-		initialTextRotation = 0,
+		initialRotation: initialTextRotation = 0,
 		rotationSpeed = 3
 	}: Props = $props();
 
@@ -58,11 +55,6 @@
 			envMap={sphereEnvMap?.texture}></T.MeshStandardMaterial>
 	</T.Mesh>
 
-	<Text
-		position={[0, 0, radius + distanceFromSphere]}
-		{text}
-		{fontSize}
-		curveRadius={-radius - distanceFromSphere}
-		anchorY={'50%'}
-		color={textColor ?? 'white'} />
+	<!-- TODO: the position and scaling factor shouldn't be hardcoded like this -->
+	<Svg {url} scalingFactor={0.02} position={{ x: -1, y: 1, z: radius + distanceFromSphere }} />
 </T.Mesh>

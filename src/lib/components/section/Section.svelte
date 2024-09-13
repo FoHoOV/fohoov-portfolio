@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
-	import { bounds } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 
 	export type Props = {
