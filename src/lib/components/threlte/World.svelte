@@ -1,4 +1,6 @@
 <script lang="ts" module>
+	import Scene from '$lib/components/threlte/Scene.svelte';
+
 	import { T, useTask, useThrelte } from '@threlte/core';
 	import { Grid, OrbitControls } from '@threlte/extras';
 	import { Color, EquirectangularReflectionMapping, Vector2 } from 'three';
@@ -10,10 +12,12 @@
 		TAARenderPass,
 		UnrealBloomPass
 	} from 'three/examples/jsm/Addons.js';
+	import { interactivity as enableInteractivity } from '@threlte/extras';
 
 	export type Props = {
 		bloom?: boolean;
 		backgroundColor?: Color;
+		interactivity?: boolean;
 		/**
 		 * relative to threlte/textures
 		 */
@@ -23,13 +27,23 @@
 </script>
 
 <script lang="ts">
-	const { bloom, backgroundColor, backgroundTexturePath, debug = false }: Props = $props();
+	const {
+		bloom,
+		backgroundColor,
+		backgroundTexturePath,
+		interactivity = true,
+		debug = false
+	}: Props = $props();
 	const { scene, camera, renderer, renderStage } = useThrelte();
 	let windowInnerHeight = $state(0);
 	let windowInnerWidth = $state(0);
 
 	if (backgroundColor) {
 		addBackgroundColor(backgroundColor);
+	}
+
+	if (interactivity) {
+		enableInteractivity();
 	}
 
 	if (backgroundTexturePath) {
@@ -114,3 +128,5 @@
 		cellSize={1}
 		infiniteGrid />
 {/if}
+
+<Scene></Scene>
