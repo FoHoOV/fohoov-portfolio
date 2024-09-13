@@ -8,46 +8,39 @@
 
 	const data = [
 		{
-			text: 'Svelte',
-			textColor: '#000000',
-			sphereColor: '#a0bad0'
+			sphereColor: '#6c5254',
+			icon: '/icons/svelte.svg'
 		},
 		{
-			text: 'Fast Api',
-			textColor: '#000000',
-			sphereColor: '#a0bad0'
+			sphereColor: '#2e5255',
+			icon: '/icons/fastapi.svg'
 		},
 		{
-			text: 'Sveltekit',
-			textColor: '#000000',
-			sphereColor: '#a0bad0'
+			sphereColor: '#6c5254',
+			icon: '/icons/svelte.svg'
 		},
 		{
-			text: 'Flask',
-			textColor: '#000000',
-			sphereColor: '#a0bad0'
+			sphereColor: '#fffff0',
+			icon: '/icons/flask.svg'
 		},
 		{
-			text: 'Tailwind',
-			textColor: '#000000',
-			sphereColor: '#a0bad0'
+			sphereColor: '#607885',
+			icon: '/icons/tailwind.svg'
 		},
 		{
-			text: 'JS - TS',
-			textColor: '#000000',
-			sphereColor: '#a0bad0'
+			sphereColor: '#ddd8d5',
+			icon: '/icons/typescript.svg'
 		}
 	] as const satisfies Array<{
-		text: string;
-		textColor: string;
 		sphereColor: string;
+		icon: `/icons/${string}.svg`;
 	}>;
 </script>
 
 <script lang="ts">
 	const spheresRef = bounds<Group>(data.length);
 	const timeLines: gsap.core.Timeline[] = Array(spheresRef.length).fill(null);
-	const startingY = -10;
+	const startingY = -12;
 
 	export function moveOutOfView() {
 		return new Promise<void>((resolve) => {
@@ -80,7 +73,7 @@
 	onMount(() => {
 		spheresRef.bounds.forEach((sphere, i) => {
 			timeLines[i] = gsap.timeline();
-			const startingLocation = 2 + Math.random() * 5;
+			const startingLocation = 2 + Math.random() * 2;
 			timeLines[i]
 				.addLabel('start')
 				.to(sphere.position, {
@@ -91,7 +84,7 @@
 				})
 				.addLabel('bounce')
 				.to(sphere.position, {
-					y: startingLocation + 2,
+					y: startingLocation + 1,
 					yoyo: true,
 					duration: 3,
 					repeat: -1,
@@ -111,7 +104,7 @@
 		bind:ref={spheresRef.toBeBounds[i]}
 		radius={2}
 		rotationSpeed={0}
-		position={{ x: (i - 1.5) * 6, y: startingY, z: Math.random() * 2 }}
+		position={{ x: (i - 2.5) * 6, y: startingY, z: Math.random() * 2 }}
 		sphereColor={info.sphereColor}
-		url={'/icons/svelte.svg'} />
+		url={info.icon} />
 {/each}
