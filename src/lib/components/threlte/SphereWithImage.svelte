@@ -24,6 +24,8 @@
 
 <script lang="ts">
 	import Svg from '$lib/components/threlte/Svg.svelte';
+	import { spring } from 'svelte/motion';
+	import { fromStore } from 'svelte/store';
 
 	let {
 		radius,
@@ -39,12 +41,24 @@
 	let cubeRotation = $state(initialTextRotation);
 	let sphereEnvMap = $derived(ref ? generateReflectionTexture(ref) : null);
 
+	const zoom = fromStore(spring<number>(1));
+
 	useTask((delta) => {
 		cubeRotation += (delta * rotationSpeed) / 5;
 	});
 </script>
 
-<T.Group bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
+<T.Group
+	bind:ref
+	rotation.y={cubeRotation}
+	position={[position.x, position.y, position.z]}
+	scale={zoom.current}
+	onpointerenter={(e: unknown) => {
+		zoom.current = 12 / 10;
+	}}
+	onpointerleave={(e: unknown) => {
+		zoom.current = 10 / 12;
+	}}>
 	<T.Mesh>
 		<T.SphereGeometry args={[radius - 0.05]} />
 		<T.MeshStandardMaterial
