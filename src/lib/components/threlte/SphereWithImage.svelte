@@ -49,8 +49,8 @@
 		<T.SphereGeometry args={[radius - 0.05]} />
 		<T.MeshStandardMaterial
 			color={sphereColor ?? 'black'}
-			roughness={0.05}
-			metalness={0.9}
+			roughness={0.2}
+			metalness={0.98}
 			combine={AddOperation}
 			envMap={sphereEnvMap?.texture}></T.MeshStandardMaterial>
 	</T.Mesh>
