@@ -11,6 +11,13 @@
 			"type": "node-terminal"
 		},
 		{
+			"type": "msedge",
+			"request": "launch",
+			"name": "edge",
+			"url": "http://localhost:5173",
+			"webRoot": "${workspaceFolder}"
+		},
+		{
 			"type": "chrome",
 			"request": "launch",
 			"name": "chrome",
