@@ -1,10 +1,16 @@
 import { useTask, useThrelte } from '@threlte/core';
-import { CubeCamera, CubeTexture, RGBAFormat, WebGLCubeRenderTarget, type Mesh } from 'three';
+import {
+	CubeCamera,
+	CubeTexture,
+	RGBAFormat,
+	WebGLCubeRenderTarget,
+	type Object3D
+} from 'three';
 
 /**
  * only use inside component life-cycle
  */
-export function generateReflectionTexture(ref: Mesh) {
+export function generateReflectionTexture(ref: Object3D) {
 	let texture: CubeTexture | undefined = $state(undefined);
 	const { renderer, scene } = useThrelte();
 	const renderTarget = new WebGLCubeRenderTarget(256, {

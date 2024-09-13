@@ -4,7 +4,7 @@
 	import { bounds } from '$lib';
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
-	import { Mesh } from 'three';
+	import type { Group } from 'three';
 
 	const data = [
 		{
@@ -45,7 +45,7 @@
 </script>
 
 <script lang="ts">
-	const spheresRef = bounds<Mesh>(data.length);
+	const spheresRef = bounds<Group>(data.length);
 	const timeLines: gsap.core.Timeline[] = Array(spheresRef.length).fill(null);
 	const startingY = -10;
 

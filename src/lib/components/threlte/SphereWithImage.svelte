@@ -5,7 +5,7 @@
 		type ColorRepresentation,
 		type Vector3,
 		type Color,
-		type Mesh,
+		type Group,
 		type Vector3Like,
 		AddOperation
 	} from 'three';
@@ -18,7 +18,7 @@
 		distanceFromSphere?: number;
 		initialRotation?: number;
 		rotationSpeed?: number;
-		ref?: Mesh | undefined;
+		ref?: Group | undefined;
 	};
 </script>
 
@@ -44,7 +44,7 @@
 	});
 </script>
 
-<T.Mesh bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
+<T.Group bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
 	<T.Mesh>
 		<T.SphereGeometry args={[radius - 0.05]} />
 		<T.MeshStandardMaterial
@@ -56,5 +56,5 @@
 	</T.Mesh>
 
 	<!-- TODO: the position and scaling factor shouldn't be hardcoded like this -->
-	<Svg {url} scalingFactor={0.02} position={{ x: -1, y: 1, z: radius + distanceFromSphere }} />
-</T.Mesh>
+	<Svg {url} scalingFactor={0.02} position={{ x: 0, y: 0, z: radius + distanceFromSphere }} />
+</T.Group>

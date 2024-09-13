@@ -6,7 +6,7 @@
 		type ColorRepresentation,
 		type Vector3,
 		type Color,
-		type Mesh,
+		type Group,
 		type Vector3Like,
 		AddOperation
 	} from 'three';
@@ -21,7 +21,7 @@
 		distanceFromSphere?: number;
 		initialTextRotation?: number;
 		rotationSpeed?: number;
-		ref?: Mesh | undefined;
+		ref?: Group | undefined;
 	};
 </script>
 
@@ -47,7 +47,7 @@
 	});
 </script>
 
-<T.Mesh bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
+<T.Group bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
 	<T.Mesh>
 		<T.SphereGeometry args={[radius - 0.05]} />
 		<T.MeshStandardMaterial
@@ -65,4 +65,4 @@
 		curveRadius={-radius - distanceFromSphere}
 		anchorY={'50%'}
 		color={textColor ?? 'white'} />
-</T.Mesh>
+</T.Group>
