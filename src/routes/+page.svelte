@@ -11,7 +11,7 @@
 <script lang="ts">
 </script>
 
-<div class="fixed left-0 top-0 z-50 h-full w-full bg-transparent">
+<div class="fixed left-0 top-0 h-full w-full bg-transparent">
 	<Canvas>
 		<World bloom={false} debug={false}></World>
 	</Canvas>
