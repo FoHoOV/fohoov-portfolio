@@ -1,5 +1,6 @@
 <script lang="ts" module>
-	import SphereWithText from '$lib/components/threlte/SphereWithText.svelte';
+	import SphereWithImage from '$lib/components/threlte/SphereWithImage.svelte';
+
 	import { bounds } from '$lib';
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
@@ -106,13 +107,11 @@
 </script>
 
 {#each data as info, i (info)}
-	<SphereWithText
+	<SphereWithImage
 		bind:ref={spheresRef.toBeBounds[i]}
-		text={info.text}
-		radius={2.1}
-		fontSize={1}
+		radius={2}
 		rotationSpeed={0}
 		position={{ x: (i - 1.5) * 6, y: startingY, z: Math.random() * 2 }}
 		sphereColor={info.sphereColor}
-		textColor={info.textColor} />
+		url={'/icons/svelte.svg'} />
 {/each}
