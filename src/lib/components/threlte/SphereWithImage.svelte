@@ -55,6 +55,6 @@
 			envMap={sphereEnvMap?.texture}></T.MeshStandardMaterial>
 	</T.Mesh>
 
-	<!-- TODO: the position and scaling factor shouldn't be hardcoded like this -->
+	<!-- TODO: scaling factor shouldn't be hardcoded like this, add a size? -->
 	<Svg {url} scalingFactor={0.02} position={{ x: 0, y: 0, z: radius + distanceFromSphere }} />
 </T.Group>

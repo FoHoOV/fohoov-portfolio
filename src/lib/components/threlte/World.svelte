@@ -61,7 +61,7 @@
 			const taaRenderPass = new TAARenderPass(scene, $camera);
 			composer.addPass(taaRenderPass);
 
-			const bloomPass = new UnrealBloomPass(new Vector2(1, 1), 0.25, 0.25, 0.1);
+			const bloomPass = new UnrealBloomPass(new Vector2(1, 1), 0.27, 0.2, 0.05);
 			composer.addPass(bloomPass);
 
 			const outputPass = new OutputPass();
@@ -90,7 +90,7 @@
 <svelte:window bind:innerHeight={windowInnerHeight} bind:innerWidth={windowInnerWidth} />
 
 <T.PerspectiveCamera
-	position={[0, 3, 20]}
+	position={[0, 3, 25]}
 	makeDefault
 	on:create={({ ref }) => {
 		ref.lookAt(0, 0, 0);
@@ -101,7 +101,7 @@
 </T.PerspectiveCamera>
 
 <T.DirectionalLight position={[0, 10, 0]} castShadow intensity={0.1}></T.DirectionalLight>
-<T.AmbientLight intensity={5}></T.AmbientLight>
+<T.AmbientLight intensity={10}></T.AmbientLight>
 
 {#if debug}
 	<T.AxesHelper args={[500]}></T.AxesHelper>

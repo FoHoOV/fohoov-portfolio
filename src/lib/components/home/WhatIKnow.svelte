@@ -36,24 +36,24 @@
 
 	onMount(() => {
 		const wrapper = sectionRef?.getWrapper();
-		mountScene(); // TODO: remove
-		// ScrollTrigger.create({
-		// 	trigger: wrapper,
-		// 	start: 'top center',
-		// 	end: '70% center',
-		// 	onEnter: () => {
-		// 		mountScene();
-		// 	},
-		// 	onLeave: async () => {
-		// 		await unMountScene();
-		// 	},
-		// 	onLeaveBack: async () => {
-		// 		await unMountScene();
-		// 	},
-		// 	onEnterBack: () => {
-		// 		mountScene();
-		// 	}
-		// });
+		// mountScene(); // TODO: remove
+		ScrollTrigger.create({
+			trigger: wrapper,
+			start: 'top center',
+			end: '70% center',
+			onEnter: () => {
+				mountScene();
+			},
+			onLeave: async () => {
+				await unMountScene();
+			},
+			onLeaveBack: async () => {
+				await unMountScene();
+			},
+			onEnterBack: () => {
+				mountScene();
+			}
+		});
 	});
 </script>
 
