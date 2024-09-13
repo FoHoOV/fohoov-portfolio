@@ -11,7 +11,9 @@
 		Group,
 		Mesh,
 		Shape,
-		Path
+		Path,
+		BoxHelper,
+		Box3
 	} from 'three';
 	import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 
@@ -25,6 +27,7 @@
 		fillWireFrameShapes?: boolean;
 		strokesWireFrame?: boolean;
 		side?: Side;
+		debug?: boolean;
 	};
 </script>
 
@@ -38,7 +41,8 @@
 		fillWireFrameShapes = false,
 		strokesWireFrame = false,
 		depthWrite = false,
-		side = DoubleSide
+		side = DoubleSide,
+		debug = false
 	}: Props = $props();
 
 	const loader = useLoader(SVGLoader);
@@ -47,10 +51,6 @@
 
 	async function loadSvg(ref: Group): Promise<void> {
 		const data = await loader.load(url);
-
-		setGroupPosition(ref);
-		setGroupScaling(ref);
-
 		let renderOrder = 0;
 
 		// Iterate over paths in the loaded SVG data
@@ -66,7 +66,6 @@
 					fillWireFrameShapes
 				);
 				const shapes = SVGLoader.createShapes(path);
-
 				addShapesToRef(shapes, material, ref, renderOrder);
 				renderOrder += shapes.length;
 			}
@@ -84,6 +83,13 @@
 				renderOrder += path.subPaths.length;
 			}
 		}
+
+		setGroupPosition(ref);
+		setGroupScaling(ref);
+
+		if (debug) {
+			ref.add(new BoxHelper(ref));
+		}
 	}
 
 	function setGroupPosition(ref: Group) {
@@ -93,6 +99,12 @@
 		} else {
 			ref.position.set(position.x, position.y, position.z);
 		}
+		const helper = new Box3().setFromObject(ref);
+		const size = new Vector3();
+		helper.getSize(size);
+
+		ref.position.x -= (size.x * scalingFactor) / 2;
+		ref.position.y += (size.y * scalingFactor) / 2;
 	}
 
 	function setGroupScaling(ref: Group) {
@@ -141,11 +153,9 @@
 	): void {
 		for (const subPath of subPaths) {
 			const geometry = SVGLoader.pointsToStroke(subPath.getPoints(), style);
-			if (geometry) {
-				const mesh = new Mesh(geometry, material);
-				mesh.renderOrder = renderOrder++;
-				ref.add(mesh);
-			}
+			const mesh = new Mesh(geometry, material);
+			mesh.renderOrder = renderOrder++;
+			ref.add(mesh);
 		}
 	}
 
