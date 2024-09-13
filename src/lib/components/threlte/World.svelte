@@ -100,8 +100,8 @@
 	{/if}
 </T.PerspectiveCamera>
 
-<T.DirectionalLight position={[0, 10, 0]} castShadow intensity={20}></T.DirectionalLight>
-<T.AmbientLight intensity={10}></T.AmbientLight>
+<T.DirectionalLight position={[0, 10, 0]} castShadow intensity={0.1}></T.DirectionalLight>
+<T.AmbientLight intensity={5}></T.AmbientLight>
 
 {#if debug}
 	<T.AxesHelper args={[500]}></T.AxesHelper>
