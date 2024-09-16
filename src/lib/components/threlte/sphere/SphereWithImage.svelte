@@ -23,7 +23,7 @@
 </script>
 
 <script lang="ts">
-	import Svg from '$lib/components/threlte/Svg.svelte';
+	import Svg from '$lib/components/threlte/images/Svg.svelte';
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
 
