@@ -1,68 +1,35 @@
 <script lang="ts" module>
-	import { generateReflectionTexture } from '$lib/utils';
-	import { T, useTask } from '@threlte/core';
+	import SphereWithRotation, {
+		type Props as SphereWithRotationProps
+	} from '$lib/components/threlte/sphere/SphereWithRotation.svelte';
+	import type { Color, ColorRepresentation } from 'three';
 	import { Text } from '@threlte/extras';
-	import {
-		type ColorRepresentation,
-		type Vector3,
-		type Color,
-		type Group,
-		type Vector3Like,
-		AddOperation
-	} from 'three';
 
 	export type Props = {
 		text: string;
-		radius: number;
-		fontSize: number;
-		position: Vector3 | Vector3Like;
-		textColor?: Color | ColorRepresentation;
-		sphereColor?: Color | ColorRepresentation;
 		distanceFromSphere?: number;
-		initialTextRotation?: number;
-		rotationSpeed?: number;
-		ref?: Group | undefined;
-	};
+		fontSize: number;
+		textColor?: Color | ColorRepresentation;
+	} & SphereWithRotationProps;
 </script>
 
 <script lang="ts">
 	let {
 		text,
-		radius,
 		fontSize,
-		position,
 		textColor,
-		sphereColor,
-		ref = $bindable(undefined),
 		distanceFromSphere = 0.2,
-		initialTextRotation = 0,
-		rotationSpeed = 3
+		ref = $bindable(undefined),
+		...restProps
 	}: Props = $props();
-
-	let cubeRotation = $state(initialTextRotation);
-	let sphereEnvMap = $derived(ref ? generateReflectionTexture(ref) : null);
-
-	useTask((delta) => {
-		cubeRotation += (delta * rotationSpeed) / 5;
-	});
 </script>
 
-<T.Group bind:ref rotation.y={cubeRotation} position={[position.x, position.y, position.z]}>
-	<T.Mesh>
-		<T.SphereGeometry args={[radius - 0.05]} />
-		<T.MeshStandardMaterial
-			color={sphereColor ?? 'black'}
-			roughness={0.05}
-			metalness={0.9}
-			combine={AddOperation}
-			envMap={sphereEnvMap?.texture}></T.MeshStandardMaterial>
-	</T.Mesh>
-
+<SphereWithRotation bind:ref {...restProps}>
 	<Text
-		position={[0, 0, radius + distanceFromSphere]}
+		position={[0, 0, restProps.radius + restProps.distanceFromSphere]}
 		{text}
 		{fontSize}
-		curveRadius={-radius - distanceFromSphere}
+		curveRadius={-restProps.radius - restProps.distanceFromSphere}
 		anchorY={'50%'}
 		color={textColor ?? 'white'} />
-</T.Group>
+</SphereWithRotation>
