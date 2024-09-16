@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import ThrelteSkillSet from '$lib/components/threlte/SkillSet.svelte';
+	import ThrelteSkillSet from '$lib/components/threlte/skills/SkillSet.svelte';
 	import Section from '$lib/components/section/Section.svelte';
 
 	import { getThrelteSceneManager } from '$lib/stores';

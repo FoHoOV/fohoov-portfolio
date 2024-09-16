@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import SphereWithImage from '$lib/components/threlte/SphereWithImage.svelte';
+	import SphereWithImage from '$lib/components/threlte/sphere/SphereWithImage.svelte';
 
 	import { bounds } from '$lib';
 	import { gsap } from 'gsap';
