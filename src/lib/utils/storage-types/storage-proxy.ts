@@ -6,7 +6,7 @@ type ConstructorParams = {
 	initialCookies: Record<string, string | undefined>;
 };
 
-export class StorageTypes {
+export class StorageProxy {
 	public readonly cookies;
 	public readonly localStorage;
 
@@ -17,6 +17,7 @@ export class StorageTypes {
 		if (initialCookies && !browser) {
 			this.cookies.from(
 				Object.entries(initialCookies)
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					.filter(([_, value]) => value !== undefined)
 					.map(([key, value]) => {
 						return { name: key, value: value };
