@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import SphereWithImage from '$lib/components/threlte/sphere/SphereWithImage.svelte';
+	import Skill from '$lib/components/threlte/skills/Skill.svelte';
 
 	import { bounds } from '$lib';
 	import { gsap } from 'gsap';
@@ -100,7 +100,7 @@
 </script>
 
 {#each data as info, i (info)}
-	<SphereWithImage
+	<Skill
 		bind:ref={spheresRef.toBeBounds[i]}
 		radius={2}
 		rotationSpeed={0}
