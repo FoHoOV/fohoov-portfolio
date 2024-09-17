@@ -51,9 +51,10 @@
 		position={[0, 0, -restProps.radius - distanceFromSphere]}
 		{text}
 		{fontSize}
-		curveRadius={restProps.radius + distanceFromSphere}
+		curveRadius={-restProps.radius - distanceFromSphere}
 		anchorY={'50%'}
 		anchorX={'50%'}
+		rotation.y={Math.PI}
 		{fillOpacity}
 		color={textColor} />
 	{@render children?.()}

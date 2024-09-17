@@ -74,6 +74,6 @@
 		sphereColor={info.sphereColor}
 		text={info.text}
 		textColor={info.sphereColor}
-		fontSize={2}
+		fontSize={1}
 		url={info.icon} />
 {/each}
