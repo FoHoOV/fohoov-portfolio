@@ -30,13 +30,14 @@
 		roughness = 0.2,
 		metalness = 0.98,
 		ref = $bindable(undefined),
-		children
+		children,
+		...restProps
 	}: Props = $props();
 
 	const sphereEnvMap = $derived(ref ? generateReflectionTexture(ref) : null);
 </script>
 
-<T.Group bind:ref position={[position.x, position.y, position.z]}>
+<T.Group bind:ref position={[position.x, position.y, position.z]} {...restProps}>
 	<T.Mesh>
 		<T.SphereGeometry args={[radius - 0.05]} />
 		<T.MeshStandardMaterial
