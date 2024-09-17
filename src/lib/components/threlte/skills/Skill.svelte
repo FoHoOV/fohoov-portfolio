@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import SphereWithImage, {
 		type Props as SphereWithImageProps
-	} from '$lib/components/threlte/sphere/SphereWithImage.svelte';
+	} from '$lib/components/threlte/utils/sphere/SphereWithImage.svelte';
 	import { Text } from '@threlte/extras';
 
 	import { spring } from 'svelte/motion';

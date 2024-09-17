@@ -1,8 +1,8 @@
 <script lang="ts" module>
-	import Svg from '$lib/components/threlte/images/Svg.svelte';
+	import Svg from '$lib/components/threlte/utils/images/Svg.svelte';
 	import SphereWithRotation, {
 		type Props as SphereWithRotationProps
-	} from '$lib/components/threlte/sphere/SphereWithRotation.svelte';
+	} from '$lib/components/threlte/utils/sphere/SphereWithRotation.svelte';
 
 	export type Props = {
 		url: string;
