@@ -1,26 +1,28 @@
 <script lang="ts" module>
 	import Sphere, { type Props as SphereProps } from '$lib/components/threlte/sphere/Sphere.svelte';
 	import { useTask } from '@threlte/core';
+	import { spring } from 'svelte/motion';
+	import { fromStore } from 'svelte/store';
 
 	export type Props = {
-		initialRotation?: number;
+		xRotation?: number;
 		rotationSpeed?: number;
 	} & SphereProps;
 </script>
 
 <script lang="ts">
 	let {
-		initialRotation: initialTextRotation = 0,
+		xRotation = 0,
 		rotationSpeed = 3,
 		ref = $bindable(undefined),
 		...restProps
 	}: Props = $props();
 
-	let cubeRotation = $state(initialTextRotation);
+	let cubeRotation = $derived(fromStore(spring(xRotation)));
 
 	useTask((delta) => {
-		cubeRotation += (delta * rotationSpeed) / 5;
+		cubeRotation.current += (delta * rotationSpeed) / 5;
 	});
 </script>
 
-<Sphere bind:ref rotation.y={cubeRotation} {...restProps}></Sphere>
+<Sphere bind:ref rotation.y={cubeRotation.current} {...restProps}></Sphere>

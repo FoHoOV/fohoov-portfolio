@@ -11,7 +11,13 @@
 </script>
 
 <script lang="ts">
-	let { url, distanceFromSphere = 0.2, ref = $bindable(undefined), ...restProps }: Props = $props();
+	let {
+		url,
+		distanceFromSphere = 0.2,
+		ref = $bindable(undefined),
+		children,
+		...restProps
+	}: Props = $props();
 </script>
 
 <SphereWithRotation bind:ref {...restProps}>
@@ -20,4 +26,5 @@
 		{url}
 		scalingFactor={0.02}
 		position={{ x: 0, y: 0, z: restProps.radius + distanceFromSphere }} />
+	{@render children?.()}
 </SphereWithRotation>

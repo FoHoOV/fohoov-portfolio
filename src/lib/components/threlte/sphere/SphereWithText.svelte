@@ -17,9 +17,10 @@
 	let {
 		text,
 		fontSize,
-		textColor,
+		textColor = 'white',
 		distanceFromSphere = 0.2,
 		ref = $bindable(undefined),
+		children,
 		...restProps
 	}: Props = $props();
 </script>
@@ -31,5 +32,7 @@
 		{fontSize}
 		curveRadius={-restProps.radius - restProps.distanceFromSphere}
 		anchorY={'50%'}
-		color={textColor ?? 'white'} />
+		anchorX={'50%'}
+		color={textColor} />
+	{@render children?.()}
 </SphereWithRotation>
