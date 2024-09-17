@@ -29,10 +29,13 @@
 					}
 				});
 			});
-			$effect(() => {
-				if (noOfRevertedAnimations == timeLines.length) {
-					resolve();
-				}
+			const cleanup = $effect.root(() => {
+				$effect(() => {
+					if (noOfRevertedAnimations == timeLines.length) {
+						resolve();
+						cleanup();
+					}
+				});
 			});
 		});
 	}
