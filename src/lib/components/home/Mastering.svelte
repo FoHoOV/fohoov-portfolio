@@ -1,6 +1,6 @@
 <script lang="ts" module>
-	import Skill from '$lib/components/list/Item.svelte';
-	import SkillSet from '$lib/components/list/List.svelte';
+	import Item from '$lib/components/list/Item.svelte';
+	import List from '$lib/components/list/List.svelte';
 
 	export type Props = {
 		class?: string;
@@ -11,22 +11,21 @@
 	const { class: className }: Props = $props();
 </script>
 
-<SkillSet class="flex flex-col lg:flex-row-reverse {className}" title="Learning">
+<List class="flex flex-col lg:flex-row-reverse {className}" title="Learning">
 	{#snippet children({ popEffect })}
-		<Skill text="React" level={4} baseColor="blue" gsaps={[(options) => popEffect(options, true)]}>
-		</Skill>
+		<Item text="React" level={4} baseColor="blue" gsaps={[(options) => popEffect(options, true)]}>
+		</Item>
 
-		<Skill text="GSAP!" level={3} baseColor="green" gsaps={[(options) => popEffect(options)]}>
-		</Skill>
+		<Item text="GSAP!" level={3} baseColor="green" gsaps={[(options) => popEffect(options)]}></Item>
 
-		<Skill text="Next" level={'?'} baseColor="greenyellow" gsaps={[(options) => popEffect(options)]}
-		></Skill>
+		<Item text="Next" level={'?'} baseColor="greenyellow" gsaps={[(options) => popEffect(options)]}
+		></Item>
 
-		<Skill
+		<Item
 			text="Three.js (threlte)"
 			level={'?'}
 			baseColor="green"
 			gsaps={[(options) => popEffect(options)]}>
-		</Skill>
+		</Item>
 	{/snippet}
-</SkillSet>
+</List>

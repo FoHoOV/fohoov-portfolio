@@ -22,9 +22,6 @@
 
 <SphereWithRotation bind:ref {...restProps}>
 	<!-- TODO: scaling factor shouldn't be hardcoded like this, add a size? -->
-	<Svg
-		{url}
-		scalingFactor={0.02}
-		position={{ x: 0, y: 0, z: restProps.radius + distanceFromSphere }} />
+	<Svg {url} size={2} position={{ x: 0, y: 0, z: restProps.radius + distanceFromSphere }} />
 	{@render children?.()}
 </SphereWithRotation>
