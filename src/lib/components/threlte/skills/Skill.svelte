@@ -19,7 +19,6 @@
 	bind:ref
 	scale={zoom.current}
 	onpointerenter={(e: unknown) => {
-		// TODO: reactivity doesnt work
 		zoom.current = 12 / 10;
 	}}
 	onpointerleave={(e: unknown) => {
