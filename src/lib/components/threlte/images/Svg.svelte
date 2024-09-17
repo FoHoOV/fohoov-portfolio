@@ -95,21 +95,24 @@
 	function setGroupTransforms(ref: Group) {
 		const boundingBox = new Box3();
 		setGroupScaling(ref, boundingBox.setFromObject(ref));
-		setGroupPosition(ref, boundingBox.setFromObject(ref));
+		setGroupPosition(ref);
+		centerGroup(ref, boundingBox.setFromObject(ref));
 	}
 
-	function setGroupPosition(ref: Group, boundingBox: Box3) {
-		const center = new Vector3();
-		boundingBox.getCenter(center);
-
+	function setGroupPosition(ref: Group) {
 		// Apply position
 		if (position instanceof Vector3) {
 			ref.position.copy(position);
 		} else {
 			ref.position.set(position.x, position.y, position.z);
 		}
+	}
 
-		ref.position.sub(center);
+	function centerGroup(ref: Group, boundingBox: Box3) {
+		const size = new Vector3();
+		boundingBox.getSize(size);
+		ref.position.x -= size.x / 2;
+		ref.position.y += size.y / 2;
 	}
 
 	function setGroupScaling(ref: Group, boundingBox: Box3) {
@@ -118,7 +121,7 @@
 
 		if (!size) {
 			// Default scaling
-			ref.scale.set(1, 1, 1);
+			ref.scale.set(1, 1, -1);
 			return;
 		}
 
@@ -127,12 +130,12 @@
 			// Uniform scaling
 			const maxActualSize = Math.max(actualSize.x, actualSize.y);
 			const scalingFactor = size / maxActualSize;
-			ref.scale.set(scalingFactor, scalingFactor, scalingFactor);
+			ref.scale.set(scalingFactor, -scalingFactor, scalingFactor);
 		} else {
 			// Non-uniform scaling
 			const scaleX = size.width / actualSize.x;
 			const scaleY = size.height / actualSize.y;
-			ref.scale.set(scaleX, scaleY, 1);
+			ref.scale.set(scaleX, -scaleY, 1);
 		}
 	}
 
