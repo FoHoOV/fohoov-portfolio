@@ -19,7 +19,7 @@
 
 	export type Props = {
 		url: string;
-		scalingFactor?: number;
+		size?: number | { width: number; height: number };
 		position?: Vector3 | Vector3Like;
 		drawFillShapes?: boolean;
 		drawStrokes?: boolean;
@@ -35,7 +35,7 @@
 	const {
 		url,
 		position = new Vector3(0, 0),
-		scalingFactor = 0.05,
+		size = 1,
 		drawFillShapes = true,
 		drawStrokes = false,
 		fillWireFrameShapes = false,
@@ -47,9 +47,10 @@
 
 	const loader = useLoader(SVGLoader);
 
+	let wrapperRef: Group | undefined = undefined;
 	let groupRef: Group | undefined = undefined;
 
-	async function loadSvg(ref: Group): Promise<void> {
+	async function loadSvg(wrapperRef: Group, groupRef: Group): Promise<void> {
 		const data = await loader.load(url);
 		let renderOrder = 0;
 
@@ -66,7 +67,7 @@
 					fillWireFrameShapes
 				);
 				const shapes = SVGLoader.createShapes(path);
-				addShapesToRef(shapes, material, ref, renderOrder);
+				addShapesToRef(shapes, material, groupRef, renderOrder);
 				renderOrder += shapes.length;
 			}
 
@@ -79,37 +80,60 @@
 					strokesWireFrame
 				);
 
-				addStrokesToRef(path.subPaths, path.userData.style, material, ref, renderOrder);
+				addStrokesToRef(path.subPaths, path.userData.style, material, groupRef, renderOrder);
 				renderOrder += path.subPaths.length;
 			}
 		}
 
-		setGroupPosition(ref);
-		setGroupScaling(ref);
+		setGroupTransforms(groupRef);
 
 		if (debug) {
-			ref.add(new BoxHelper(ref));
+			wrapperRef.add(new BoxHelper(wrapperRef));
 		}
 	}
 
-	function setGroupPosition(ref: Group) {
-		// Handle position, ensuring compatibility with both Vector3 and object positions
+	function setGroupTransforms(ref: Group) {
+		const boundingBox = new Box3();
+		setGroupScaling(ref, boundingBox.setFromObject(ref));
+		setGroupPosition(ref, boundingBox.setFromObject(ref));
+	}
+
+	function setGroupPosition(ref: Group, boundingBox: Box3) {
+		const center = new Vector3();
+		boundingBox.getCenter(center);
+
+		// Apply position
 		if (position instanceof Vector3) {
 			ref.position.copy(position);
 		} else {
 			ref.position.set(position.x, position.y, position.z);
 		}
-		const helper = new Box3().setFromObject(ref);
-		const size = new Vector3();
-		helper.getSize(size);
 
-		ref.position.x -= (size.x * scalingFactor) / 2;
-		ref.position.y += (size.y * scalingFactor) / 2;
+		ref.position.sub(center);
 	}
 
-	function setGroupScaling(ref: Group) {
-		ref.scale.multiplyScalar(scalingFactor);
-		ref.scale.y *= -1;
+	function setGroupScaling(ref: Group, boundingBox: Box3) {
+		const actualSize = new Vector3();
+		boundingBox.getSize(actualSize);
+
+		if (!size) {
+			// Default scaling
+			ref.scale.set(1, 1, 1);
+			return;
+		}
+
+		// Determine the scaling factors
+		if (typeof size === 'number') {
+			// Uniform scaling
+			const maxActualSize = Math.max(actualSize.x, actualSize.y);
+			const scalingFactor = size / maxActualSize;
+			ref.scale.set(scalingFactor, scalingFactor, scalingFactor);
+		} else {
+			// Non-uniform scaling
+			const scaleX = size.width / actualSize.x;
+			const scaleY = size.height / actualSize.y;
+			ref.scale.set(scaleX, scaleY, 1);
+		}
 	}
 
 	// Helper function to create materials
@@ -160,12 +184,14 @@
 	}
 
 	onMount(() => {
-		if (!groupRef) {
-			throw new Error('for some reason groupRef is not bound yet');
+		if (!wrapperRef || !groupRef) {
+			throw new Error('for some reason refs is not bound yet');
 		}
 
-		loadSvg(groupRef);
+		loadSvg(wrapperRef, groupRef);
 	});
 </script>
 
-<T.Group bind:ref={groupRef}></T.Group>
+<T.Group bind:ref={wrapperRef}>
+	<T.Group bind:ref={groupRef}></T.Group>
+</T.Group>
