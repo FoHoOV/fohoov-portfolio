@@ -29,7 +29,7 @@
 	}: Props = $props();
 
 	const rotation = fromStore(spring<number>(0));
-	const fillOpacity = $derived(Math.PI / rotation.current);
+	const fillOpacity = $derived(rotation.current / Math.PI);
 	const zoom = fromStore(spring<number>(1));
 </script>
 
