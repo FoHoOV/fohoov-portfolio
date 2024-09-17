@@ -40,7 +40,7 @@
 		ScrollTrigger.create({
 			trigger: wrapper,
 			start: 'top center',
-			end: '70% center',
+			end: '60% center',
 			onEnter: () => {
 				mountScene();
 			},

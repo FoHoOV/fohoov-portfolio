@@ -25,13 +25,16 @@
 				scrollTrigger: {
 					trigger: wrapper?.getWrapper(),
 					toggleActions: 'play reverse restart reverse',
-					start: '-10% top'
+					start: 'top center',
+					end: 'center center'
 				}
 			});
 		}
+
 		if (!timeLine) {
 			return;
 		}
+
 		timeLine.from(
 			target,
 			{

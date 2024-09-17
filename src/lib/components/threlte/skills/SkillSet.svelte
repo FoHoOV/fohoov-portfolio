@@ -13,22 +13,23 @@
 	const timeLines: gsap.core.Timeline[] = Array(spheresRef.length).fill(null);
 
 	export function moveOutOfView() {
-		return new Promise<void>((resolve) => {
-			let noOfRevertedAnimations = $state(0);
-			timeLines.forEach((timeLine, i) => {
-				gsap.to(spheresRef.bounds[i].position, {
-					y: startingY,
-					delay: Math.random(),
-					duration: 2,
-					ease: 'elastic.in',
-					onStart() {
-						timeLine.kill();
-					},
-					onComplete() {
-						noOfRevertedAnimations += 1;
-					}
-				});
+		let noOfRevertedAnimations = $state(0);
+		timeLines.forEach((timeLine, i) => {
+			gsap.to(spheresRef.bounds[i].position, {
+				y: startingY,
+				delay: Math.random(),
+				duration: 2,
+				ease: 'elastic.in(1, 0.3)',
+				onStart() {
+					timeLine.kill();
+				},
+				onComplete() {
+					noOfRevertedAnimations += 1;
+				}
 			});
+		});
+
+		return new Promise<void>((resolve) => {
 			const cleanup = $effect.root(() => {
 				$effect(() => {
 					if (noOfRevertedAnimations == timeLines.length) {
