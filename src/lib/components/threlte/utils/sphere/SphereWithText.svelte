@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import SphereWithRotation, {
 		type Props as SphereWithRotationProps
-	} from '$lib/components/threlte/sphere/SphereWithRotation.svelte';
+	} from '$lib/components/threlte/utils/sphere/SphereWithRotation.svelte';
 	import type { Color, ColorRepresentation } from 'three';
 	import { Text } from '@threlte/extras';
 

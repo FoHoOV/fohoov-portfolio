@@ -13,7 +13,7 @@
 
 <div class="fixed left-0 top-0 h-full w-full bg-transparent">
 	<Canvas>
-		<World bloom={false} debug={true}></World>
+		<World bloom={true} debug={false}></World>
 	</Canvas>
 </div>
 

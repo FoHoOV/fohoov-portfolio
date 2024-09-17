@@ -9,6 +9,8 @@
 	export type Props = {
 		class?: string;
 	};
+
+	const sceneSymbol = Symbol('ThrelteSkillSet');
 </script>
 
 <script lang="ts">
@@ -16,10 +18,9 @@
 
 	const threlteSceneManager = getThrelteSceneManager();
 	let sectionRef: Section | undefined = undefined;
-	const skillSetSymbol = Symbol('ThrelteSkillSet');
 
 	function mountScene() {
-		threlteSceneManager.add(skillSetSymbol, {
+		threlteSceneManager.add(sceneSymbol, {
 			component: ThrelteSkillSet,
 			props: () => {
 				return {};
@@ -31,7 +32,7 @@
 	}
 
 	async function unMountScene() {
-		await threlteSceneManager.remove(skillSetSymbol);
+		await threlteSceneManager.remove(sceneSymbol);
 	}
 
 	onMount(() => {
