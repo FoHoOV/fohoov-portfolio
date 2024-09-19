@@ -15,7 +15,7 @@
 
 <script lang="ts">
 	const { children, ...restProps }: Props = $props();
-	let wrapper: Section | undefined;
+	let ref: HTMLDivElement | undefined = undefined;
 	let timeLine: gsap.core.Timeline | null = null;
 	const delusionManager = getDelusionManager();
 
@@ -23,7 +23,7 @@
 		if (createTimeline) {
 			timeLine = getTimeline({
 				scrollTrigger: {
-					trigger: wrapper?.getWrapper(),
+					trigger: ref,
 					toggleActions: 'play reverse restart reverse',
 					start: 'top center',
 					end: 'center center'
@@ -45,10 +45,6 @@
 		);
 	}) satisfies PopEffect;
 
-	export function getWrapper() {
-		return wrapper?.getWrapper();
-	}
-
 	$effect.pre(() => {
 		delusionManager.isDelusionOn$().current;
 		// on each delusion change we could be getting a new set of items so we have to renew it after the re-render
@@ -56,7 +52,7 @@
 	});
 </script>
 
-<Section {...restProps} bind:this={wrapper}>
+<Section {...restProps} bind:ref>
 	<div class="grid h-full w-full auto-rows-max content-center gap-10 pt-14 md:gap-20">
 		{@render children({ popEffect: createPopEffect })}
 	</div>

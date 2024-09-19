@@ -3,6 +3,7 @@
 	import ThrelteProjects from '$lib/components/threlte/projects/Projects.svelte';
 	import { getThrelteSceneManager } from '$lib/stores';
 	import { onMount } from 'svelte';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	export type Props = {
 		class?: string;
@@ -13,16 +14,43 @@
 
 <script lang="ts">
 	const { class: className }: Props = $props();
+
+	let ref: HTMLDivElement | undefined = undefined;
+
 	const threlteSceneManager = getThrelteSceneManager();
 
-	onMount(() => {
+	function mountScene() {
 		threlteSceneManager.add(sceneSymbol, {
 			component: ThrelteProjects,
 			props() {
 				return {};
 			}
 		});
+	}
+
+	function unMountScene() {
+		threlteSceneManager.remove(sceneSymbol);
+	}
+
+	onMount(() => {
+		ScrollTrigger.create({
+			trigger: ref,
+			start: 'top center',
+			end: '60% center',
+			onEnter: () => {
+				mountScene();
+			},
+			onLeave: async () => {
+				await unMountScene();
+			},
+			onLeaveBack: async () => {
+				await unMountScene();
+			},
+			onEnterBack: () => {
+				mountScene();
+			}
+		});
 	});
 </script>
 
-<Section class="lg:flex-row-reverse {className}" title="Projects"></Section>
+<Section bind:ref class="lg:flex-row-reverse {className}" title="Projects"></Section>

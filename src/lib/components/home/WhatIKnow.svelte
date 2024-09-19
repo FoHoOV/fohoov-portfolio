@@ -17,7 +17,7 @@
 	const { class: className }: Props = $props();
 
 	const threlteSceneManager = getThrelteSceneManager();
-	let sectionRef: Section | undefined = undefined;
+	let ref: HTMLDivElement | undefined = undefined;
 
 	function mountScene() {
 		threlteSceneManager.add(sceneSymbol, {
@@ -36,10 +36,9 @@
 	}
 
 	onMount(() => {
-		const wrapper = sectionRef?.getWrapper();
 		// mountScene(); // TODO: remove
 		ScrollTrigger.create({
-			trigger: wrapper,
+			trigger: ref,
 			start: 'top center',
 			end: '60% center',
 			onEnter: () => {
@@ -58,4 +57,4 @@
 	});
 </script>
 
-<Section bind:this={sectionRef} title="What I know" class={className}></Section>
+<Section bind:ref title="What I know" class={className}></Section>
