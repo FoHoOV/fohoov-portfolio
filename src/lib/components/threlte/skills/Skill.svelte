@@ -49,7 +49,7 @@
 		}
 		lookAt(ref, camera.current, {
 			condition() {
-				return rotation.current == 0;
+				return rotation.current == cachedYRotation;
 			}
 		});
 	});
