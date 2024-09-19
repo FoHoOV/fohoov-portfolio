@@ -47,6 +47,7 @@
 
 	const loader = useLoader(SVGLoader);
 
+	// the reason we added a wrapperRef is because everything in groupRef is scaled down/up, so nothing means 1-1 with parent values
 	let wrapperRef: Group | undefined = undefined;
 	let groupRef: Group | undefined = undefined;
 

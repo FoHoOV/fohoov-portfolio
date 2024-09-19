@@ -2,7 +2,10 @@
 	import SphereWithImage, {
 		type Props as SphereWithImageProps
 	} from '$lib/components/threlte/utils/sphere/SphereWithImage.svelte';
+	import { lookAt } from '$lib/utils/threlte/look-at';
+	import { useThrelte } from '@threlte/core';
 	import { Text } from '@threlte/extras';
+	import { onMount } from 'svelte';
 
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
@@ -31,6 +34,25 @@
 	const rotation = fromStore(spring<number>(0));
 	const fillOpacity = $derived(rotation.current / Math.PI);
 	const zoom = fromStore(spring<number>(1));
+
+	/**
+	 * saves the sphere.rotation.y before setting the rotation store
+	 * this helps to revert back to the original rotation to prevent snapping
+	 */
+	let cachedYRotation = 0;
+
+	const { camera } = useThrelte();
+
+	onMount(() => {
+		if (!ref) {
+			return;
+		}
+		lookAt(ref, camera.current, {
+			condition() {
+				return rotation.current == 0;
+			}
+		});
+	});
 </script>
 
 <SphereWithImage
@@ -38,13 +60,14 @@
 	scale={zoom.current}
 	onpointerenter={(e: unknown) => {
 		zoom.current = 12 / 10;
-		rotation.current = Math.PI;
+		cachedYRotation = ref!.rotation.y;
+		rotation.current = cachedYRotation + Math.PI;
 	}}
 	onpointerleave={(e: unknown) => {
 		zoom.current = 10 / 12;
-		rotation.current = 0;
+		rotation.current = cachedYRotation;
 	}}
-	xRotation={rotation.current}
+	yRotation={rotation.current}
 	{rotationSpeed}
 	{...restProps}>
 	<Text

@@ -1,4 +1,4 @@
-export * from './generics';
+export * from './amped-ts-builtins';
 export * from './error-message';
 export * from './range';
 export * from './union-to-intersection';
