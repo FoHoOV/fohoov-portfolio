@@ -36,6 +36,6 @@ export class ThrelteSceneManager {
 	}
 
 	get scenes$() {
-		return this.#scenes.values();
+		return this.#scenes;
 	}
 }
