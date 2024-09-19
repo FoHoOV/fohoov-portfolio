@@ -7,7 +7,7 @@
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
 
-	export type Props = { url: string } & ThrelteProps<Mesh>;
+	export type Props = { url: string } & Omit<ThrelteProps<Mesh>, 'children'>;
 </script>
 
 <script lang="ts">
@@ -39,6 +39,6 @@
 		zoom.current = 1;
 	})}
 	{...restProps}>
-	<BentPlaneGeometry args={[0.2, 10, 10, 20, 20]} />
+	<BentPlaneGeometry radius={0.2} width={10} height={10} widthSegments={20} heightSegments={20} />
 	<ImageMaterial transparent side={DoubleSide} {url} radius={radius.current} zoom={zoom.current} />
 </T.Mesh>
