@@ -7,24 +7,22 @@
 	import { fromStore } from 'svelte/store';
 
 	export type Props = {
-		xRotation?: number;
+		yRotation?: number;
 		rotationSpeed?: number;
 	} & SphereProps;
 </script>
 
 <script lang="ts">
 	let {
-		xRotation = 0,
+		yRotation = 0,
 		rotationSpeed = 3,
 		ref = $bindable(undefined),
 		...restProps
 	}: Props = $props();
 
-	let cubeRotation = $derived(fromStore(spring(xRotation)));
-
 	useTask((delta) => {
-		cubeRotation.current += (delta * rotationSpeed) / 5;
+		ref!.rotation.y += (delta * rotationSpeed) / 5;
 	});
 </script>
 
-<Sphere bind:ref rotation.y={cubeRotation.current} {...restProps}></Sphere>
+<Sphere bind:ref rotation.y={yRotation} {...restProps}></Sphere>
