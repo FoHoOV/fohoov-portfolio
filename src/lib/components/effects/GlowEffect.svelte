@@ -9,9 +9,10 @@
 
 <script lang="ts">
 	const { class: className, children }: Props = $props();
+	// TODO: make the effect more performant, don't use text-shadow, use something else.
 </script>
 
-<div class="contents {className}">
+<div class="glow-effect contents {className}">
 	{@render children()}
 </div>
 
