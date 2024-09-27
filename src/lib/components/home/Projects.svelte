@@ -24,6 +24,9 @@
 			component: ThrelteProjects,
 			props() {
 				return {};
+			},
+			async beforeUnmount(exports) {
+				await exports?.moveOutOfView();
 			}
 		});
 	}
