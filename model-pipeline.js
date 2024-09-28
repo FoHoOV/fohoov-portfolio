@@ -12,7 +12,7 @@ import { exit } from 'node:process';
  */
 const configuration = {
 	sourceDir: resolve(join('static', 'threlte/models')),
-	targetDir: resolve(join('src', 'lib', 'components', 'models')),
+	targetDir: resolve(join('src', 'lib', 'components', 'threlte', 'models')),
 	overwrite: false,
 	root: '/threlte/models/',
 	types: true,
@@ -108,7 +108,7 @@ filteredGltfFiles.forEach((file) => {
 	const formattedArgs = args.join(' ');
 
 	// run the command
-	const cmd = `npx @threlte/gltf@latest ${path} ${formattedArgs}`; // TODO: change to @next - current next is buggy (first 3.0.0 version actually)
+	const cmd = `pnpm exec gltf ${path} ${formattedArgs}`;
 	try {
 		execSync(cmd, {
 			cwd: configuration.sourceDir

@@ -13,16 +13,22 @@
 		{
 			"type": "msedge",
 			"request": "launch",
-			"name": "edge",
+			"name": "debug:edge",
 			"url": "http://localhost:5173",
 			"webRoot": "${workspaceFolder}"
 		},
 		{
 			"type": "chrome",
 			"request": "launch",
-			"name": "chrome",
+			"name": "debug:chrome",
 			"url": "http://localhost:5173",
 			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"type": "node-terminal",
+			"request": "launch",
+			"name": "threlte:generate-models",
+			"command": "pnpm run threlte:generate-models"
 		}
 	]
 }
