@@ -7,6 +7,8 @@
 </script>
 
 <script lang="ts">
+	import FlashLight from '$lib/components/threlte/models/FlashLight.svelte';
+
 	const { camera } = useThrelte();
 
 	const xRotation = fromStore(
@@ -36,6 +38,8 @@
 		opacity.current = 1;
 	});
 </script>
+
+<FlashLight position={[0, 0, 0]} scale={40} />
 
 <ArtBoard
 	url="/images/project-management-dark.png"
