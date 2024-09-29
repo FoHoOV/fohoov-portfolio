@@ -15,5 +15,6 @@
 		"wireframe",
 		"yoyo"
 	],
+	"svelte.enable-ts-plugin": true,
 	"typescript.tsdk": "node_modules/typescript/lib"
 }
