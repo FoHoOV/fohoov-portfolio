@@ -1,13 +1,16 @@
 <script lang="ts" module>
+	import Project from '$lib/components/threlte/projects/Project.svelte';
 	import FlashLight from '$lib/components/threlte/projects/FlashLight.svelte';
-	import ArtBoard from '$lib/components/threlte/utils/artboard/ArtBoard.svelte';
-	import { useThrelte, T } from '@threlte/core';
+	import { type ComponentExports } from '$lib/utils';
+	import { useThrelte } from '@threlte/core';
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
 </script>
 
 <script lang="ts">
+	let flashLightRef: ComponentExports<typeof FlashLight> | undefined = $state(undefined);
+
 	const { camera } = useThrelte();
 
 	const xRotation = fromStore(
@@ -38,35 +41,52 @@
 	});
 </script>
 
-<FlashLight />
+<FlashLight bind:this={flashLightRef} />
 
-<ArtBoard
+<Project
 	url="/images/project-management-dark.png"
+	flashLight={flashLightRef}
 	rotation.x={xRotation.current}
-	oncreate={(e) => {
-		e.lookAt(camera.current.position);
+	position={[-15, 0, 0]}
+	oncreate={(e) => e.lookAt(camera.current.position)}
+	artBoardProps={{
+		materialProps: {
+			opacity: opacity.current
+		}
 	}}
-	materialProps={{
-		opacity: opacity.current
-	}}
-	position={[-15, 0, 0]}></ArtBoard>
-<ArtBoard
+	textProps={{
+		text: 'Project management'
+	}}>
+</Project>
+
+<Project
 	url="/images/project-management-dark.png"
+	flashLight={flashLightRef}
 	rotation.x={xRotation.current}
-	materialProps={{
-		opacity: opacity.current
+	position={[0, 0, 0]}
+	oncreate={(e) => e.lookAt(camera.current.position)}
+	artBoardProps={{
+		materialProps: {
+			opacity: opacity.current
+		}
 	}}
-	oncreate={(e) => {
-		e.lookAt(camera.current.position);
-	}}
-	position={[0, 0, 0]}></ArtBoard>
-<ArtBoard
+	textProps={{
+		text: 'Sam Steel Sina'
+	}}>
+</Project>
+
+<Project
 	url="/images/project-management-dark.png"
+	flashLight={flashLightRef}
 	rotation.x={xRotation.current}
-	materialProps={{
-		opacity: opacity.current
+	position={[15, 0, 0]}
+	oncreate={(e) => e.lookAt(camera.current.position)}
+	artBoardProps={{
+		materialProps: {
+			opacity: opacity.current
+		}
 	}}
-	oncreate={(e) => {
-		e.lookAt(camera.current.position);
-	}}
-	position={[15, 0, 0]}></ArtBoard>
+	textProps={{
+		text: 'To be or not to be'
+	}}>
+</Project>

@@ -1,6 +1,8 @@
 <script lang="ts" module>
 	import BentPlaneGeometry from '$lib/components/threlte/utils/geometry/BentPlaneGeometry.svelte';
 	import { ImageMaterial as ThrelteImageMaterial, type IntersectionEvent } from '@threlte/extras';
+	import ImageMaterial from '$lib/components/threlte/utils/images/ImageMaterial.svelte';
+	import type { ComponentProps } from 'svelte';
 	import { T, type Props as ThrelteProps } from '@threlte/core';
 
 	import { DoubleSide, type Mesh } from 'three';
@@ -8,13 +10,11 @@
 	import { fromStore } from 'svelte/store';
 
 	export type Props = { url: string } & {
-		materialProps?: ThrelteProps<typeof ImageMaterial>;
-	} & ThrelteProps<Mesh>;
+		materialProps?: ComponentProps<typeof ImageMaterial>;
+	} & ThrelteProps<typeof Mesh>;
 </script>
 
 <script lang="ts">
-	import ImageMaterial from '$lib/components/threlte/utils/images/ImageMaterial.svelte';
-
 	let { url, ref = $bindable(undefined), materialProps, ...restProps }: Props = $props();
 
 	const scale = fromStore(spring(1));
