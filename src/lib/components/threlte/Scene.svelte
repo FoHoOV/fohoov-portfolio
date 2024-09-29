@@ -1,5 +1,4 @@
 <script lang="ts" module>
-	import FlashLight from '$lib/components/threlte/models/FlashLight.svelte';
 	import { getThrelteSceneManager } from '$lib/stores';
 </script>
 
