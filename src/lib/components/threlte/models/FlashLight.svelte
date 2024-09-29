@@ -39,7 +39,7 @@ Title: Flashlight
 	const gltf = useGltf<GLTFResult>('/threlte/models/FlashLight.glb');
 </script>
 
-<T.Group bind:ref dispose={true} {...props}>
+<T.Group bind:ref dispose={false} {...props}>
 	{#await gltf}
 		{@render fallback?.()}
 	{:then gltf}
