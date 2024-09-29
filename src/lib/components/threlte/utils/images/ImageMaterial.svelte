@@ -8,7 +8,7 @@
 	}
 	export type Props = {
 		url: string;
-	} & Omit<ThrelteProps<MeshStandardMaterial>, 'transparent' | 'map'>;
+	} & Omit<ThrelteProps<typeof MeshStandardMaterial>, 'transparent' | 'map'>;
 </script>
 
 <script lang="ts">

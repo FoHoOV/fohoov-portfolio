@@ -7,7 +7,7 @@
 	export type Props = {
 		radius: number;
 		children?: Snippet;
-	} & ThrelteProps<PlaneGeometry>['parameters'];
+	} & ThrelteProps<typeof PlaneGeometry>['parameters'];
 </script>
 
 <script lang="ts">

@@ -8,7 +8,7 @@
 	export type Props = {
 		position?: Vector3 | Vector3Like | [x: number, y: number, z: number];
 		rotation?: Vector3Like;
-	} & ThrelteProps<SpotLight>;
+	} & ThrelteProps<typeof SpotLight>;
 </script>
 
 <script lang="ts">
