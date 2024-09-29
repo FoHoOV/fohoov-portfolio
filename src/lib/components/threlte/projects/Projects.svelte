@@ -1,14 +1,13 @@
 <script lang="ts" module>
+	import FlashLight from '$lib/components/threlte/projects/FlashLight.svelte';
 	import ArtBoard from '$lib/components/threlte/utils/artboard/ArtBoard.svelte';
-	import { useThrelte } from '@threlte/core';
+	import { useThrelte, T } from '@threlte/core';
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
 </script>
 
 <script lang="ts">
-	import FlashLight from '$lib/components/threlte/models/FlashLight.svelte';
-
 	const { camera } = useThrelte();
 
 	const xRotation = fromStore(
@@ -39,7 +38,7 @@
 	});
 </script>
 
-<FlashLight position={[0, 0, 0]} scale={40} />
+<FlashLight />
 
 <ArtBoard
 	url="/images/project-management-dark.png"

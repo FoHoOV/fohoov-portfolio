@@ -40,6 +40,8 @@
 		radius.current = 0.1;
 		zoom.current = 1;
 	})}
+	receiveShadow
+	side={DoubleSide}
 	{...restProps}>
 	<BentPlaneGeometry radius={0.2} width={10} height={10} widthSegments={20} heightSegments={20} />
 	<ImageMaterial transparent {url} radius={radius.current} zoom={zoom.current} {...materialProps} />
