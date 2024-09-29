@@ -1,18 +1,20 @@
 <script lang="ts" module>
 	import BentPlaneGeometry from '$lib/components/threlte/utils/geometry/BentPlaneGeometry.svelte';
-	import { ImageMaterial, type IntersectionEvent } from '@threlte/extras';
+	import { ImageMaterial as ThrelteImageMaterial, type IntersectionEvent } from '@threlte/extras';
 	import { T, type Props as ThrelteProps } from '@threlte/core';
 
 	import { DoubleSide, type Mesh } from 'three';
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
 
-	export type Props = { url: string } & ThrelteProps<Mesh> & {
-			materialProps?: ThrelteProps<ImageMaterial>;
-		};
+	export type Props = { url: string } & {
+		materialProps?: ThrelteProps<typeof ImageMaterial>;
+	} & ThrelteProps<Mesh>;
 </script>
 
 <script lang="ts">
+	import ImageMaterial from '$lib/components/threlte/utils/images/ImageMaterial.svelte';
+
 	let { url, ref = $bindable(undefined), materialProps, ...restProps }: Props = $props();
 
 	const scale = fromStore(spring(1));
@@ -44,5 +46,7 @@
 	side={DoubleSide}
 	{...restProps}>
 	<BentPlaneGeometry radius={0.2} width={10} height={10} widthSegments={20} heightSegments={20} />
-	<ImageMaterial transparent {url} radius={radius.current} zoom={zoom.current} {...materialProps} />
+	<!-- <ThrelteImageMaterial {url} radius={radius.current} zoom={zoom.current} {...materialProps}
+	></ThrelteImageMaterial> -->
+	<ImageMaterial {url} {...materialProps}></ImageMaterial>
 </T.Mesh>
