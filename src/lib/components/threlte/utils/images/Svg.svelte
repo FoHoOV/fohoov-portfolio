@@ -6,6 +6,7 @@
 		DoubleSide,
 		ShapeGeometry,
 		MeshBasicMaterial,
+		MeshStandardMaterial,
 		Color,
 		Vector3,
 		Group,
@@ -16,6 +17,9 @@
 		Box3
 	} from 'three';
 	import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
+
+	type SvgMaterial = MeshBasicMaterial | MeshStandardMaterial;
+	export type SvgMaterialTypes = 'standard' | 'basic';
 
 	export type Props = {
 		url: string;
@@ -28,6 +32,7 @@
 		strokesWireFrame?: boolean;
 		side?: Side;
 		debug?: boolean;
+		materialType?: SvgMaterialTypes;
 	};
 </script>
 
@@ -42,7 +47,8 @@
 		strokesWireFrame = false,
 		depthWrite = false,
 		side = DoubleSide,
-		debug = false
+		debug = false,
+		materialType = 'basic'
 	}: Props = $props();
 
 	const loader = useLoader(SVGLoader);
@@ -141,12 +147,8 @@
 	}
 
 	// Helper function to create materials
-	function createMaterial(
-		colorStyle: string,
-		opacity: number,
-		wireframe: boolean
-	): MeshBasicMaterial {
-		return new MeshBasicMaterial({
+	function createMaterial(colorStyle: string, opacity: number, wireframe: boolean): SvgMaterial {
+		return new (materialType == 'basic' ? MeshBasicMaterial : MeshStandardMaterial)({
 			color: new Color().setStyle(colorStyle),
 			opacity: opacity,
 			transparent: true,
@@ -159,7 +161,7 @@
 	// Helper function to add shapes to the reference object
 	function addShapesToRef(
 		shapes: Shape[],
-		material: MeshBasicMaterial,
+		material: SvgMaterial,
 		ref: Group,
 		renderOrder: number
 	): void {
@@ -175,7 +177,7 @@
 	function addStrokesToRef(
 		subPaths: Path[],
 		style: any,
-		material: MeshBasicMaterial,
+		material: SvgMaterial,
 		ref: Group,
 		renderOrder: number
 	): void {
