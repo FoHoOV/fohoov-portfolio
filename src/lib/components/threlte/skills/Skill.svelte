@@ -69,7 +69,6 @@
 	}}
 	yRotation={rotation.current}
 	{rotationSpeed}
-	svgMaterialType={'standard'}
 	{...restProps}>
 	<Text
 		position={[0, 0, -restProps.radius - distanceFromSphere]}

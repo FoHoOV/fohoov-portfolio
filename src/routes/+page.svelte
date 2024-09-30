@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import FoHoOV from '$lib/components/home/FoHoOV.svelte';
 	import WhatIKnow from '$lib/components/home/WhatIKnow.svelte';
-	import Mastering from '$lib/components/home/Mastering.svelte';
+	import Learning from '$lib/components/home/Learning.svelte';
 	import Projects from '$lib/components/home/Projects.svelte';
 	import WorkExperience from '$lib/components/home/WorkExperience.svelte';
 	import World from '$lib/components/threlte/World.svelte';
@@ -22,6 +22,6 @@
 <FoHoOV />
 <About />
 <WhatIKnow />
-<Mastering class="pt-7" />
+<Learning class="pt-7" />
 <Projects class="pt-7" />
 <WorkExperience class="pt-7" />
