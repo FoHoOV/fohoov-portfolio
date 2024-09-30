@@ -1,11 +1,11 @@
 <script lang="ts" module>
 	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
+	import PopInEffect from '$lib/components/effects/PopInEffect.svelte';
+
 	import { getDelusionManager, gsapCreator, type TweenConfig } from '$lib';
 </script>
 
 <script lang="ts">
-	import PopInEffect from '$lib/components/effects/PopInEffect.svelte';
-
 	const delusionManager = getDelusionManager();
 	let timeLine: gsap.core.Timeline | undefined;
 
