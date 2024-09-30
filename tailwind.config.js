@@ -9,7 +9,8 @@ export default {
 	plugins: [typography(), daisyui],
 	daisyui: {
 		themes: ['sunset', 'light'],
-		defaultTheme: 'sunset'
+		defaultTheme: 'sunset',
+		logs: false
 	},
 	theme: {
 		screens: {
