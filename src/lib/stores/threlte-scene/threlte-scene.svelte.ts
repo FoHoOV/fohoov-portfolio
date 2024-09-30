@@ -29,7 +29,11 @@ export class ThrelteSceneManager {
 		}
 
 		if (current.beforeUnmount) {
-			await current.beforeUnmount(current.exports);
+			try {
+				await current.beforeUnmount(current.exports);
+			} catch (e) {
+				console.error(e);
+			}
 		}
 
 		this.#scenes.delete(key);

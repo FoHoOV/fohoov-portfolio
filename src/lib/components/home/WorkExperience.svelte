@@ -37,7 +37,8 @@
 			lineColorClassName={'bg-secondary'}
 			iconColorClassName={'text-secondary'}
 			direction="start">
-			Created a E-commerce from scratch using <Code text="python, TS and vanilla CSS" />
+			Created a E-commerce from scratch using <Code text="python" />, <Code text="vanilla TS/JS" /> and
+			<Code text="vanilla CSS" />
 		</TimeLine.Item>
 		<TimeLine.Item
 			year={'now'}

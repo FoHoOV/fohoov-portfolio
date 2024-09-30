@@ -22,7 +22,7 @@
 	);
 
 	const { pointer } = useInteractivity();
-	const spotLightYRotation = $derived(-$pointer.x);
+	const spotLightYRotation = $derived(-$pointer.x * 1.5);
 
 	function startDraggingState() {
 		componentState = 'moving';
@@ -50,6 +50,10 @@
 		}
 
 		return false;
+	}
+
+	export function moveOutOfView() {
+		scale.current = 0;
 	}
 
 	onMount(() => {
