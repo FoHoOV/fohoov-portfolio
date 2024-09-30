@@ -3,8 +3,9 @@
 	import WhatIKnow from '$lib/components/home/WhatIKnow.svelte';
 	import Mastering from '$lib/components/home/Mastering.svelte';
 	import Projects from '$lib/components/home/Projects.svelte';
-
+	import WorkExperience from '$lib/components/home/WorkExperience.svelte';
 	import World from '$lib/components/threlte/World.svelte';
+
 	import { Canvas } from '@threlte/core';
 </script>
 
@@ -21,3 +22,4 @@
 <WhatIKnow />
 <Mastering class="pt-7" />
 <Projects class="pt-7" />
+<WorkExperience class="pt-7" />
