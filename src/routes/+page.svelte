@@ -11,6 +11,7 @@
 </script>
 
 <script lang="ts">
+	import ContactInfo from '$lib/components/home/ContactInfo.svelte';
 </script>
 
 <div class="fixed left-0 top-0 h-full w-full bg-transparent">
@@ -25,3 +26,4 @@
 <Learning class="pt-7" />
 <Projects class="pt-7" />
 <WorkExperience class="pt-7" />
+<ContactInfo class="pt-7"></ContactInfo>
