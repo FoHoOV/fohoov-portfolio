@@ -31,6 +31,6 @@
 	<GridEffect class="h-full w-full" grid={{ x: 4, y: 4 }}></GridEffect>
 </div>
 
-<DelusionToggle />
+<!-- <DelusionToggle /> -->
 
 {@render children()}
