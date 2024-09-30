@@ -18,7 +18,10 @@
 	let spotlightRef: SpotLight | undefined = undefined;
 
 	onMount(() => {
-		spotlightRef!.target = objRef!;
+		if (!spotlightRef || !objRef) {
+			throw new Error('RotationalLight refs are not bound yet');
+		}
+		spotlightRef.target = objRef;
 	});
 </script>
 
