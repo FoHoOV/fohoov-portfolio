@@ -1,6 +1,8 @@
 <script lang="ts" module>
 	import FlashLight from '$lib/components/threlte/projects/FlashLight.svelte';
 	import ArtBoard from '$lib/components/threlte/utils/artboard/ArtBoard.svelte';
+	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
+
 	import { type ComponentExports } from '$lib/utils';
 	import Icon from '@iconify/svelte';
 	import { T, useTask, type Props as ThrelteProps } from '@threlte/core';
@@ -34,8 +36,6 @@
 </script>
 
 <script lang="ts">
-	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
-
 	let {
 		projectUrl,
 		imageUrl,
