@@ -13,19 +13,19 @@
 
 <List class="flex flex-col lg:flex-row-reverse {className}" title="Learning">
 	{#snippet children({ popEffect })}
-		<Item text="React" level={4} baseColor="blue" gsaps={[(options) => popEffect(options, true)]}>
+		<Item text="React" level={8} baseColor="blue" gsaps={[(options) => popEffect(options, true)]}>
 		</Item>
 
-		<Item text="GSAP!" level={3} baseColor="green" gsaps={[(options) => popEffect(options)]}></Item>
-
-		<Item text="Next" level={'?'} baseColor="greenyellow" gsaps={[(options) => popEffect(options)]}
-		></Item>
+		<Item text="GSAP!" level={6} baseColor="green" gsaps={[(options) => popEffect(options)]}></Item>
 
 		<Item
 			text="Three.js (threlte)"
-			level={'?'}
+			level={5}
 			baseColor="green"
 			gsaps={[(options) => popEffect(options)]}>
 		</Item>
+
+		<Item text="Next" level={'?'} baseColor="greenyellow" gsaps={[(options) => popEffect(options)]}
+		></Item>
 	{/snippet}
 </List>

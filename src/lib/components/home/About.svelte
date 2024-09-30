@@ -53,7 +53,7 @@
 
 <Section class="flex h-full flex-col items-center justify-center {className}" title="About me">
 	<div
-		class="grid h-full w-10/12 grid-cols-2 grid-rows-2 gap-10 py-16 md:grid-cols-3 md:grid-rows-2"
+		class="grid h-full w-10/12 auto-rows-fr grid-cols-2 gap-10 py-16 md:grid-cols-3"
 		use:gsapCreator={[createPopInEffect]}>
 		<Card class="{commonCardClass} bg-primary text-primary-content">
 			<p class={commonPClass}>Enthusiastic</p>
