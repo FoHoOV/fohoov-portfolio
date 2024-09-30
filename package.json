@@ -43,6 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@iconify/svelte": "^4.0.2",
 		"@threlte/core": "8.0.0-next.17",
 		"@threlte/extras": "9.0.0-next.23",
 		"@threlte/gltf": "3.0.0-next.7",

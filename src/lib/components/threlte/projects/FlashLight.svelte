@@ -14,6 +14,7 @@
 
 	const spotLightAngel = 1.2;
 
+	const initialScale = 15;
 	const scale = fromStore(
 		spring(0, {
 			stiffness: 0.1
@@ -25,23 +26,26 @@
 
 	function startDraggingState() {
 		componentState = 'moving';
-		scale.current = 33;
+		scale.current = initialScale;
 	}
 
 	function endDraggingState() {
 		componentState = 'stable';
-		scale.current = 30;
+		scale.current = initialScale - 3;
 	}
 
-	export function isIntersecting(target: Object3D, easiness = 2) {
+	export function isIntersecting(target: Object3D, strictness = 3) {
 		if (!flashLightRef) {
 			throw new Error("FlashLight isn't created yet");
 		}
-		const distance = target.position.clone().sub(flashLightRef.position);
-		const directionToTarget = distance.clone().normalize();
-		const angelToTarget = new Vector3(0, spotLightYRotation, -1).angleTo(directionToTarget);
 
-		if (angelToTarget <= spotLightAngel / easiness) {
+		const flashLightDirection = new Vector3();
+		const targetDirection = new Vector3();
+		flashLightRef.getWorldDirection(flashLightDirection);
+		target.getWorldDirection(targetDirection);
+		const angleToTarget = flashLightDirection.angleTo(targetDirection);
+
+		if (angleToTarget <= spotLightAngel / strictness) {
 			return true;
 		}
 
@@ -49,13 +53,13 @@
 	}
 
 	onMount(() => {
-		scale.current = 30;
+		scale.current = initialScale;
 	});
 </script>
 
 <FlashLight
 	bind:ref={flashLightRef}
-	position={[$pointer.x * 15, $pointer.y * 10, 10]}
+	position={[$pointer.x * 15, $pointer.y * 2, 10]}
 	rotation.y={spotLightYRotation}
 	scale={scale.current}
 	onpointerdown={startDraggingState}
