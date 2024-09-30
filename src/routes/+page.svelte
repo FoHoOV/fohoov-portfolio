@@ -7,6 +7,7 @@
 	import World from '$lib/components/threlte/World.svelte';
 
 	import { Canvas } from '@threlte/core';
+	import About from '$lib/components/home/About.svelte';
 </script>
 
 <script lang="ts">
@@ -19,6 +20,7 @@
 </div>
 
 <FoHoOV />
+<About />
 <WhatIKnow />
 <Mastering class="pt-7" />
 <Projects class="pt-7" />

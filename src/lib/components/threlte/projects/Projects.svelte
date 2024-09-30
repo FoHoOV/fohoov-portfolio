@@ -20,16 +20,19 @@
 	);
 	const opacity = fromStore(spring(0));
 
-	export async function moveOutOfView() {
+	export function moveOutOfView() {
 		opacity.current = 0;
 		xRotation.current = Math.PI;
+		flashLightRef?.moveOutOfView();
 
 		const promise = new Promise<void>((resolve) => {
 			const cleanup = $effect.root(() => {
-				if (opacity.current == 0) {
-					resolve();
-					cleanup();
-				}
+				$effect(() => {
+					if (opacity.current == 0) {
+						resolve();
+						cleanup();
+					}
+				});
 			});
 		});
 		return promise;

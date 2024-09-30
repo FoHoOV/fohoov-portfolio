@@ -1,15 +1,19 @@
 <script lang="ts" module>
-	import { gsapCreator, type TimeLineCreator, type TweenConfig } from '$lib';
+	import { gsapCreator, type TweenConfig } from '$lib';
 	import type { Snippet } from 'svelte';
 
 	export type Props = {
 		children?: Snippet;
+		grid: {
+			x: number;
+			y: number;
+		};
 		class?: string;
 	};
 </script>
 
 <script lang="ts">
-	const { class: className, children }: Props = $props();
+	const { class: className, grid, children }: Props = $props();
 
 	function createGridEffect({ target, getTimeline }: TweenConfig) {
 		const boxes = target.querySelectorAll('.box');
@@ -22,7 +26,7 @@
 			ease: 'power2.inOut',
 			stagger: {
 				amount: 0.5,
-				grid: [3, 3],
+				grid: [grid.y, grid.x],
 				from: 'center'
 			}
 		});
@@ -48,7 +52,7 @@
 				ease: 'back.in',
 				stagger: {
 					amount: 1,
-					grid: [3, 3],
+					grid: [grid.y, grid.x],
 					from: 'random'
 				},
 				onComplete: () => {
@@ -73,9 +77,11 @@
 				shiftGridBorders(options);
 			}
 		]}
-		class="absolute left-0 top-0 -z-50 grid h-full w-full grid-cols-3 grid-rows-3 bg-base-200">
-		{#each { length: 3 } as _}
-			{#each { length: 3 } as _}
+		class="absolute left-0 top-0 -z-50 grid h-full w-full bg-base-200"
+		style:grid-template-rows="repeat({grid.y}, minmax(0, 1fr))"
+		style:grid-template-columns="repeat({grid.x}, minmax(0, 1fr))">
+		{#each { length: grid.y } as _}
+			{#each { length: grid.x } as _}
 				<span class="box h-full w-full border-0 border-transparent bg-base-300"> </span>
 			{/each}
 		{/each}

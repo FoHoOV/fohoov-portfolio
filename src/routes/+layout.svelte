@@ -28,7 +28,7 @@
 </script>
 
 <div class="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden">
-	<GridEffect class="h-full w-full"></GridEffect>
+	<GridEffect class="h-full w-full" grid={{ x: 4, y: 4 }}></GridEffect>
 </div>
 
 <DelusionToggle />

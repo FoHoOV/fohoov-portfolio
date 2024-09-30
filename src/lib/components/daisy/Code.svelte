@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-	const { prefix, code }: Props = $props();
+	const { prefix, text }: Props = $props();
 </script>
 
-<pre data-prefix={prefix} class="inline"><code>{code}</code></pre>
+<pre data-prefix={prefix} class="inline font-bold"><code>{text}</code></pre>
