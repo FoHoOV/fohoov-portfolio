@@ -21,7 +21,8 @@
 	 * I have to use this hack till it starts to work like it should
 	 */
 	.glow-effect > :global(h1),
-	.glow-effect > :global(p) {
+	.glow-effect > :global(p),
+	.glow-effect > :global(a) {
 		--from-value: rgb(255, 255, 255);
 		--to-value: rgb(124, 124, 124);
 		filter: drop-shadow(8px 6px 62px var(--from-value));

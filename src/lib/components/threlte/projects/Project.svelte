@@ -34,6 +34,8 @@
 </script>
 
 <script lang="ts">
+	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
+
 	let {
 		projectUrl,
 		imageUrl,
@@ -87,21 +89,25 @@
 	<ArtBoard url={imageUrl} width={10} height={10} {...artBoardProps}></ArtBoard>
 
 	<HTML transform center {...center.props}>
-		<p
-			class="w-max text-pretty text-3xl font-extrabold text-secondary {center.class}"
-			style="opacity: {textOpacity.current};">
-			{center.text}
-		</p>
+		<GlowEffect>
+			<p
+				class="w-max text-pretty text-3xl font-extrabold text-secondary {center.class}"
+				style="opacity: {textOpacity.current};">
+				{center.text}
+			</p>
+		</GlowEffect>
 	</HTML>
 
 	<HTML transform position={[3, -3.5, 2]} {...bottom?.props}>
-		<a
-			class="link link-success block w-28 text-3xl font-extrabold {bottom?.class}"
-			style="opacity: {1 - textOpacity.current};"
-			href={projectUrl}
-			target="_blank">
-			<span>visit</span>
-			<Icon class="inline-block" icon="mdi:arrow-right" />
-		</a>
+		<GlowEffect>
+			<a
+				class="link link-success block w-28 text-3xl font-extrabold {bottom?.class}"
+				style="opacity: {1 - textOpacity.current};"
+				href={projectUrl}
+				target="_blank">
+				<span>visit</span>
+				<Icon class="inline-block" icon="mdi:arrow-right" />
+			</a>
+		</GlowEffect>
 	</HTML>
 </T.Group>
