@@ -64,7 +64,7 @@
 		const imageAspect: number = texture.image.width / texture.image.height;
 
 		if (!meshGeometry?.height || !meshGeometry?.width) {
-			throw new Error("mesh geometry height/width couldn't be calculated");
+			throw new Error("parent's mesh geometry height/width couldn't be calculated");
 		}
 
 		adjustTextureScaling(texture, meshGeometry.height / meshGeometry.width, imageAspect);
