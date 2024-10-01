@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
-	import RotationalLight from '$lib/components/threlte/light/ RotationalLight.svelte';
+	import RotationalLight from '$lib/components/threlte/light/RotationalLight.svelte';
 	import { Vector3, type Group, type Object3D } from 'three';
 </script>
 
