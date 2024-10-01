@@ -33,9 +33,14 @@
 <Section title="Contact info" class="{className} flex h-full flex-col items-center">
 	<div class="z-10 flex h-full flex-col items-center gap-20 pt-10 md:flex-row md:pt-0">
 		{@render info('GitHub', 'mdi:github', 'https://github.com/FoHoOV')}
-		{@render info('LinkedIn', 'mdi:linkedin', 'https://github.com/FoHoOV', {
-			color: '#0a66c2'
-		})}
+		{@render info(
+			'LinkedIn',
+			'mdi:linkedin',
+			'https://www.linkedin.com/in/alireza-setayesh-mehr/',
+			{
+				color: '#0a66c2'
+			}
+		)}
 		{@render info('Email', 'bxl:gmail', 'mailto:fohoov@gmail.com', { color: '#cf0000' })}
 	</div>
 </Section>
