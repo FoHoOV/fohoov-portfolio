@@ -69,5 +69,5 @@
 	onpointerdown={startDraggingState}
 	onpointerleave={endDraggingState}
 	onpointerup={endDraggingState}>
-	<RotationalLight angle={spotLightAngel} intensity={300} color={'white'} position={[0, 0, 0]} />
+	<RotationalLight angle={spotLightAngel} intensity={50} color={'white'} position={[0, 0, 0]} />
 </FlashLight>

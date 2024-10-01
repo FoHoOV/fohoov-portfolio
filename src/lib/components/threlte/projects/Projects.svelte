@@ -65,7 +65,7 @@
 
 <Project
 	projectUrl="https://project-management-fohoov.vercel.app/user/projects"
-	imageUrl="/images/project-management-dark.png"
+	imageUrl="/images/samsteel-light.png"
 	flashLight={flashLightRef}
 	rotation.x={xRotation.current}
 	position={[10, 0, 0]}
