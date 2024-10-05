@@ -25,11 +25,11 @@
 		artBoardProps?: Omit<ComponentProps<typeof ArtBoard>, 'url'>;
 		center: {
 			text: string;
-			props?: ComponentProps<HTML>;
+			props?: ComponentProps<Text>;
 			class?: string;
 		};
 		bottom?: {
-			props?: ComponentProps<HTML>;
+			props?: ComponentProps<Text>;
 			class?: string;
 		};
 	} & ThrelteProps<typeof Group>;
@@ -85,29 +85,34 @@
 		radius.current = 0.1;
 		zoom.current = 1;
 	})}
+	onclick={() => {
+		window.open(projectUrl, '_blank');
+	}}
 	{...rootProps}>
 	<ArtBoard url={imageUrl} width={10} height={10} {...artBoardProps}></ArtBoard>
 
-	<HTML transform center {...center.props}>
-		<GlowEffect>
-			<p
-				class="w-max text-pretty text-3xl font-extrabold text-secondary {center.class}"
-				style="opacity: {textOpacity.current};">
-				{center.text}
-			</p>
-		</GlowEffect>
-	</HTML>
+	<Text
+		text={center.text}
+		color={'#fd6f9c'}
+		fillOpacity={textOpacity.current}
+		fontSize={0.8}
+		strokeColor={'#fd6f9c'}
+		letterSpacing={0.1}
+		outlineColor={'#fd6f9c'}
+		outlineWidth={0.01}
+		outlineOpacity={textOpacity.current}
+		position.z={3}
+		anchorX={'50%'} />
 
-	<HTML transform position={[3, -3.5, 2]} {...bottom?.props}>
-		<GlowEffect>
-			<a
-				class="link link-success block w-28 text-3xl font-extrabold {bottom?.class}"
-				style="opacity: {1 - textOpacity.current};"
-				href={projectUrl}
-				target="_blank">
-				<span>visit</span>
-				<Icon class="inline-block" icon="mdi:arrow-right" />
-			</a>
-		</GlowEffect>
-	</HTML>
+	<Text
+		text={'visit'}
+		color={'#b0e2b0'}
+		fillOpacity={1 - textOpacity.current}
+		fontSize={0.8}
+		strokeColor={'#b0e2b0'}
+		letterSpacing={0.1}
+		outlineColor={'#b0e2b0'}
+		outlineWidth={0.01}
+		outlineOpacity={1 - textOpacity.current}
+		position={[2.5, -3, 1]} />
 </T.Group>
