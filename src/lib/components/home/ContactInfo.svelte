@@ -36,7 +36,7 @@
 		{@render info(
 			'LinkedIn',
 			'mdi:linkedin',
-			'https://www.linkedin.com/in/alireza-setayesh-mehr/',
+			'https://www.linkedin.com/in/alireza-setayesh-mehr-891001332/',
 			{
 				color: '#0a66c2'
 			}
