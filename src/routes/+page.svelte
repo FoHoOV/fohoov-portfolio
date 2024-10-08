@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import FoHoOV from '$lib/components/home/FoHoOV.svelte';
-	import WhatIKnow from '$lib/components/home/WhatIKnow.svelte';
+	import SkillSet from '$lib/components/home/SkillSet.svelte';
 	import Learning from '$lib/components/home/Learning.svelte';
 	import Projects from '$lib/components/home/Projects.svelte';
 	import WorkExperience from '$lib/components/home/WorkExperience.svelte';
@@ -22,7 +22,7 @@
 
 <FoHoOV />
 <About />
-<WhatIKnow />
+<SkillSet />
 <Learning class="pt-7" />
 <Projects class="pt-7" />
 <WorkExperience class="pt-7" />
