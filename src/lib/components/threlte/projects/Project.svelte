@@ -26,11 +26,9 @@
 		center: {
 			text: string;
 			props?: ComponentProps<Text>;
-			class?: string;
 		};
 		bottom?: {
 			props?: ComponentProps<Text>;
-			class?: string;
 		};
 	} & ThrelteProps<typeof Group>;
 </script>
@@ -102,7 +100,8 @@
 		outlineWidth={0.01}
 		outlineOpacity={textOpacity.current}
 		position.z={3}
-		anchorX={'50%'} />
+		anchorX={'50%'}
+		{...center.props} />
 
 	<Text
 		text={'visit'}
@@ -114,5 +113,6 @@
 		outlineColor={'#b0e2b0'}
 		outlineWidth={0.01}
 		outlineOpacity={1 - textOpacity.current}
-		position={[2.5, -3, 1]} />
+		position={[2.5, -3, 1]}
+		{...bottom?.props} />
 </T.Group>
