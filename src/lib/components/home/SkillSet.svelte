@@ -36,7 +36,6 @@
 	}
 
 	onMount(() => {
-		// mountScene(); // TODO: remove
 		ScrollTrigger.create({
 			trigger: ref,
 			start: 'top center',
