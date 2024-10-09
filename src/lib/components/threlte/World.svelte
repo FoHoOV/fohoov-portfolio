@@ -110,7 +110,7 @@
 		ref.lookAt(0, 0, 0);
 	}}>
 	{#if debug}
-		<OrbitControls enableDamping target={[0, 0, 0]} />
+		<OrbitControls />
 	{/if}
 </T.PerspectiveCamera>
 
