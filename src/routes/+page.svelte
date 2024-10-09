@@ -5,6 +5,7 @@
 	import Projects from '$lib/components/home/Projects.svelte';
 	import WorkExperience from '$lib/components/home/WorkExperience.svelte';
 	import World from '$lib/components/threlte/World.svelte';
+	import SkillSetWorld from '$lib/components/threlte/skills/SkillSetWorld.svelte';
 
 	import { Canvas } from '@threlte/core';
 	import About from '$lib/components/home/About.svelte';
@@ -16,9 +17,12 @@
 
 <div class="fixed left-0 top-0 h-full w-full bg-transparent">
 	<Canvas>
-		<World bloom={false} debug={false}></World>
+		<World bloom={false} debug={true}></World>
+		<SkillSetWorld></SkillSetWorld>
 	</Canvas>
 </div>
+
+<div class="h-full w-full bg-transparent"></div>
 
 <FoHoOV />
 <About />
