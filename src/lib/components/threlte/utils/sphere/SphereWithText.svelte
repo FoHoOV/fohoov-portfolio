@@ -27,10 +27,10 @@
 
 <SphereWithRotation bind:ref {...restProps}>
 	<Text
-		position={[0, 0, restProps.radius + restProps.distanceFromSphere]}
+		position={[0, 0, restProps.radius + distanceFromSphere]}
 		{text}
 		{fontSize}
-		curveRadius={-restProps.radius - restProps.distanceFromSphere}
+		curveRadius={-restProps.radius - distanceFromSphere}
 		anchorY={'50%'}
 		anchorX={'50%'}
 		color={textColor} />

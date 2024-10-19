@@ -4,7 +4,6 @@
 	import Section from '$lib/components/section/Section.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { onMount } from 'svelte';
 
 	export type Props = {
 		class?: string;

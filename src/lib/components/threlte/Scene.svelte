@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts" module>
 	import { getThrelteSceneManager } from '$lib/stores';
 </script>
@@ -6,6 +8,6 @@
 	const threlteSceneManager = getThrelteSceneManager();
 </script>
 
-{#each threlteSceneManager.scenes$ as [key, { component: Component, props, exports }] (key)}
-	<Component bind:this={exports} {...props()}></Component>
+{#each threlteSceneManager.scenes$ as [key, scene] (key)}
+	<scene.component bind:this={scene.exports} {...scene.props()} />
 {/each}

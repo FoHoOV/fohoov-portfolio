@@ -2,7 +2,7 @@
 	import Scene from '$lib/components/threlte/Scene.svelte';
 
 	import { T, useTask, useThrelte } from '@threlte/core';
-	import { Grid, OrbitControls } from '@threlte/extras';
+	import { Grid, OrbitControls, PerfMonitor } from '@threlte/extras';
 	import { Color, EquirectangularReflectionMapping, Vector2 } from 'three';
 	import {
 		EffectComposer,
@@ -119,6 +119,8 @@
 
 {#if debug}
 	<T.AxesHelper args={[500]}></T.AxesHelper>
+
+	<PerfMonitor />
 
 	<Grid
 		cellColor="#ffffff"

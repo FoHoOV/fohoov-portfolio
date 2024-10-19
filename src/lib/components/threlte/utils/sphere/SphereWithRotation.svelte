@@ -3,8 +3,6 @@
 		type Props as SphereProps
 	} from '$lib/components/threlte/utils/sphere/Sphere.svelte';
 	import { useTask } from '@threlte/core';
-	import { spring } from 'svelte/motion';
-	import { fromStore } from 'svelte/store';
 
 	export type Props = {
 		yRotation?: number;
