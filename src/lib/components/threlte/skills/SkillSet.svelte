@@ -1,83 +1,97 @@
 <script lang="ts" module>
+	import { RandomPosition } from '$lib';
 	import Skill from '$lib/components/threlte/skills/Skill.svelte';
+	import { T, useThrelte, useTask } from '@threlte/core';
+	import { data } from './skills';
 
-	import { bounds } from '$lib';
-	import { gsap } from 'gsap';
+	import { Spherical, Vector3, type Group } from 'three';
 	import { onMount } from 'svelte';
-	import type { Group } from 'three';
-	import { data, startingY } from './skills';
+	import { tweened } from 'svelte/motion';
+	import { fromStore } from 'svelte/store';
+	import { cubicInOut } from 'svelte/easing';
 </script>
 
 <script lang="ts">
-	const spheresRef = bounds<Group>(data.length);
-	const timeLines: gsap.core.Timeline[] = Array(spheresRef.length).fill(null);
+	const radius = 2;
+	const randomPositionBoxSize = 10;
+	const randomPositionGenerator = new RandomPosition(randomPositionBoxSize, radius * 2);
+	randomPositionGenerator.addForcedUseCell(
+		randomPositionGenerator.positionToIndex({
+			x: Math.ceil(randomPositionBoxSize / 2),
+			y: Math.ceil(randomPositionBoxSize / 2),
+			z: Math.ceil(randomPositionBoxSize / 2)
+		})
+	);
 
-	export function moveOutOfView() {
-		let noOfRevertedAnimations = $state(0);
-		timeLines.forEach((timeLine, i) => {
-			gsap.to(spheresRef.bounds[i].position, {
-				y: startingY,
-				delay: Math.random(),
-				duration: 2,
-				ease: 'elastic.in(1, 0.3)',
-				onStart() {
-					timeLine.kill();
-				},
-				onComplete() {
-					noOfRevertedAnimations += 1;
-				}
-			});
+	const { camera } = useThrelte();
+	const initialCameraPosition = camera.current.position;
+
+	export async function moveOutOfView() {}
+
+	function explode(group: Group) {
+		const scale = fromStore(
+			tweened(0, {
+				duration: 2000,
+				easing: cubicInOut
+			})
+		);
+
+		scale.current = 1;
+		const { stop } = useTask(() => {
+			if (scale.current === 1) {
+				stop();
+			}
+
+			group.rotation.y = (1 - scale.current) * 3 * Math.PI;
 		});
+	}
 
-		return new Promise<void>((resolve) => {
-			const cleanup = $effect.root(() => {
-				$effect(() => {
-					if (noOfRevertedAnimations == timeLines.length) {
-						resolve();
-						cleanup();
-					}
-				});
-			});
+	function moveCameraAround() {
+		let quotient = 1;
+		let initialSphericalPosition = new Spherical().setFromVector3(initialCameraPosition);
+		useTask(() => {
+			const spherical = new Spherical().setFromVector3(camera.current.position);
+			spherical.theta += 0.01;
+			spherical.radius += 0.1 * quotient;
+			if (
+				spherical.radius <= initialSphericalPosition.radius / 2 ||
+				spherical.radius >= (initialSphericalPosition.radius * 3) / 2
+			) {
+				quotient *= -1;
+			}
+			camera.current.position.setFromSpherical(spherical);
+			camera.current.lookAt(0, 0, 0);
 		});
 	}
 
 	onMount(() => {
-		spheresRef.bounds.forEach((sphere, i) => {
-			timeLines[i] = gsap.timeline();
-			const endingY = i % 2 == 0 ? -3 + Math.random() * 2 : 4 + Math.random() * 2;
-			timeLines[i]
-				.addLabel('start')
-				.to(sphere.position, {
-					delay: Math.random(),
-					y: endingY,
-					duration: 3,
-					ease: 'elastic.out'
-				})
-				.addLabel('bounce')
-				.to(sphere.position, {
-					y: endingY + 1,
-					yoyo: true,
-					duration: 3,
-					repeat: -1,
-					ease: 'sine.inOut'
-				});
-		});
 		return () => {
-			timeLines.forEach((timeLine) => {
-				timeLine.kill();
-			});
+			camera.current.position.copy(initialCameraPosition);
 		};
 	});
 </script>
 
-{#each data as info, i (info)}
-	<Skill
-		bind:ref={spheresRef.toBeBounds[i]}
-		radius={2.8}
-		position={info.position}
-		sphereColor={info.sphereColor}
-		text={info.text}
-		textColor={info.sphereColor}
-		fontSize={1}
-		url={info.icon} />
-{/each}
+<T.PointLight position={[0, 0, 0]} intensity={50} castShadow></T.PointLight>
+
+<T.Group
+	position={[
+		-randomPositionGenerator.maxDistance / 2,
+		-randomPositionGenerator.maxDistance / 2,
+		-randomPositionGenerator.maxDistance / 2
+	]}
+	oncreate={(ref) => {
+		explode(ref);
+		moveCameraAround();
+	}}>
+	{#each data as info (info)}
+		<Skill
+			{radius}
+			position={new Vector3(...Object.values(randomPositionGenerator.generate()))}
+			sphereColor={info.sphereColor}
+			text={info.text}
+			textColor={info.sphereColor}
+			size={1.5}
+			fontSize={1}
+			url={'icon' in info ? info.icon : undefined} />
+	{/each}
+</T.Group>

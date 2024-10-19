@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import { T, useLoader } from '@threlte/core';
-	import { onMount } from 'svelte';
+
 	import type { Side, Vector3Like } from 'three';
 	import {
 		DoubleSide,
@@ -23,7 +23,7 @@
 
 	export type Props = {
 		url: string;
-		size?: number | { width: number; height: number };
+		size?: number;
 		position?: Vector3 | Vector3Like;
 		drawFillShapes?: boolean;
 		drawStrokes?: boolean;
@@ -53,17 +53,14 @@
 
 	const loader = useLoader(SVGLoader);
 
-	// the reason we added a wrapperRef is because everything in groupRef is scaled down/up, so nothing means 1-1 with parent values
-	let wrapperRef: Group | undefined = undefined;
-	let groupRef: Group | undefined = undefined;
-
 	async function loadSvg(wrapperRef: Group, groupRef: Group): Promise<void> {
 		const data = await loader.load(url);
 		let renderOrder = 0;
 
-		// Iterate over paths in the loaded SVG data
 		for (const path of data.paths) {
-			if (!path.userData) continue; // Skip if userData is not present
+			if (!path.userData) {
+				continue;
+			}
 
 			// Handle fill shapes
 			const fillColor = path.userData.style.fill;
@@ -132,18 +129,9 @@
 			return;
 		}
 
-		// Determine the scaling factors
-		if (typeof size === 'number') {
-			// Uniform scaling
-			const maxActualSize = Math.max(actualSize.x, actualSize.y);
-			const scalingFactor = size / maxActualSize;
-			ref.scale.set(scalingFactor, -scalingFactor, scalingFactor);
-		} else {
-			// Non-uniform scaling
-			const scaleX = size.width / actualSize.x;
-			const scaleY = size.height / actualSize.y;
-			ref.scale.set(scaleX, -scaleY, 1);
-		}
+		const maxActualSize = Math.max(actualSize.x, actualSize.y);
+		const scalingFactor = size / maxActualSize;
+		ref.scale.set(scalingFactor, -scalingFactor, scalingFactor);
 	}
 
 	// Helper function to create materials
@@ -188,16 +176,13 @@
 			ref.add(mesh);
 		}
 	}
-
-	onMount(() => {
-		if (!wrapperRef || !groupRef) {
-			throw new Error('for some reason refs is not bound yet');
-		}
-
-		loadSvg(wrapperRef, groupRef);
-	});
 </script>
 
-<T.Group bind:ref={wrapperRef}>
-	<T.Group bind:ref={groupRef}></T.Group>
+<T.Group>
+	<T.Group
+		oncreate={(ref) => {
+			// the reason we need the parent is because everything in this group is scaled down/up,
+			// so nothing means 1-1 with parent values
+			loadSvg(ref, ref.parent as Group);
+		}}></T.Group>
 </T.Group>

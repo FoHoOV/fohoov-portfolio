@@ -2,6 +2,9 @@
 	import SphereWithImage, {
 		type Props as SphereWithImageProps
 	} from '$lib/components/threlte/utils/sphere/SphereWithImage.svelte';
+	import SphereWithRotation, {
+		type Props as SphereWithRotationProps
+	} from '$lib/components/threlte/utils/sphere/SphereWithRotation.svelte';
 	import { lookAt } from '$lib/utils/threlte/look-at';
 	import { useThrelte } from '@threlte/core';
 	import { Text } from '@threlte/extras';
@@ -11,22 +14,34 @@
 	import { fromStore } from 'svelte/store';
 	import type { Color, ColorRepresentation } from 'three';
 
-	export type Props = {
+	type BaseProps = {
 		text: string;
 		fontSize: number;
 		textColor?: Color | ColorRepresentation;
 		scale?: never;
-	} & SphereWithImageProps;
+	};
+
+	export type Props =
+		| ({
+				url: string;
+		  } & BaseProps &
+				SphereWithImageProps)
+		| ({
+				url?: undefined;
+		  } & BaseProps &
+				SphereWithRotationProps);
 </script>
 
 <script lang="ts">
 	let {
+		url,
 		text,
 		fontSize,
 		textColor = 'white',
 		distanceFromSphere = 0.3,
 		rotationSpeed = 0,
 		ref = $bindable(undefined),
+		size = 1,
 		children,
 		...restProps
 	}: Props = $props();
@@ -43,6 +58,17 @@
 
 	const { camera } = useThrelte();
 
+	function pointerEnteredHandler() {
+		zoom.current = 12 / 10;
+		cachedYRotation = ref!.rotation.y;
+		rotation.current = cachedYRotation + Math.PI;
+	}
+
+	function pointerLeftHandler() {
+		zoom.current = 10 / 12;
+		rotation.current = cachedYRotation;
+	}
+
 	onMount(() => {
 		if (!ref) {
 			return;
@@ -55,30 +81,58 @@
 	});
 </script>
 
-<SphereWithImage
-	bind:ref
-	scale={zoom.current}
-	onpointerenter={(e: unknown) => {
-		zoom.current = 12 / 10;
-		cachedYRotation = ref!.rotation.y;
-		rotation.current = cachedYRotation + Math.PI;
-	}}
-	onpointerleave={(e: unknown) => {
-		zoom.current = 10 / 12;
-		rotation.current = cachedYRotation;
-	}}
-	yRotation={rotation.current}
-	{rotationSpeed}
-	{...restProps}>
-	<Text
-		position={[0, 0, -restProps.radius - distanceFromSphere]}
-		{text}
-		{fontSize}
-		curveRadius={-restProps.radius - distanceFromSphere}
-		anchorY={'50%'}
-		anchorX={'50%'}
-		rotation.y={Math.PI}
-		{fillOpacity}
-		color={textColor} />
-	{@render children?.()}
-</SphereWithImage>
+{#if url}
+	<SphereWithImage
+		bind:ref
+		scale={zoom.current}
+		onpointerenter={pointerEnteredHandler}
+		onpointerleave={pointerLeftHandler}
+		{url}
+		yRotation={rotation.current}
+		{rotationSpeed}
+		{size}
+		{...restProps}>
+		<Text
+			position={[0, 0, -restProps.radius - distanceFromSphere]}
+			{text}
+			{fontSize}
+			curveRadius={-restProps.radius - distanceFromSphere}
+			anchorY={'50%'}
+			anchorX={'50%'}
+			rotation.y={Math.PI}
+			{fillOpacity}
+			color={textColor} />
+		{@render children?.()}
+	</SphereWithImage>
+{:else}
+	<SphereWithRotation
+		bind:ref
+		scale={zoom.current}
+		onpointerenter={pointerEnteredHandler}
+		onpointerleave={pointerLeftHandler}
+		yRotation={rotation.current}
+		{rotationSpeed}
+		{size}
+		{...restProps}>
+		<Text
+			position={[0, 0, -restProps.radius - distanceFromSphere]}
+			{text}
+			{fontSize}
+			curveRadius={-restProps.radius - distanceFromSphere}
+			anchorY={'50%'}
+			anchorX={'50%'}
+			rotation.y={Math.PI}
+			{fillOpacity}
+			color={textColor} />
+		<Text
+			position={[0, 0, restProps.radius + distanceFromSphere]}
+			{text}
+			{fontSize}
+			curveRadius={restProps.radius + distanceFromSphere}
+			anchorY={'50%'}
+			anchorX={'50%'}
+			fillOpacity={1 - fillOpacity}
+			color={textColor} />
+		{@render children?.()}
+	</SphereWithRotation>
+{/if}

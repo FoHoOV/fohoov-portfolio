@@ -8,6 +8,7 @@
 		url: string;
 		distanceFromSphere?: number;
 		svgMaterialType?: SvgMaterialTypes;
+		size?: number;
 	} & SphereWithRotationProps;
 </script>
 
@@ -16,6 +17,7 @@
 		url,
 		distanceFromSphere = 0.2,
 		ref = $bindable(undefined),
+		size = 2,
 		svgMaterialType,
 		children,
 		...restProps
@@ -23,10 +25,9 @@
 </script>
 
 <SphereWithRotation bind:ref {...restProps}>
-	<!-- TODO: scaling factor shouldn't be hardcoded like this, add a size? -->
 	<Svg
 		{url}
-		size={2}
+		{size}
 		position={{ x: 0, y: 0, z: restProps.radius + distanceFromSphere }}
 		materialType={svgMaterialType} />
 	{@render children?.()}

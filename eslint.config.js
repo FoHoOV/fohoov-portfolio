@@ -37,6 +37,7 @@ export default tseslint.config(
 		rules: {
 			'@typescript-eslint/no-unused-vars': 'warn',
 			'@typescript-eslint/no-explicit-any': 'warn',
+			'svelte/valid-compile': 'warn',
 			'no-unused-expressions': 'off',
 			'@typescript-eslint/no-unused-expressions': 'off'
 		}

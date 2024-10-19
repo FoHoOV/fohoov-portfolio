@@ -1,6 +1,6 @@
 import { LinkedListItem } from '$lib/utils/linked-list/item';
 
-export class LinkedList<T> {
+export class LinkedList<T> implements Iterable<T> {
 	#start: LinkedListItem<T> | null = null;
 	#length: number = 0;
 
@@ -74,6 +74,27 @@ export class LinkedList<T> {
 		}
 
 		return result!;
+	}
+
+	[Symbol.iterator](): Iterator<T> {
+		let current = this.#start;
+
+		return {
+			next: () => {
+				const value = current?.value;
+				current = current?.next ?? null;
+				return { value: value as T, done: current === null };
+			}
+		};
+	}
+
+	includes(value: T) {
+		for (const v of this) {
+			if (v === value) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	get length() {
