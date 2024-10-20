@@ -33,6 +33,8 @@
 </script>
 
 <script lang="ts">
+	import { Float } from '@threlte/extras';
+
 	let {
 		url,
 		text,
@@ -81,58 +83,60 @@
 	});
 </script>
 
-{#if url}
-	<SphereWithImage
-		bind:ref
-		scale={zoom.current}
-		onpointerenter={pointerEnteredHandler}
-		onpointerleave={pointerLeftHandler}
-		{url}
-		yRotation={rotation.current}
-		{rotationSpeed}
-		{size}
-		{...restProps}>
-		<Text
-			position={[0, 0, -restProps.radius - distanceFromSphere]}
-			{text}
-			{fontSize}
-			curveRadius={-restProps.radius - distanceFromSphere}
-			anchorY={'50%'}
-			anchorX={'50%'}
-			rotation.y={Math.PI}
-			{fillOpacity}
-			color={textColor} />
-		{@render children?.()}
-	</SphereWithImage>
-{:else}
-	<SphereWithRotation
-		bind:ref
-		scale={zoom.current}
-		onpointerenter={pointerEnteredHandler}
-		onpointerleave={pointerLeftHandler}
-		yRotation={rotation.current}
-		{rotationSpeed}
-		{size}
-		{...restProps}>
-		<Text
-			position={[0, 0, -restProps.radius - distanceFromSphere]}
-			{text}
-			{fontSize}
-			curveRadius={-restProps.radius - distanceFromSphere}
-			anchorY={'50%'}
-			anchorX={'50%'}
-			rotation.y={Math.PI}
-			{fillOpacity}
-			color={textColor} />
-		<Text
-			position={[0, 0, restProps.radius + distanceFromSphere]}
-			{text}
-			{fontSize}
-			curveRadius={restProps.radius + distanceFromSphere}
-			anchorY={'50%'}
-			anchorX={'50%'}
-			fillOpacity={1 - fillOpacity}
-			color={textColor} />
-		{@render children?.()}
-	</SphereWithRotation>
-{/if}
+<Float floatIntensity={20}>
+	{#if url}
+		<SphereWithImage
+			bind:ref
+			scale={zoom.current}
+			onpointerenter={pointerEnteredHandler}
+			onpointerleave={pointerLeftHandler}
+			{url}
+			yRotation={rotation.current}
+			{rotationSpeed}
+			{size}
+			{...restProps}>
+			<Text
+				position={[0, 0, -restProps.radius - distanceFromSphere]}
+				{text}
+				{fontSize}
+				curveRadius={-restProps.radius - distanceFromSphere}
+				anchorY={'50%'}
+				anchorX={'50%'}
+				rotation.y={Math.PI}
+				{fillOpacity}
+				color={textColor} />
+			{@render children?.()}
+		</SphereWithImage>
+	{:else}
+		<SphereWithRotation
+			bind:ref
+			scale={zoom.current}
+			onpointerenter={pointerEnteredHandler}
+			onpointerleave={pointerLeftHandler}
+			yRotation={rotation.current}
+			{rotationSpeed}
+			{size}
+			{...restProps}>
+			<Text
+				position={[0, 0, -restProps.radius - distanceFromSphere]}
+				{text}
+				{fontSize}
+				curveRadius={-restProps.radius - distanceFromSphere}
+				anchorY={'50%'}
+				anchorX={'50%'}
+				rotation.y={Math.PI}
+				{fillOpacity}
+				color={textColor} />
+			<Text
+				position={[0, 0, restProps.radius + distanceFromSphere]}
+				{text}
+				{fontSize}
+				curveRadius={restProps.radius + distanceFromSphere}
+				anchorY={'50%'}
+				anchorX={'50%'}
+				fillOpacity={1 - fillOpacity}
+				color={textColor} />
+			{@render children?.()}
+		</SphereWithRotation>
+	{/if}
+</Float>

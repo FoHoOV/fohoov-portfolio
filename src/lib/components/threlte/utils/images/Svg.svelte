@@ -183,6 +183,6 @@
 		oncreate={(ref) => {
 			// the reason we need the parent is because everything in this group is scaled down/up,
 			// so nothing means 1-1 with parent values
-			loadSvg(ref, ref.parent as Group);
+			void loadSvg(ref, ref.parent as Group);
 		}}></T.Group>
 </T.Group>
