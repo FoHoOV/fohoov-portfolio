@@ -12,10 +12,21 @@
 
 <script lang="ts">
 	let { class: className, title, ref = $bindable(undefined), children }: Props = $props();
+
+	let titleRef: HTMLDivElement | undefined = undefined;
+	function fadeHeader(_: Event) {
+		titleRef!.style.opacity = (
+			1 -
+			Math.max(document.body.offsetHeight - ref!.getBoundingClientRect().top, 0) /
+				document.body.offsetHeight
+		).toString();
+	}
 </script>
 
+<svelte:window onscroll={fadeHeader} />
+
 <div class="min-h-full w-full {className}" bind:this={ref}>
-	<div class="sticky top-0 z-10 w-full self-start text-center align-top">
+	<div class="sticky top-0 z-10 w-full self-start text-center align-top" bind:this={titleRef}>
 		<GlowEffect>
 			<h1 class="py-7 text-7xl font-extrabold backdrop-blur-sm sm:text-8xl">{title}</h1>
 		</GlowEffect>
