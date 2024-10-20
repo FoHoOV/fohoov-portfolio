@@ -13,6 +13,11 @@ export default tseslint.config(
 	...svelte.configs['flat/prettier'],
 	{
 		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				tsconfigRootDir: import.meta.dirname,
+				extraFileExtensions: ['.spec.ts', '.test.ts', '.svelte']
+			},
 			globals: {
 				...globals.browser,
 				...globals.node
@@ -29,17 +34,38 @@ export default tseslint.config(
 		}
 	},
 	{
-		languageOptions: {
-			parserOptions: {
-				extraFileExtensions: ['.spec.ts', '.test.ts']
-			}
-		},
 		rules: {
-			'@typescript-eslint/no-unused-vars': 'warn',
 			'@typescript-eslint/no-explicit-any': 'warn',
 			'svelte/valid-compile': 'warn',
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					args: 'all',
+					argsIgnorePattern: '^_',
+					caughtErrors: 'all',
+					caughtErrorsIgnorePattern: '^_',
+					destructuredArrayIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					ignoreRestSiblings: true
+				}
+			],
+			'@typescript-eslint/no-floating-promises': 'warn',
 			'no-unused-expressions': 'off',
-			'@typescript-eslint/no-unused-expressions': 'off'
+			'@typescript-eslint/no-misused-promises': [
+				'error',
+				{
+					checksVoidReturn: {
+						attributes: false
+					}
+				}
+			],
+			'@typescript-eslint/no-unused-expressions': [
+				'warn',
+				{
+					allowShortCircuit: true,
+					allowTernary: true
+				}
+			]
 		}
 	},
 	{
