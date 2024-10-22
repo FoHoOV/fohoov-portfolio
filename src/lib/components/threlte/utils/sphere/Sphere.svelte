@@ -31,7 +31,7 @@
 		radius,
 		position,
 		sphereColor,
-		roughness = 0.2,
+		roughness = 0.1,
 		metalness = 0.98,
 		ref = $bindable(undefined),
 		enableReflection = true,
