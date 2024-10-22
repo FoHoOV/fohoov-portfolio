@@ -17,6 +17,10 @@
 		sphereColor?: Color | ColorRepresentation;
 		roughness?: number;
 		metalness?: number;
+		/**
+		 * @default true
+		 */
+		enableReflection?: boolean;
 		ref?: Group | undefined;
 		children?: Snippet;
 	} & Omit<ThrelteProps<typeof Group>, 'position' | 'ref' | 'children'>;
@@ -30,11 +34,12 @@
 		roughness = 0.2,
 		metalness = 0.98,
 		ref = $bindable(undefined),
+		enableReflection = true,
 		children,
 		...restProps
 	}: Props = $props();
 
-	const sphereEnvMap = $derived(ref ? generateReflectionTexture(ref) : null);
+	const sphereEnvMap = $derived(enableReflection && ref ? generateReflectionTexture(ref) : null);
 </script>
 
 <T.Group bind:ref position={[position.x, position.y, position.z]} {...restProps}>

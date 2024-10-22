@@ -31,8 +31,8 @@
 		});
 	}
 
-	function unMountScene() {
-		threlteSceneManager.remove(sceneSymbol);
+	async function unMountScene() {
+		await threlteSceneManager.remove(sceneSymbol);
 	}
 
 	onMount(() => {

@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
-	import type { Snippet } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 
 	export type Props = {
 		class?: string;
@@ -14,13 +14,17 @@
 	let { class: className, title, ref = $bindable(undefined), children }: Props = $props();
 
 	let titleRef: HTMLDivElement | undefined = undefined;
-	function fadeHeader(_: Event) {
+	function fadeHeader() {
 		titleRef!.style.opacity = (
 			1 -
 			Math.max(document.body.offsetHeight - ref!.getBoundingClientRect().top, 0) /
 				document.body.offsetHeight
 		).toString();
 	}
+
+	onMount(() => {
+		fadeHeader();
+	});
 </script>
 
 <svelte:window onscroll={fadeHeader} />

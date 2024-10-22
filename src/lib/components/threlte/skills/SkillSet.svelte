@@ -92,6 +92,7 @@
 			textColor={info.sphereColor}
 			size={1.5}
 			fontSize={1}
+			enableReflection={false}
 			url={'icon' in info ? info.icon : undefined} />
 	{/each}
 </T.Group>
