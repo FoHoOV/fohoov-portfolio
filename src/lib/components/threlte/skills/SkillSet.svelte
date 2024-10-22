@@ -8,9 +8,9 @@
 	import { onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
-	import { cubicInOut } from 'svelte/easing';
+	import { cubicInOut, cubicOut } from 'svelte/easing';
 
-	const CAMERA_OUT_RADIUS = 5000;
+	const CAMERA_OUT_RADIUS = 1000;
 	const RADIUS = 2;
 	const RANDOM_POSITION_BOX_SIZE = 10;
 </script>
@@ -27,7 +27,7 @@
 	);
 
 	const { camera } = useThrelte();
-	const initialCameraPosition = camera.current.position;
+	const initialCameraPosition = camera.current.position.clone();
 
 	let currentAnimation: 'intro' | 'viewing' | 'outro' | 'finished' = $state('intro');
 
@@ -53,7 +53,7 @@
 
 		const radiusTweened = fromStore(
 			tweened(movedCamera.radius, {
-				easing: cubicInOut,
+				easing: cubicOut,
 				duration: 2000
 			})
 		);
