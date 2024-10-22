@@ -3,7 +3,6 @@
 
 	import type { Side, Vector3Like } from 'three';
 	import {
-		DoubleSide,
 		ShapeGeometry,
 		MeshBasicMaterial,
 		MeshStandardMaterial,
@@ -14,7 +13,8 @@
 		Shape,
 		Path,
 		BoxHelper,
-		Box3
+		Box3,
+		FrontSide
 	} from 'three';
 	import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 
@@ -46,7 +46,7 @@
 		fillWireFrameShapes = false,
 		strokesWireFrame = false,
 		depthWrite = false,
-		side = DoubleSide,
+		side = FrontSide,
 		debug = false,
 		materialType = 'basic'
 	}: Props = $props();
