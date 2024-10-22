@@ -4,63 +4,182 @@
 	import { T, useThrelte, useTask } from '@threlte/core';
 	import { data } from './skills';
 
-	import { Spherical, Vector3, type Group } from 'three';
+	import { Spherical, Vector3 } from 'three';
 	import { onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
 	import { cubicInOut } from 'svelte/easing';
+
+	const CAMERA_OUT_RADIUS = 5000;
+	const RADIUS = 2;
+	const RANDOM_POSITION_BOX_SIZE = 10;
 </script>
 
 <script lang="ts">
-	const radius = 2;
-	const randomPositionBoxSize = 10;
-	const randomPositionGenerator = new RandomPosition(randomPositionBoxSize, radius * 2);
+	const randomPositionGenerator = new RandomPosition(RANDOM_POSITION_BOX_SIZE, RADIUS * 2);
+
 	randomPositionGenerator.addForcedUseCell(
 		randomPositionGenerator.positionToIndex({
-			x: Math.ceil(randomPositionBoxSize / 2),
-			y: Math.ceil(randomPositionBoxSize / 2),
-			z: Math.ceil(randomPositionBoxSize / 2)
+			x: Math.ceil(RANDOM_POSITION_BOX_SIZE / 2),
+			y: Math.ceil(RANDOM_POSITION_BOX_SIZE / 2),
+			z: Math.ceil(RANDOM_POSITION_BOX_SIZE / 2)
 		})
 	);
 
 	const { camera } = useThrelte();
 	const initialCameraPosition = camera.current.position;
 
-	export async function moveOutOfView() {}
+	let currentAnimation: 'intro' | 'viewing' | 'outro' | 'finished' = $state('intro');
 
-	function explode(group: Group) {
-		const scale = fromStore(
-			tweened(0, {
-				duration: 2000,
-				easing: cubicInOut
-			})
-		);
-
-		scale.current = 1;
-		const { stop } = useTask(() => {
-			if (scale.current === 1) {
-				stop();
-			}
-
-			group.rotation.y = (1 - scale.current) * 3 * Math.PI;
+	export async function moveOutOfView() {
+		currentAnimation = 'outro';
+		return new Promise<void>((resolve) => {
+			const cleanup = $effect.root(() => {
+				$effect(() => {
+					if (currentAnimation === 'finished') {
+						resolve();
+						cleanup();
+					}
+				});
+			});
 		});
 	}
 
-	function moveCameraAround() {
-		let quotient = 1;
-		let initialSphericalPosition = new Spherical().setFromVector3(initialCameraPosition);
-		useTask(() => {
+	function introAnimation(initialSphericalPosition: Spherical) {
+		let movedCamera = new Spherical().copy(initialSphericalPosition);
+
+		movedCamera.radius = CAMERA_OUT_RADIUS;
+		camera.current.position.setFromSpherical(movedCamera);
+
+		const radiusTweened = fromStore(
+			tweened(movedCamera.radius, {
+				easing: cubicInOut,
+				duration: 2000
+			})
+		);
+
+		const rotationTweened = fromStore(
+			tweened(initialSphericalPosition.theta, {
+				easing: cubicInOut,
+				duration: 2000
+			})
+		);
+
+		let isInitialized = false;
+		const init = () => {
+			radiusTweened.current = Math.floor(initialSphericalPosition.radius);
+			rotationTweened.current += Math.PI * 2;
+		};
+
+		return () => {
+			if (!isInitialized) {
+				init();
+				isInitialized = true;
+			}
+
 			const spherical = new Spherical().setFromVector3(camera.current.position);
-			spherical.theta += 0.003;
+
+			spherical.radius = radiusTweened.current;
+			spherical.theta = rotationTweened.current;
+
+			if (spherical.radius <= initialSphericalPosition.radius) {
+				currentAnimation = 'viewing';
+			}
+
+			camera.current.position.setFromSpherical(spherical);
+			camera.current.lookAt(0, 0, 0);
+		};
+	}
+
+	function viewingAnimation(initialSphericalPosition: Spherical) {
+		let quotient = 1;
+
+		return () => {
+			const spherical = new Spherical().setFromVector3(camera.current.position);
+
 			spherical.radius += 0.02 * quotient;
+			spherical.theta += 0.005;
+
 			if (
 				spherical.radius <= initialSphericalPosition.radius / 2 ||
 				spherical.radius >= (initialSphericalPosition.radius * 3) / 2
 			) {
 				quotient *= -1;
 			}
+
 			camera.current.position.setFromSpherical(spherical);
 			camera.current.lookAt(0, 0, 0);
+		};
+	}
+
+	function outroAnimation() {
+		let radiusTweened = { current: 0 };
+		let rotationTweened = { current: 0 };
+
+		let isInitialized = false;
+		const init = () => {
+			const initialSphericalPosition = new Spherical().setFromVector3(camera.current.position);
+
+			radiusTweened = fromStore(
+				tweened(initialSphericalPosition.radius, {
+					easing: cubicInOut,
+					duration: 2000
+				})
+			);
+
+			rotationTweened = fromStore(
+				tweened(initialSphericalPosition.theta, {
+					easing: cubicInOut,
+					duration: 2000
+				})
+			);
+			radiusTweened.current = CAMERA_OUT_RADIUS;
+			rotationTweened.current -= Math.PI * 2;
+		};
+
+		return () => {
+			if (!isInitialized) {
+				init();
+				isInitialized = true;
+			}
+
+			const spherical = new Spherical().setFromVector3(camera.current.position);
+
+			spherical.radius = radiusTweened.current;
+			spherical.theta = rotationTweened.current;
+
+			if (spherical.radius >= CAMERA_OUT_RADIUS) {
+				currentAnimation = 'finished';
+			}
+
+			camera.current.position.setFromSpherical(spherical);
+			camera.current.lookAt(0, 0, 0);
+		};
+	}
+
+	function animate() {
+		let initialSphericalPosition = new Spherical().setFromVector3(initialCameraPosition);
+
+		const intro = introAnimation(initialSphericalPosition);
+		const viewing = viewingAnimation(initialSphericalPosition);
+		const outro = outroAnimation();
+
+		useTask(() => {
+			switch ($state.snapshot(currentAnimation)) {
+				case 'intro':
+					intro();
+					break;
+				case 'viewing':
+					viewing();
+					break;
+				case 'outro':
+					outro();
+					break;
+				case 'finished':
+					break;
+				default:
+					throw new Error('unhandled animation state');
+			}
 		});
 	}
 
@@ -79,13 +198,12 @@
 		-randomPositionGenerator.maxDistance / 2,
 		-randomPositionGenerator.maxDistance / 2
 	]}
-	oncreate={(ref) => {
-		explode(ref);
-		moveCameraAround();
+	oncreate={() => {
+		animate();
 	}}>
 	{#each data as info (info)}
 		<Skill
-			{radius}
+			radius={RADIUS}
 			position={new Vector3(...Object.values(randomPositionGenerator.generate()))}
 			sphereColor={info.sphereColor}
 			text={info.text}
