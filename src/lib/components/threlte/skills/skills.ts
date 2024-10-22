@@ -25,10 +25,10 @@ export const data = [
 		text: 'Tailwind'
 	},
 	{
-		sphereColor: '#ddd8d5',
+		sphereColor: '#3f777d',
 		icon: '/icons/brands/typescript.svg',
 		text: 'Typescript'
-	}, //change
+	},
 	{
 		sphereColor: '#698c94',
 		icon: '/icons/brands/react.svg',
@@ -48,7 +48,7 @@ export const data = [
 		text: 'MicroFronts'
 	},
 	{
-		sphereColor: '#51e43e',
+		sphereColor: '#5f60c7',
 		icon: '/icons/brands/dotnet.svg',
 		text: 'ASP.NET'
 	},
@@ -87,7 +87,7 @@ export const data = [
 		text: 'Playwright'
 	},
 	{
-		sphereColor: '#743ca6',
+		sphereColor: '#cf7552',
 		icon: '/icons/brands/html.svg',
 		text: 'HTML'
 	},

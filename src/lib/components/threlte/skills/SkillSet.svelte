@@ -51,8 +51,8 @@
 		let initialSphericalPosition = new Spherical().setFromVector3(initialCameraPosition);
 		useTask(() => {
 			const spherical = new Spherical().setFromVector3(camera.current.position);
-			spherical.theta += 0.01;
-			spherical.radius += 0.1 * quotient;
+			spherical.theta += 0.003;
+			spherical.radius += 0.02 * quotient;
 			if (
 				spherical.radius <= initialSphericalPosition.radius / 2 ||
 				spherical.radius >= (initialSphericalPosition.radius * 3) / 2
