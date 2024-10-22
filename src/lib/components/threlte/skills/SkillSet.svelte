@@ -54,14 +54,14 @@
 		const radiusTweened = fromStore(
 			tweened(movedCamera.radius, {
 				easing: cubicOut,
-				duration: 2000
+				duration: 1500
 			})
 		);
 
 		const rotationTweened = fromStore(
 			tweened(initialSphericalPosition.theta, {
 				easing: cubicInOut,
-				duration: 2000
+				duration: 1500
 			})
 		);
 
@@ -123,14 +123,14 @@
 			radiusTweened = fromStore(
 				tweened(initialSphericalPosition.radius, {
 					easing: cubicInOut,
-					duration: 2000
+					duration: 1000
 				})
 			);
 
 			rotationTweened = fromStore(
 				tweened(initialSphericalPosition.theta, {
 					easing: cubicInOut,
-					duration: 2000
+					duration: 1000
 				})
 			);
 			radiusTweened.current = CAMERA_OUT_RADIUS;
