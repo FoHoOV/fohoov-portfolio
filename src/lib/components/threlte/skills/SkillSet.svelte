@@ -29,7 +29,7 @@
 	const { camera } = useThrelte();
 	const initialCameraPosition = camera.current.position.clone();
 
-	let currentAnimation: 'intro' | 'viewing' | 'outro' | 'finished' = $state('intro');
+	let currentAnimation: 'intro' | 'circle-around' | 'outro' | 'finished' = $state('intro');
 
 	export async function moveOutOfView() {
 		currentAnimation = 'outro';
@@ -83,7 +83,7 @@
 			spherical.theta = rotationTweened.current;
 
 			if (spherical.radius <= initialSphericalPosition.radius) {
-				currentAnimation = 'viewing';
+				currentAnimation = 'circle-around';
 			}
 
 			camera.current.position.setFromSpherical(spherical);
@@ -91,7 +91,7 @@
 		};
 	}
 
-	function viewingAnimation(initialSphericalPosition: Spherical) {
+	function circleAroundAnimation(initialSphericalPosition: Spherical) {
 		let quotient = 1;
 
 		return () => {
@@ -161,7 +161,7 @@
 		let initialSphericalPosition = new Spherical().setFromVector3(initialCameraPosition);
 
 		const intro = introAnimation(initialSphericalPosition);
-		const viewing = viewingAnimation(initialSphericalPosition);
+		const circleAround = circleAroundAnimation(initialSphericalPosition);
 		const outro = outroAnimation();
 
 		useTask(() => {
@@ -169,8 +169,8 @@
 				case 'intro':
 					intro();
 					break;
-				case 'viewing':
-					viewing();
+				case 'circle-around':
+					circleAround();
 					break;
 				case 'outro':
 					outro();
