@@ -120,7 +120,7 @@
 {#if debug}
 	<T.AxesHelper args={[500]}></T.AxesHelper>
 
-	<PerfMonitor />
+	<PerfMonitor scale={2} />
 
 	<Grid
 		cellColor="#ffffff"
