@@ -28,6 +28,7 @@
 
 	const { camera } = useThrelte();
 	const initialCameraPosition = camera.current.position.clone();
+	const initialCameraRotation = camera.current.rotation.clone();
 
 	let currentAnimation: 'intro' | 'circle-around' | 'outro' | 'finished' = $state('intro');
 
@@ -186,6 +187,11 @@
 	onMount(() => {
 		return () => {
 			camera.current.position.copy(initialCameraPosition);
+			camera.current.rotation.set(
+				initialCameraRotation.x,
+				initialCameraRotation.y,
+				initialCameraRotation.z
+			);
 		};
 	});
 </script>
