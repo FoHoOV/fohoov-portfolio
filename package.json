@@ -46,6 +46,7 @@
 		"@iconify/svelte": "^4.0.2",
 		"@threlte/core": "8.0.0-next.21",
 		"@threlte/extras": "9.0.0-next.28",
+		"@threlte/flex": "2.0.0-next.9",
 		"@threlte/gltf": "3.0.0-next.8",
 		"@types/js-cookie": "^3.0.6",
 		"@types/three": "^0.165.0",

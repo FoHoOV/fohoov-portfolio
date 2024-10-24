@@ -17,6 +17,9 @@ importers:
       '@threlte/extras':
         specifier: 9.0.0-next.28
         version: 9.0.0-next.28(@types/three@0.165.0)(svelte@5.1.0)(three@0.169.0)
+      '@threlte/flex':
+        specifier: 2.0.0-next.9
+        version: 2.0.0-next.9(svelte@5.1.0)(three@0.169.0)
       '@threlte/gltf':
         specifier: 3.0.0-next.8
         version: 3.0.0-next.8
@@ -610,6 +613,12 @@ packages:
 
   '@threlte/extras@9.0.0-next.28':
     resolution: {integrity: sha512-vsDvKcRtSlkWVDwCeJ1eONZX45K+ySSPpzmGYJx82iahPDQc4R+Igo8JA/sxRSIAGL3NvmnMiHIzf1xzuT9jYA==}
+    peerDependencies:
+      svelte: '>=5'
+      three: '>=0.155'
+
+  '@threlte/flex@2.0.0-next.9':
+    resolution: {integrity: sha512-PNJlD1Ko9Ga3ZNOSf1G5GibAkx+JLv34Cq4pvy0R7aQvSTmwZM63IzeSlzgQPoyXKBI6keC6ADUqMg7DYP/M9w==}
     peerDependencies:
       svelte: '>=5'
       three: '>=0.155'
@@ -2647,6 +2656,9 @@ packages:
     resolution: {integrity: sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==}
     engines: {node: '>=12.20'}
 
+  yoga-layout@3.1.0:
+    resolution: {integrity: sha512-auzJ8lEovThZIpR8wLGWNo/JEj4VTO79q9/gOJ0dWb3shAYPFdX3t9VN0fC0v+jeQF77STUdCzebLwRMqzn5gQ==}
+
   zimmerframe@1.1.2:
     resolution: {integrity: sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w==}
 
@@ -3056,6 +3068,13 @@ snapshots:
       troika-three-text: 0.49.1(three@0.169.0)
     transitivePeerDependencies:
       - '@types/three'
+
+  '@threlte/flex@2.0.0-next.9(svelte@5.1.0)(three@0.169.0)':
+    dependencies:
+      mitt: 3.0.1
+      svelte: 5.1.0
+      three: 0.169.0
+      yoga-layout: 3.1.0
 
   '@threlte/gltf@3.0.0-next.8':
     dependencies:
@@ -5105,5 +5124,7 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.1.1: {}
+
+  yoga-layout@3.1.0: {}
 
   zimmerframe@1.1.2: {}
