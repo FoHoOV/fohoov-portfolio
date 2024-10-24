@@ -22,7 +22,6 @@ export function gsapCreator(node: Element, creators: GsapOptions) {
 							throw new Error(`timeline with label ${options?.label} not found!`);
 						}
 						timeLine = gsapCore.timeline(options);
-						// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 						options?.label && timeLines.set(options.label, timeLine);
 					}
 
