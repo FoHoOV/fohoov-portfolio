@@ -2,6 +2,7 @@
 	import { RandomPosition } from '$lib';
 	import Skill from '$lib/components/threlte/skills/Skill.svelte';
 	import { T, useThrelte, useTask } from '@threlte/core';
+	import { Stars } from '@threlte/extras';
 	import { data } from './skills';
 
 	import { Spherical, Vector3 } from 'three';
@@ -198,6 +199,7 @@
 
 <T.PointLight position={[0, 0, 0]} intensity={50} castShadow></T.PointLight>
 
+<Stars count={200} fade={true} lightness={0.2}></Stars>
 <T.Group
 	position={[
 		-randomPositionGenerator.maxDistance / 2,
