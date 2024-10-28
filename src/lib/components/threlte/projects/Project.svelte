@@ -1,26 +1,21 @@
 <script lang="ts" module>
 	import FlashLight from '$lib/components/threlte/projects/FlashLight.svelte';
 	import ArtBoard from '$lib/components/threlte/utils/artboard/ArtBoard.svelte';
-	import GlowEffect from '$lib/components/effects/GlowEffect.svelte';
 
 	import { type ComponentExports } from '$lib/utils';
-	import Icon from '@iconify/svelte';
 	import { T, useTask, type Props as ThrelteProps } from '@threlte/core';
-	import {
-		HTML,
-		ImageMaterial as ThrelteImageMaterial,
-		type IntersectionEvent
-	} from '@threlte/extras';
+	import { type IntersectionEvent } from '@threlte/extras';
 	import { Text } from '@threlte/extras';
 	import { type ComponentProps } from 'svelte';
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
-	import type { Mesh, Group } from 'three';
+	import type { Group } from 'three';
 
 	export type Props = {
 		projectUrl: string;
 		imageUrl: string;
-		flashLight: ComponentExports<typeof FlashLight>;
+		flashLight?: ComponentExports<typeof FlashLight>;
+		size?: number;
 	} & {
 		artBoardProps?: Omit<ComponentProps<typeof ArtBoard>, 'url'>;
 		center: {
@@ -40,6 +35,7 @@
 		ref = $bindable(undefined),
 		flashLight,
 		artBoardProps,
+		size = 10,
 		center,
 		bottom,
 		...rootProps
@@ -87,7 +83,7 @@
 		window.open(projectUrl, '_blank');
 	}}
 	{...rootProps}>
-	<ArtBoard url={imageUrl} width={10} height={10} {...artBoardProps}></ArtBoard>
+	<ArtBoard url={imageUrl} width={size} height={size} {...artBoardProps}></ArtBoard>
 
 	<Text
 		text={center.text}
@@ -113,6 +109,6 @@
 		outlineColor={'#b0e2b0'}
 		outlineWidth={0.01}
 		outlineOpacity={1 - textOpacity.current}
-		position={[2.5, -3, 1]}
+		position={[size / 4, -size / 3, 1]}
 		{...bottom?.props} />
 </T.Group>
