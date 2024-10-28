@@ -22,6 +22,11 @@
 			direction="start">
 			Created a E-commerce from scratch using <Code text="python" />, <Code text="vanilla TS/JS" /> and
 			<Code text="vanilla CSS" />
+			{#snippet bottom()}
+				<div class="badge badge-secondary badge-outline">Flask</div>
+				<div class="badge badge-secondary badge-outline">TS/JS</div>
+				<div class="badge badge-secondary badge-outline">CSS</div>
+			{/snippet}
 		</TimeLine.Item>
 		<TimeLine.Item
 			year={'2021'}
@@ -30,6 +35,9 @@
 			iconColorClassName={'text-accent'}
 			direction="end">
 			Started teaching online classes about web fundamentals
+			{#snippet bottom()}
+				<div class="badge badge-accent badge-outline">web fundamentals</div>
+			{/snippet}
 		</TimeLine.Item>
 		<TimeLine.Item
 			year={'2022'}
@@ -39,6 +47,10 @@
 			direction="start">
 			We worked on <Code text="NativeScript + Angular" /> with <Code text="xplat" />
 			to create a cross platform applications
+			{#snippet bottom()}
+				<div class="badge badge-primary badge-outline">NativeScript</div>
+				<div class="badge badge-primary badge-outline">XPlat</div>
+			{/snippet}
 		</TimeLine.Item>
 		<TimeLine.Item
 			year={'now'}
@@ -59,6 +71,12 @@
 					Creating micro frontends using <Code text="React" /> and <Code text="MUI" />
 				</li>
 			</ol>
+			{#snippet bottom()}
+				<div class="badge badge-success badge-outline">React</div>
+				<div class="badge badge-success badge-outline">ASP.NET</div>
+				<div class="badge badge-success badge-outline">micro fronts</div>
+				<div class="badge badge-success badge-outline">MUI</div>
+			{/snippet}
 		</TimeLine.Item>
 	</TimeLine.Root>
 </Section>

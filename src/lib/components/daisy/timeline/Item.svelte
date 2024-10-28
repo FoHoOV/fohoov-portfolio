@@ -9,6 +9,7 @@
 		iconColorClassName?: string;
 		direction?: 'start' | 'end';
 		children: Snippet;
+		bottom?: Snippet;
 	};
 </script>
 
@@ -19,7 +20,8 @@
 		lineColorClassName,
 		iconColorClassName,
 		direction = 'start',
-		children
+		children,
+		bottom
 	}: Props = $props();
 </script>
 
@@ -37,6 +39,11 @@
 		<div class="pt-2 text-lg {iconColorClassName}">
 			{@render children()}
 		</div>
+		{#if bottom}
+			<div class="pt-2">
+				{@render bottom()}
+			</div>
+		{/if}
 	</div>
 	{#if lineColorClassName}
 		<hr class={lineColorClassName} />
