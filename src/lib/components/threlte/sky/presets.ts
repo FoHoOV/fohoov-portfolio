@@ -1,6 +1,3 @@
-import type { Sky } from '@threlte/extras';
-import type { ComponentProps } from 'svelte';
-
 export const presets = {
 	sunset: {
 		turbidity: 10,
@@ -38,4 +35,15 @@ export const presets = {
 		mieDirectionalG: 0,
 		exposure: 0.26
 	}
-} as const;
+} as const satisfies Record<
+	string,
+	{
+		turbidity: number;
+		rayleigh: number;
+		azimuth: number;
+		elevation: number;
+		mieCoefficient: number;
+		mieDirectionalG: number;
+		exposure: number;
+	}
+>;

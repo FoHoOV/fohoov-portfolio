@@ -6,6 +6,20 @@ export default defineConfig({
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
+	optimizeDeps: {
+		esbuildOptions: {
+			// TODO: remove
+			supported: {
+				'top-level-await': true
+			}
+		}
+	},
+	esbuild: {
+		supported: {
+			// TODO: remove
+			'top-level-await': true
+		}
+	},
 	ssr: {
 		noExternal: ['gsap', '@gsap/shockingly', 'three']
 	}

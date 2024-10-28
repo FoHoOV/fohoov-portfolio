@@ -1,11 +1,16 @@
 <script lang="ts" module>
 	import Project from '$lib/components/threlte/projects/Project.svelte';
 	import FlashLight from '$lib/components/threlte/projects/FlashLight.svelte';
+	import Responsive from '$lib/components/threlte/responsive/Responsive.svelte';
+	import { Flex, Box } from '@threlte/flex';
+
 	import { type ComponentExports } from '$lib/utils';
-	import { T, useThrelte } from '@threlte/core';
+	import { useThrelte } from '@threlte/core';
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
 	import { fromStore } from 'svelte/store';
+	import { lookAt } from '$lib/utils/threlte/look-at';
+	import { projects } from '$lib/components/threlte/projects/projects';
 </script>
 
 <script lang="ts">
@@ -46,36 +51,36 @@
 
 <FlashLight bind:this={flashLightRef} />
 
-<Project
-	projectUrl="https://project-management-fohoov.vercel.app/user/projects"
-	imageUrl="/images/project-management-dark.png"
-	flashLight={flashLightRef}
-	rotation.x={xRotation.current}
-	position={[-10, 0, 0]}
-	oncreate={(e) => e.lookAt(camera.current.position)}
-	artBoardProps={{
-		materialProps: {
-			opacity: opacity.current
-		}
-	}}
-	center={{
-		text: 'Project management'
-	}}>
-</Project>
-
-<Project
-	projectUrl="https://samsteelsina.vercel.app/"
-	imageUrl="/images/samsteel-light.png"
-	flashLight={flashLightRef}
-	rotation.x={xRotation.current}
-	position={[10, 0, 0]}
-	oncreate={(e) => e.lookAt(camera.current.position)}
-	artBoardProps={{
-		materialProps: {
-			opacity: opacity.current
-		}
-	}}
-	center={{
-		text: 'Sam Steel Sina'
-	}}>
-</Project>
+<Responsive>
+	{#snippet children({ device })}
+		<Flex
+			width={device == 'desktop' ? 25 : 10}
+			flexDirection={device == 'desktop' ? 'Row' : 'Column'}
+			gap={5}
+			alignItems={'Center'}
+			justifyContent={'SpaceBetween'}>
+			{#each projects as project}
+				<Box flex={1}>
+					{#snippet children({ width })}
+						<Project
+							projectUrl={project.projectUrl}
+							imageUrl={project.imageUrl}
+							size={width}
+							flashLight={flashLightRef}
+							rotation.x={xRotation.current}
+							oncreate={(e) => lookAt(e, camera.current)}
+							artBoardProps={{
+								materialProps: {
+									opacity: opacity.current
+								}
+							}}
+							center={{
+								text: project.name
+							}}>
+						</Project>
+					{/snippet}
+				</Box>
+			{/each}
+		</Flex>
+	{/snippet}
+</Responsive>

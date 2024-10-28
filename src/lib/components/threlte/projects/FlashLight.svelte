@@ -9,7 +9,6 @@
 </script>
 
 <script lang="ts">
-	let componentState: 'moving' | 'stable' = $state('stable');
 	let flashLightRef: Group | undefined = undefined;
 
 	const spotLightAngel = 1.2;
@@ -25,12 +24,10 @@
 	const spotLightYRotation = $derived(-$pointer.x * 1.5);
 
 	function startDraggingState() {
-		componentState = 'moving';
 		scale.current = initialScale;
 	}
 
 	function endDraggingState() {
-		componentState = 'stable';
 		scale.current = initialScale - 3;
 	}
 
