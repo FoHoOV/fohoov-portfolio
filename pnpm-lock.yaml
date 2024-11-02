@@ -12,17 +12,17 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2(svelte@5.1.0)
       '@threlte/core':
-        specifier: 8.0.0-next.21
-        version: 8.0.0-next.21(svelte@5.1.0)(three@0.169.0)
+        specifier: 8.0.0-next.23
+        version: 8.0.0-next.23(svelte@5.1.0)(three@0.169.0)
       '@threlte/extras':
-        specifier: 9.0.0-next.28
-        version: 9.0.0-next.28(@types/three@0.165.0)(svelte@5.1.0)(three@0.169.0)
+        specifier: 9.0.0-next.32
+        version: 9.0.0-next.32(@types/three@0.165.0)(svelte@5.1.0)(three@0.169.0)
       '@threlte/flex':
-        specifier: 2.0.0-next.9
-        version: 2.0.0-next.9(svelte@5.1.0)(three@0.169.0)
+        specifier: 2.0.0-next.10
+        version: 2.0.0-next.10(svelte@5.1.0)(three@0.169.0)
       '@threlte/gltf':
-        specifier: 3.0.0-next.8
-        version: 3.0.0-next.8
+        specifier: 3.0.0-next.9
+        version: 3.0.0-next.9
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
@@ -611,26 +611,26 @@ packages:
     peerDependencies:
       three: '>=0.151.0'
 
-  '@threlte/core@8.0.0-next.21':
-    resolution: {integrity: sha512-4dYEEFlDOQs0EdqX5DayPO6MAgI4VzIVpDtuHhVgxWJTOv9DDCmuZbMzkr9AHN7jVDo3wyQ8t4881VikFpUhxQ==}
+  '@threlte/core@8.0.0-next.23':
+    resolution: {integrity: sha512-GqwUejW8QMHpJRyqN632ZAkX9WuluTl229XUaQRelfGRMOgP0BpPfikB2ldydSurpsm37SYCTJwn+29uG4FzZA==}
     peerDependencies:
       svelte: '>=5'
       three: '>=0.155'
 
-  '@threlte/extras@9.0.0-next.28':
-    resolution: {integrity: sha512-vsDvKcRtSlkWVDwCeJ1eONZX45K+ySSPpzmGYJx82iahPDQc4R+Igo8JA/sxRSIAGL3NvmnMiHIzf1xzuT9jYA==}
+  '@threlte/extras@9.0.0-next.32':
+    resolution: {integrity: sha512-sxLewfbgeiAn9CI5d+9jiS71aL5dylKp4npFRrrF8IUDroRvKXkcteDfdB8IsUf1PmqFy6Nk46RV9BzT+HWeWQ==}
     peerDependencies:
       svelte: '>=5'
       three: '>=0.155'
 
-  '@threlte/flex@2.0.0-next.9':
-    resolution: {integrity: sha512-PNJlD1Ko9Ga3ZNOSf1G5GibAkx+JLv34Cq4pvy0R7aQvSTmwZM63IzeSlzgQPoyXKBI6keC6ADUqMg7DYP/M9w==}
+  '@threlte/flex@2.0.0-next.10':
+    resolution: {integrity: sha512-HpayE9qRZhmuoTDvV6Tv8Wxn2urXzxKAVwaSMkIFcVzx4gwhuBQUGL3R4qwT43f9Jj6qsV3vRBf23u7hR7xsKg==}
     peerDependencies:
       svelte: '>=5'
       three: '>=0.155'
 
-  '@threlte/gltf@3.0.0-next.8':
-    resolution: {integrity: sha512-PVsxiregi3b3MMUHWn8HkeXXGwUf3x0TEMn9CEyLFcuhWJKFRZLM+r4vwQeT/FCOfvCN2crXjR2IAe2Y4+XcFg==}
+  '@threlte/gltf@3.0.0-next.9':
+    resolution: {integrity: sha512-iwDXZLsBDtqUqcB+nR6Qoruhsk/rrjRp3ooOpTchZVsPRsXKP2Yljk5bSlGmIWlH5yiHvrb+c4gOASWeQFH/bQ==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -2309,6 +2309,10 @@ packages:
     resolution: {integrity: sha512-qD0pUvL3P26Vx+K1VodZROSu7MjDHFDunEVZ+2d3LUDWHyYI87AJFOIws0HufKWHDgXbPO4FCSugmysnX4LDwA==}
     engines: {node: '>=18'}
 
+  svelte@5.1.9:
+    resolution: {integrity: sha512-nzq+PPKGS2PoEWDjAcXSrKSbXmmmOAxd6dAz1IhRusUpVkFS6DMELWPyBPGwu6TpO/gsgtFXwX0M4+pAR5gzKw==}
+    engines: {node: '>=18'}
+
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
@@ -3064,13 +3068,13 @@ snapshots:
     transitivePeerDependencies:
       - '@types/three'
 
-  '@threlte/core@8.0.0-next.21(svelte@5.1.0)(three@0.169.0)':
+  '@threlte/core@8.0.0-next.23(svelte@5.1.0)(three@0.169.0)':
     dependencies:
       mitt: 3.0.1
       svelte: 5.1.0
       three: 0.169.0
 
-  '@threlte/extras@9.0.0-next.28(@types/three@0.165.0)(svelte@5.1.0)(three@0.169.0)':
+  '@threlte/extras@9.0.0-next.32(@types/three@0.165.0)(svelte@5.1.0)(three@0.169.0)':
     dependencies:
       '@threejs-kit/instanced-sprite-mesh': 2.4.7(@types/three@0.165.0)(three@0.169.0)
       svelte: 5.1.0
@@ -3081,14 +3085,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/three'
 
-  '@threlte/flex@2.0.0-next.9(svelte@5.1.0)(three@0.169.0)':
+  '@threlte/flex@2.0.0-next.10(svelte@5.1.0)(three@0.169.0)':
     dependencies:
       mitt: 3.0.1
       svelte: 5.1.0
       three: 0.169.0
       yoga-layout: 3.1.0
 
-  '@threlte/gltf@3.0.0-next.8':
+  '@threlte/gltf@3.0.0-next.9':
     dependencies:
       '@gltf-transform/core': 3.10.1
       '@gltf-transform/extensions': 3.10.1
@@ -3100,9 +3104,9 @@ snapshots:
       meow: 11.0.0
       meshoptimizer: 0.18.1
       prettier: 3.3.3
-      prettier-plugin-svelte: 3.2.7(prettier@3.3.3)(svelte@5.1.0)
+      prettier-plugin-svelte: 3.2.7(prettier@3.3.3)(svelte@5.1.9)
       sharp: 0.32.6
-      svelte: 5.1.0
+      svelte: 5.1.9
       three: 0.122.0
       three-stdlib: 2.33.0(three@0.122.0)
     transitivePeerDependencies:
@@ -4481,6 +4485,11 @@ snapshots:
       prettier: 3.3.3
       svelte: 5.1.0
 
+  prettier-plugin-svelte@3.2.7(prettier@3.3.3)(svelte@5.1.9):
+    dependencies:
+      prettier: 3.3.3
+      svelte: 5.1.9
+
   prettier-plugin-tailwindcss@0.5.14(prettier-plugin-svelte@3.2.7(prettier@3.3.3)(svelte@5.1.0))(prettier@3.3.3):
     dependencies:
       prettier: 3.3.3
@@ -4773,6 +4782,22 @@ snapshots:
       svelte: 5.1.0
 
   svelte@5.1.0:
+    dependencies:
+      '@ampproject/remapping': 2.3.0
+      '@jridgewell/sourcemap-codec': 1.5.0
+      '@types/estree': 1.0.6
+      acorn: 8.13.0
+      acorn-typescript: 1.4.13(acorn@8.13.0)
+      aria-query: 5.3.2
+      axobject-query: 4.1.0
+      esm-env: 1.0.0
+      esrap: 1.2.2
+      is-reference: 3.0.2
+      locate-character: 3.0.0
+      magic-string: 0.30.12
+      zimmerframe: 1.1.2
+
+  svelte@5.1.9:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
