@@ -49,23 +49,26 @@
 	});
 </script>
 
-<FlashLight bind:this={flashLightRef} />
-
 <Responsive>
 	{#snippet children({ device })}
+		<FlashLight bind:this={flashLightRef} axis={device === 'desktop' ? 'x' : 'y'} />
+
+		{@const gap = 5}
+		{@const eachProjectWidth = device === 'desktop' ? 10 : 1}
 		<Flex
-			width={device == 'desktop' ? 25 : 10}
+			width={2 * eachProjectWidth + gap}
+			height={2 * eachProjectWidth + gap}
+			{gap}
 			flexDirection={device == 'desktop' ? 'Row' : 'Column'}
-			gap={5}
-			alignItems={'Center'}
+			alignItems={'Stretch'}
 			justifyContent={'SpaceBetween'}>
 			{#each projects as project}
-				<Box flex={1}>
+				<Box width="auto" height="auto" flex={1} paddingTop={3}>
 					{#snippet children({ width })}
 						<Project
+							size={width}
 							projectUrl={project.projectUrl}
 							imageUrl={project.imageUrl}
-							size={width}
 							flashLight={flashLightRef}
 							rotation.x={xRotation.current}
 							oncreate={(e) => lookAt(e, camera.current)}
