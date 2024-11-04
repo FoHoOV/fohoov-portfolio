@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import Code from '$lib/components/daisy/Code.svelte';
 	import Section from '$lib/components/section/Section.svelte';
-	import { TimeLine } from '$lib/components/daisy/timeline/index.svelte';
+	import { TimeLine } from '$lib/components/daisy/timeline';
 
 	export type Props = {
 		class?: string;
