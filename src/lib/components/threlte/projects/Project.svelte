@@ -3,7 +3,7 @@
 	import ArtBoard from '$lib/components/threlte/utils/artboard/ArtBoard.svelte';
 
 	import { type ComponentExports } from '$lib/utils';
-	import { T, useTask, useThrelte, type Props as ThrelteProps } from '@threlte/core';
+	import { T, useTask, type Props as ThrelteProps } from '@threlte/core';
 	import { type IntersectionEvent } from '@threlte/extras';
 	import { Text } from '@threlte/extras';
 	import { type ComponentProps } from 'svelte';
@@ -40,8 +40,6 @@
 		bottom,
 		...rootProps
 	}: Props = $props();
-
-	const { camera } = useThrelte();
 	const textOpacity = fromStore(spring(1));
 
 	const scale = fromStore(spring(1));
@@ -65,8 +63,6 @@
 		} else {
 			textOpacity.current = 1;
 		}
-
-		ref.lookAt(camera.current.position);
 	});
 </script>
 
