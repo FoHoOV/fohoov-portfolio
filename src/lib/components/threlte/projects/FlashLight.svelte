@@ -60,6 +60,13 @@
 	onMount(() => {
 		scale.current = initialScale;
 	});
+	/**
+	 * TODO: removed this part
+	 * 	{...axis === 'x'
+		? { rotation: [0, spotLightRotation, 0] }
+		: { rotation: [spotLightRotation, 0, 0] }}
+	 * I have to fix light direction
+	*/
 </script>
 
 <FlashLight
@@ -70,9 +77,6 @@
 	onpointerup={endDraggingState}
 	position={axis === 'x'
 		? [$pointer.x * 15, $pointer.y * 2, 10]
-		: [$pointer.x * 2, $pointer.y * 15, 10]}
-	{...axis === 'x'
-		? { rotation: [0, spotLightRotation, 0] }
-		: { rotation: [spotLightRotation, 0, 0] }}>
+		: [$pointer.x * 2, $pointer.y * 15, 10]}>
 	<RotationalLight angle={spotLightAngel} intensity={50} color={'white'} position={[0, 0, 0]} />
 </FlashLight>
