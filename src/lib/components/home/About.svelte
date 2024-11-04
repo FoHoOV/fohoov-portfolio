@@ -12,8 +12,8 @@
 
 <script lang="ts">
 	const { class: className }: Props = $props();
-	const commonCardClass =
-		'w-full h-full justify-self-center text-2xl opacity-0 -translate-x-4 font-bold transition-transform hover:scale-90 box';
+	const commonCardClass = `w-full h-full justify-self-center text-2xl opacity-0 -translate-x-4 font-bold 
+		transition-transform hover:!scale-90 origin-right box`;
 	const commonPClass = 'grow-0';
 
 	function createPopInEffect(options: TweenConfig) {

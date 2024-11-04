@@ -24,9 +24,10 @@
 			timeLine = getTimeline({
 				scrollTrigger: {
 					trigger: ref,
+					markers: true,
 					toggleActions: 'play reverse restart reverse',
 					start: 'top center',
-					end: 'center center'
+					end: 'center top'
 				}
 			});
 		}

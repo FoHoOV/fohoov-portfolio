@@ -11,11 +11,6 @@
 	} & HTMLAttributes<HTMLParagraphElement>;
 
 	let lastUsedWaveIndex = 0;
-</script>
-
-<script lang="ts">
-	const { class: className, baseColor, children, ...restParams }: Props = $props();
-
 	function getWave() {
 		const svg = WAVES[lastUsedWaveIndex];
 		lastUsedWaveIndex += 1;
@@ -24,6 +19,10 @@
 		}
 		return svg;
 	}
+</script>
+
+<script lang="ts">
+	const { class: className, baseColor, children, ...restParams }: Props = $props();
 
 	function getSvg() {
 		const svg = getWave();
