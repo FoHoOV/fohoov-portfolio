@@ -32,7 +32,7 @@
 <div class="min-h-full w-full {className}" bind:this={ref}>
 	<div class="sticky top-0 z-10 w-full self-start text-center align-top" bind:this={titleRef}>
 		<GlowEffect>
-			<h1 class="py-7 text-7xl font-extrabold backdrop-blur-sm sm:text-8xl">{title}</h1>
+			<h1 class="py-7 text-7xl font-extrabold sm:text-8xl">{title}</h1>
 		</GlowEffect>
 	</div>
 	{@render children?.()}
