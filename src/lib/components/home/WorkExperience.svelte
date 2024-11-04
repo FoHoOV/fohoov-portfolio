@@ -2,6 +2,9 @@
 	import Code from '$lib/components/daisy/Code.svelte';
 	import Section from '$lib/components/section/Section.svelte';
 	import { TimeLine } from '$lib/components/daisy/timeline';
+	import { onMount } from 'svelte';
+
+	import { gsap } from 'gsap';
 
 	export type Props = {
 		class?: string;
@@ -10,11 +13,37 @@
 
 <script lang="ts">
 	const { class: className }: Props = $props();
+	let ref: HTMLDivElement | undefined = undefined;
+
+	onMount(() => {
+		if (!ref) {
+			return;
+		}
+
+		const anim = gsap.from(document.querySelectorAll('.-item-selector'), {
+			stagger: 0.2,
+			opacity: 0,
+			scale: 0,
+			duration: 0.8,
+			overwrite: true,
+			scrollTrigger: {
+				trigger: ref,
+				toggleActions: 'play reverse restart reverse',
+				start: 'top center',
+				end: 'center top'
+			}
+		});
+
+		return () => {
+			anim.kill();
+		};
+	});
 </script>
 
-<Section class={className} title={'Work experience'}>
+<Section class={className} title={'Work experience'} bind:ref>
 	<TimeLine.Root class="pt-10">
 		<TimeLine.Item
+			class={'-item-selector'}
 			year={'2020'}
 			title={'SAM Steel Sina'}
 			lineColorClassName={'bg-secondary'}
@@ -29,6 +58,7 @@
 			{/snippet}
 		</TimeLine.Item>
 		<TimeLine.Item
+			class={'-item-selector'}
 			year={'2021'}
 			title={'Teaching Web'}
 			lineColorClassName={'bg-accent'}
@@ -40,6 +70,7 @@
 			{/snippet}
 		</TimeLine.Item>
 		<TimeLine.Item
+			class={'-item-selector'}
 			year={'2022'}
 			title={'Intech'}
 			lineColorClassName={'bg-primary'}
@@ -53,6 +84,7 @@
 			{/snippet}
 		</TimeLine.Item>
 		<TimeLine.Item
+			class={'-item-selector'}
 			year={'now'}
 			title={'Keshavarzi Bank'}
 			lineColorClassName={'bg-success'}

@@ -8,6 +8,7 @@
 		lineColorClassName?: string;
 		iconColorClassName?: string;
 		direction?: 'start' | 'end';
+		class?: string;
 		children: Snippet;
 		bottom?: Snippet;
 	};
@@ -17,6 +18,7 @@
 	const {
 		year,
 		title,
+		class: className,
 		lineColorClassName,
 		iconColorClassName,
 		direction = 'start',
@@ -25,7 +27,7 @@
 	}: Props = $props();
 </script>
 
-<li class="px-2">
+<li class="px-2 {className}">
 	<hr />
 	<div class="timeline-middle">
 		<Icon class={`text-4xl ${iconColorClassName}`} icon="lets-icons:check-ring"></Icon>
