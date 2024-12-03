@@ -92,15 +92,22 @@
 			direction="end">
 			<ol>
 				<li>
-					Maintaining and developing
+					Maintained and developed
 					<a href="https://ib.bki.ir" target="_blank">Internet Banking</a> of Keshavarzi
 				</li>
 				<li>
-					Maintaining and developing <a href="https://accounts.bki.ir" target="_blank"
+					Maintained and developed <a href="https://accounts.bki.ir" target="_blank"
 						>Open Banking</a> of Keshavarzi
 				</li>
 				<li>
-					Creating micro frontends using <Code text="React" /> and <Code text="MUI" />
+					Created micro frontends using <Code text="React" /> and <Code text="MUI" />
+				</li>
+				<li>
+					Created <Code text="@htsc" /> npm packages for
+					{#each ['postMessage', 'ui', 'ignite(starter)', 'template', 'client/schema generator'] as pkg, i}
+						<Code text={pkg} class={i == 0 ? '' : 'pl-2'} />,
+					{/each}
+					and <Code text="vite-htsc-plugin" /> to develop react apps for Keshavarzi Bank.
 				</li>
 			</ol>
 			{#snippet bottom()}
